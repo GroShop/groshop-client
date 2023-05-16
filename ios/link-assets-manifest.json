@@ -1,0 +1,57 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Merriweather-Black.ttf",
+      "sha1": "4e0309a91c59725eeb790ea38a244738901741fe"
+    },
+    {
+      "path": "src/assets/fonts/Merriweather-Bold.ttf",
+      "sha1": "34b46b97242a7454a10f742a805741eecc83c490"
+    },
+    {
+      "path": "src/assets/fonts/Merriweather-Light.ttf",
+      "sha1": "14ca8b58384a56c5274d1016473216ca283b5a9a"
+    },
+    {
+      "path": "src/assets/fonts/Merriweather-Regular.ttf",
+      "sha1": "a6eb562aa1bca027f02b3d6a4de14c1fb3bef799"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-Black.ttf",
+      "sha1": "5e61b5d2fadda72712c8ef1a1bed8d1b5e5c364a"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-Bold.ttf",
+      "sha1": "c828019f33d43d0701f14626ab5c48b7cff0d431"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-ExtraBold.ttf",
+      "sha1": "496c63179478a4c946c217d49dd76260ce027c0c"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-ExtraLight.ttf",
+      "sha1": "9c2d3481d74141c40303f60f7144e2bfc620b658"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-Light.ttf",
+      "sha1": "048bcf35fbe082f4bd03c4565ee70c4d97b2f20a"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-Medium.ttf",
+      "sha1": "678d7e14cc39c7fab7f9a8f9d3a44b85cf8228f5"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-Regular.ttf",
+      "sha1": "7f3a56349d12c56bafbefcfd199e62464ca6e238"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-SemiBold.ttf",
+      "sha1": "e0a18c1a510fb444bb22bf961a6e50e845359ebe"
+    },
+    {
+      "path": "src/assets/fonts/Raleway-Thin.ttf",
+      "sha1": "dc0ae243021e6393cf3861a63f8b1039d0865b1d"
+    }
+  ]
+}
