@@ -48,7 +48,7 @@ const Input = (props: IInputProps) => {
                   onChangeText={onChange}
                   value={value}
                 />
-                {props.icon && (
+                {props.icon && (  
                   <View>
                     <ImageComponent src={props.icon} height={20} width={22} />
                   </View>

@@ -5,9 +5,9 @@ import signIn from "../assets/icons/sign_in.png";
 import appleIcon from "../assets/icons/apple.png"
 import facebookIcon from "../assets/icons/facebook.png";
 import googleIcon from "../assets/icons/google.png";
-// import checkBoxInActive from "../assets/icons/checkbox_inactive.png";
-// import checkBoxActive from "../assets/icons/checkbox_active.png";
-// import backIcon from "../assets/icons/back.png";
+import checkBoxInActive from "../assets/icons/checkbox_inactive.png";
+import checkBoxActive from "../assets/icons/checkbox_active.png";
+import backIcon from "../assets/icons/back_icon.png";
 import eyeActive from "../assets/icons/eye_active.png";
 import eyeInActive from "../assets/icons/eye_inactive.png";
 import radioActive from "../assets/icons/radio_active.png";
@@ -20,9 +20,9 @@ const Assets = {
   appleIcon,
   facebookIcon,
   googleIcon,
-  // checkBoxActive,
-  // checkBoxInActive,
-  // backIcon,
+  checkBoxActive,
+  checkBoxInActive,
+  backIcon,
   eyeActive,
   eyeInActive,
   radioActive,
