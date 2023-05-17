@@ -20,6 +20,8 @@ interface IInputProps {
 }
 
 const Input = (props: IInputProps) => {
+  console.log('value: ');
+
   return (
     <View className={`w-full ${props.style}`}>
       <Controller
@@ -27,7 +29,6 @@ const Input = (props: IInputProps) => {
         rules={props.rules || {}}
         control={props.control}
         render={({field: {onChange, value, onBlur}, fieldState: {error}}) => {
-          console.log('value: ' + error);
           return (
             <>
               <View

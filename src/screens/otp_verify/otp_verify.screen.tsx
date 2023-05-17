@@ -5,6 +5,7 @@ import {
   Container,
   ImageComponent,
   Input,
+  OtpComponent,
   PrimaryButton,
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
@@ -12,7 +13,7 @@ import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Height, Ratio, Width, useSetState} from '../../utils/functions.utils';
 
-const ForgotPsd = (props: any) => {
+const OtpVerify = (props: any) => {
   const [state, setState] = useSetState({
     passwordIcon: true,
   });
@@ -26,7 +27,7 @@ const ForgotPsd = (props: any) => {
       password: '',
     },
   });
-  const handleForgotPsd = (data?: any) => {
+  const handleOtpVerify = (data?: any) => {
     // alert(JSON.stringify(data));
   };
   return (
@@ -38,34 +39,26 @@ const ForgotPsd = (props: any) => {
           className="h-[5%] justify-end">
           <ImageComponent src={Assets.backIcon} height={20} width={22} />
         </TouchableOpacity>
-        <View className="items-center justify-evenly h-[50%]">
+        <View className="items-center justify-around h-[20%]">
           <Text className="font-raleway-semi-bold text-secondary-black text-3xl  ">
-            Forgot Password
+            Verify Your Number
           </Text>
-          <ImageComponent
-            src={Assets.passwordImg}
-            height={Ratio(265)}
-            width={Ratio(250)}
-          />
-          <Text className="font-merriweather-regular text-secondary-black text-xs ">
-            Enter your phone number to verify it’s you, and we will send you a
-            one-time authorization code.
-          </Text>
-        </View>
-        <View className="h-[14%] pt-1">
-          <View>
-            <Input
-              type="text"
-              placeholder="Email"
-              control={control}
-              name="email"
-            />
+          <View className="items-center space-y-3">
+            <Text className="font-merriweather-regular  text-xs text-verify ">
+              4 digit code send to
+            </Text>
+            <Text className="font-merriweather-bold text-secondary-black text-sm ">
+              +62 (302) **** ****
+            </Text>
           </View>
         </View>
-        <View className="h-[36%] ">
+        <View className="h-[14%] w-[70%] ml-auto mr-auto  ">
+          <OtpComponent />
+        </View>
+        <View className="h-[61%] pt-2 ">
           <PrimaryButton
-            onClick={() => props.navigation.navigate('OtpVerify')}
-            text={'Next'}
+            onClick={() => handleSubmit(handleOtpVerify)}
+            text={'Verify'}
           />
         </View>
       </View>
@@ -73,4 +66,4 @@ const ForgotPsd = (props: any) => {
   );
 };
 
-export default ForgotPsd;
+export default OtpVerify;
