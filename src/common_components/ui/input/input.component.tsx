@@ -34,7 +34,7 @@ const Input = (props: IInputProps) => {
                   error && 'border-error border-[1px]'
                 }`}>
                 <TextInput
-                  className={`${props.inputStyle}  h-full ${
+                  className={`${props.inputStyle} text-secondary-black  h-full ${
                     props.iconOnPress || props.icon ? 'w-[80%]' : 'w-full'
                   } rounded-lg`}
                   placeholder={props.placeholder}

@@ -7,7 +7,7 @@ import {
   PermissionsAndroid,
   Platform,
 } from "react-native";
-// import {showMessage} from "react-native-flash-message";
+import {showMessage} from "react-native-flash-message";
 // import Models from "imports/models.import";
 // import ImagePicker from "react-native-image-crop-picker";np 
 import {useNavigation} from "@react-navigation/native";
@@ -81,47 +81,47 @@ export const Ratio = (value: any, isHeight?: boolean) => {
 //   return false;
 // };
 
-// export const Success = (message: string, description?: string) => [
-//   showMessage({
-//     message: message,
-//     description: description,
-//     type: "success",
-//     icon: "auto",
-//     autoHide: true,
-//     position: "top",
-//   }),
-// ];
-// export const Failure = (message: string, description?: string) => [
-//   showMessage({
-//     message: message,
-//     description: description,
-//     type: "danger",
-//     icon: "auto",
-//     autoHide: true,
-//     position: "top",
-//   }),
-// ];
+export const Success = (message: string, description?: string) => [
+  showMessage({
+    message: message,
+    description: description,
+    type: "success",
+    icon: "auto",
+    autoHide: true,
+    position: "top",
+  }),
+];
+export const Failure = (message: string, description?: string) => [
+  showMessage({
+    message: message,
+    description: description,
+    type: "danger",
+    icon: "auto",
+    autoHide: true,
+    position: "top",
+  }),
+];
 
-// export const Warning = (message: string, description?: string) => [
-//   showMessage({
-//     message: message,
-//     description: description,
-//     type: "warning",
-//     icon: "auto",
-//     autoHide: true,
-//     position: "top",
-//   }),
-// ];
-// export const Info = (message: string, description?: string) => [
-//   showMessage({
-//     message: message,
-//     description: description,
-//     type: "info",
-//     icon: "auto",
-//     autoHide: true,
-//     position: "top",
-//   }),
-// ];
+export const Warning = (message: string, description?: string) => [
+  showMessage({
+    message: message,
+    description: description,
+    type: "warning",
+    icon: "auto",
+    autoHide: true,
+    position: "top",
+  }),
+];
+export const Info = (message: string, description?: string) => [
+  showMessage({
+    message: message,
+    description: description,
+    type: "info",
+    icon: "auto",
+    autoHide: true,
+    position: "top",
+  }),
+];
 
 export const isUrlFound = (url: string) => {
   if (/^https:\/\//.test(url)) {

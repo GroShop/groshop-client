@@ -11,7 +11,9 @@ import {
 import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useSetState} from '../../utils/functions.utils';
+import {Failure, useSetState} from '../../utils/functions.utils';
+import { Models } from 'imports/models.imports';
+import { Success } from '../../utils/functions.utils';
 
 const SignIn = (props: any) => {
   // state
@@ -35,8 +37,18 @@ const SignIn = (props: any) => {
     resolver: zodResolver(Validation.signInScheme),
   });
 
-  const handleSignIn = (data?: any) => {
-    alert(JSON.stringify(data));
+  const handleSignIn = async(data?: any) => {
+    try {
+      delete data.confirm_password
+      console.log(JSON.stringify(data));
+      let res:any= await Models.auth.signup(data);
+      Success(res.message)
+      // props.navigation.navigate('Home');
+    } catch (error:any) {
+      console.log("error",error);
+      
+      Failure(error.response.data.message)
+    }
   };
 
   return (
