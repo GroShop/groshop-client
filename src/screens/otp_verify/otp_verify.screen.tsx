@@ -1,10 +1,11 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Assets,
   Container,
   ImageComponent,
   Input,
+  InviteModal,
   OtpComponent,
   PrimaryButton,
 } from '../../utils/imports.utils';
@@ -14,9 +15,13 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Height, Ratio, Width, useSetState} from '../../utils/functions.utils';
 
 const OtpVerify = (props: any) => {
+  // ref
+  const modalRef:any = useRef()
+  // state
   const [state, setState] = useSetState({
     passwordIcon: true,
   });
+
   const {
     control,
     handleSubmit,
@@ -30,6 +35,7 @@ const OtpVerify = (props: any) => {
   const handleOtpVerify = (data?: any) => {
     // alert(JSON.stringify(data));
   };
+
   return (
     <Container>
       <View className="w-[90%] h-full mx-auto">
@@ -57,9 +63,10 @@ const OtpVerify = (props: any) => {
         </View>
         <View className="h-[61%] pt-2 ">
           <PrimaryButton
-            onClick={() => handleSubmit(handleOtpVerify)}
+            onClick={() =>modalRef.current.openModal() }
             text={'Verify'}
           />
+          <InviteModal ref={modalRef} />
         </View>
       </View>
     </Container>

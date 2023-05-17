@@ -4,6 +4,7 @@ import Input from "../common_components/ui/input/input.component";
 import PrimaryButton from "../common_components/ui/primaryButtton/primary_button";
 import ImageComponent from "../common_components/ui/image/image.component";
 import OtpComponent from "../components/otp/otp.component";
+import InviteModal from "../common_components/ui/invite_modal/invite_modal";
 
 
 
@@ -13,5 +14,6 @@ export {
   Input,
   PrimaryButton,
   ImageComponent,
-  OtpComponent
+  OtpComponent,
+  InviteModal
 }
