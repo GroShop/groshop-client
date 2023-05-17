@@ -5,6 +5,7 @@ import PrimaryButton from "../common_components/ui/primaryButtton/primary_button
 import ImageComponent from "../common_components/ui/image/image.component";
 import OtpComponent from "../components/otp/otp.component";
 import InviteModal from "../common_components/ui/invite_modal/invite_modal";
+import Validation from "./validation.utils";
 
 
 
@@ -15,5 +16,6 @@ export {
   PrimaryButton,
   ImageComponent,
   OtpComponent,
-  InviteModal
+  InviteModal,
+  Validation
 }

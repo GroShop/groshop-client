@@ -12,7 +12,7 @@ const Container = (props: IContainer) => {
   return (
     <View>
       <StatusBar
-        backgroundColor={'black'}
+        backgroundColor={'green'}
         translucent={true}
         hidden={false}
         barStyle={'dark-content'}

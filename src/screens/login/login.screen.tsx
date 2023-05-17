@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
@@ -32,9 +32,12 @@ const Login = (props: any) => {
   };
   return (
     <Container>
-      <View className="w-[90%] h-full mx-auto">
-        <View className="h-[46%] items-center justify-evenly pt-2">
-          <View className="items-center space-y-2">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="w-[90%] mx-auto "
+        style={{height: '100%'}}>
+        <View className="items-center  pb-2 pt-3">
+          <View className="items-center  space-y-2 pb-2">
             <Text className="font-raleway-semi-bold text-secondary-black text-3xl ">
               Sign In
             </Text>
@@ -42,14 +45,13 @@ const Login = (props: any) => {
               Fill the field below to Sign In
             </Text>
           </View>
-
           <ImageComponent
             src={Assets.signIn}
             height={Ratio(265)}
             width={Ratio(250)}
           />
         </View>
-        <View className="h-[23%] flex-col space-y-3">
+        <View className="space-y-3">
           <View>
             <Input
               type="text"
@@ -73,13 +75,15 @@ const Login = (props: any) => {
               }}
             />
           </View>
-          <TouchableOpacity activeOpacity={0.7} onPress={()=>props.navigation.navigate('ForgotPsd')}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => props.navigation.navigate('ForgotPsd')}>
             <Text className="font-raleway-semi-bold text-primary-green text-xs text-right">
               Forgot Password?
             </Text>
           </TouchableOpacity>
         </View>
-        <View className="h-[14%]  items-center justify-around ">
+        <View className="space-y-4  py-5">
           <PrimaryButton
             onClick={() => handleSubmit(handleLogin)}
             text={'SignUp'}
@@ -88,10 +92,10 @@ const Login = (props: any) => {
             Or Sign In with
           </Text>
         </View>
-        <View className="h-[9%] items-center justify-center  ">
+        <View className="pb-5">
           <SocialMedia />
         </View>
-        <View className="h-[8%] justify-center pb-1">
+        <View className="py-3">
           <View className="items-center justify-center flex-row ">
             <Text className="font-merriweather-regular text-text-gray text-xs ">
               Didn’t have an account?{' '}
@@ -105,7 +109,7 @@ const Login = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </Container>
   );
 };

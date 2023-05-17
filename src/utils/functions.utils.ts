@@ -18,7 +18,8 @@ import _ from "lodash";
 export const {width, height} = Dimensions.get("window");
 export const aspectRatio = height / width;
 export const getBaseURL = () => {
-  let baseURL = "https://api.hellaviews.com";
+  // let baseURL = "http://localhost:8001";
+  let baseURL = "http://192.168.1.22:8001";
   if (process.env.REACT_APP_NODE_ENV === "development") {
     baseURL = "http://localhost:8001";
   } else if (process.env.REACT_APP_NODE_ENV === "stage") {
@@ -275,20 +276,7 @@ export const modelError = (error: any) => {
   }
 };
 
-export const useNavigate = () => {
-  const navigation = useNavigation();
-  const navigate = (path: string, params: object = {}) => {
-    if (!_.isEmpty(params)) {
-      setAppRoute(params);
-      // @ts-ignore
-      navigation.navigate(path);
-    } else {
-      // @ts-ignore
-      navigation.navigate(path);
-    }
-  };
-  return navigate;
-};
+
 
 export const calculateTimeToString = (date: string | number | Date) => {
   var datePast = new Date(date);

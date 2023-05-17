@@ -13,9 +13,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Height, Ratio, Width, useSetState} from '../../utils/functions.utils';
 
 const ForgotPsd = (props: any) => {
-  const [state, setState] = useSetState({
-    passwordIcon: true,
-  });
+ 
   const {
     control,
     handleSubmit,
@@ -23,18 +21,19 @@ const ForgotPsd = (props: any) => {
   } = useForm({
     defaultValues: {
       email: '',
-      password: '',
     },
   });
   const handleForgotPsd = (data?: any) => {
     // alert(JSON.stringify(data));
+    props.navigation.navigate("OtpVerify")
   };
+
   return (
     <Container>
       <View className="w-[90%] h-full mx-auto">
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => props.navigation.navigate('SignIn')}
+          onPress={() => props.navigation.goBack()}
           className="h-[5%] justify-end">
           <ImageComponent src={Assets.backIcon} height={20} width={22} />
         </TouchableOpacity>
@@ -64,7 +63,7 @@ const ForgotPsd = (props: any) => {
         </View>
         <View className="h-[36%] ">
           <PrimaryButton
-            onClick={() => props.navigation.navigate('OtpVerify')}
+            onClick={()=>handleSubmit(handleForgotPsd)}
             text={'Next'}
           />
         </View>

@@ -1,4 +1,3 @@
-import {View, Text, SafeAreaView} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -8,6 +7,7 @@ import Login from './screens/login/login.screen';
 import SignIn from './screens/signin/signin.screen';
 import ForgotPsd from './screens/phone_num/forgot_password.screen';
 import OtpVerify from './screens/otp_verify/otp_verify.screen';
+import Home from './screens/home/home.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -19,6 +19,7 @@ const App = () => {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="ForgotPsd" component={ForgotPsd} />
         <Stack.Screen name="OtpVerify" component={OtpVerify} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
@@ -6,18 +6,21 @@ import {
   ImageComponent,
   Input,
   PrimaryButton,
+  Validation,
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {z} from 'zod';
-import {Height, Width, useSetState} from '../../utils/functions.utils';
+import {useSetState} from '../../utils/functions.utils';
+
 const SignIn = (props: any) => {
+  // state
   const [state, setState] = useSetState({
     passwordIcon: true,
     confirmPasswordIcon: true,
     privacyPolicy: false,
   });
+
   const {
     control,
     handleSubmit,
@@ -26,15 +29,23 @@ const SignIn = (props: any) => {
     defaultValues: {
       email: '',
       password: '',
+      confirm_password: '',
+      username: '',
     },
+    resolver: zodResolver(Validation.signInScheme),
   });
+
   const handleSignIn = (data?: any) => {
-    // alert(JSON.stringify(data));
+    alert(JSON.stringify(data));
   };
+
   return (
     <Container>
-      <View className="w-[90%] h-full mx-auto">
-        <View className="items-center justify-end h-[11%] pt-3 ">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="w-[90%] mx-auto "
+        style={{height: '100%'}}>
+        <View className="items-center  mb-6 pt-6">
           <Text className="font-raleway-semi-bold text-secondary-black text-3xl  ">
             Sign In
           </Text>
@@ -42,13 +53,13 @@ const SignIn = (props: any) => {
             Fill the details and create your new account
           </Text>
         </View>
-        <View className="h-[46%]  flex-col justify-evenly py-2  ">
+        <View className="space-y-3">
           <View>
             <Input
               type="text"
               placeholder="Full Name"
               control={control}
-              name="name"
+              name="username"
             />
           </View>
           <View>
@@ -94,7 +105,7 @@ const SignIn = (props: any) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => setState({privacyPolicy: !state.privacyPolicy})}
-            className="flex-row items-center space-x-1">
+            className="flex-row items-center space-x-1 mt-1">
             <ImageComponent
               src={
                 state.privacyPolicy
@@ -112,19 +123,19 @@ const SignIn = (props: any) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View className="h-[17%]  items-center justify-around  ">
+        <View className="mt-8 space-y-6">
           <PrimaryButton
-            onClick={() => props.navigation.navigate('PhoneNum')}
+            onClick={() => handleSubmit(handleSignIn)}
             text={'SignUp'}
           />
           <Text className="font-merriweather-regular text-secondary-black text-xs  text-center">
             Or Sign In with
           </Text>
         </View>
-        <View className="h-[10%] items-center justify-center">
+        <View className="py-8">
           <SocialMedia />
         </View>
-        <View className="h-[15%] justify-end pb-5">
+        <View className="my-3">
           <View className="items-center justify-center flex-row ">
             <Text className="font-merriweather-regular text-text-gray text-xs ">
               Didn’t have an account?
@@ -138,7 +149,7 @@ const SignIn = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </Container>
   );
 };

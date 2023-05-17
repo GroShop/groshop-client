@@ -20,8 +20,6 @@ interface IInputProps {
 }
 
 const Input = (props: IInputProps) => {
-  console.log('value: ');
-
   return (
     <View className={`w-full ${props.style}`}>
       <Controller
@@ -33,7 +31,7 @@ const Input = (props: IInputProps) => {
             <>
               <View
                 className={`flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ${
-                  error && 'bg-error'
+                  error && 'border-error border-[1px]'
                 }`}>
                 <TextInput
                   className={`${props.inputStyle}  h-full ${
@@ -49,7 +47,7 @@ const Input = (props: IInputProps) => {
                   onChangeText={onChange}
                   value={value}
                 />
-                {props.icon && (  
+                {props.icon && (
                   <View>
                     <ImageComponent src={props.icon} height={20} width={22} />
                   </View>
@@ -65,7 +63,7 @@ const Input = (props: IInputProps) => {
                 )}
               </View>
               {error && (
-                <Text className="text-error text-sm px-1 mt-1.5">
+                <Text className="text-error text-[12px] px-1 pt-1">
                   {error.message}
                 </Text>
               )}
