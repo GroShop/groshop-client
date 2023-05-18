@@ -6,12 +6,15 @@ import {
   ImageComponent,
   Input,
   PrimaryButton,
+  Validation,
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
-import {Height, Ratio, Width, useSetState} from '../../utils/functions.utils';
+import {Failure, Height, Ratio, Success, Width, useSetState} from '../../utils/functions.utils';
+import { Models } from 'imports/models.imports';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props: any) => {
   const [state, setState] = useSetState({
@@ -26,9 +29,21 @@ const Login = (props: any) => {
       email: '',
       password: '',
     },
+    resolver: zodResolver(Validation.loginScheme),
   });
-  const handleLogin = (data?: any) => {
-    // alert(JSON.stringify(data));
+  const handleLogin = async(data?: any) => {
+      try {
+        let res:any= await Models.auth.login(data);
+       await AsyncStorage.setItem("token",res.token);
+        props.navigation.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        });
+        Success(res.message)
+      } catch (error:any) {
+        console.log("error",error);
+        Failure(error.message)
+    };
   };
   return (
     <Container>

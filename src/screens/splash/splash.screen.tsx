@@ -1,14 +1,14 @@
 import {View, Text, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import {Assets, Container} from '../../utils/imports.utils';
+import _ from 'lodash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = (props: any) => {
   useEffect(() => {
     setTimeout(async () => {
-      let localStorage: any = await AsyncStorage.getItem('getStarted');
-      localStorage = JSON.parse(localStorage);
-      if (localStorage) {
+      let token: any = await AsyncStorage.getItem('token');
+      if (!_.isEmpty(token)) {
         props.navigation.reset({
           index: 0,
           routes: [{name: 'Home'}],

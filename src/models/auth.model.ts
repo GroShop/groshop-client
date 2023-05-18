@@ -10,7 +10,7 @@ const auth = {
           resolve(res.data);
         })
         .catch((error:any) => {
-          reject(error);
+          reject(error.response.data);
         });
     });
     return promise;
@@ -24,7 +24,7 @@ const auth = {
           resolve(res.data);
         })
         .catch((error:any) => {
-            reject(error);
+            reject(error.response.data);
         });
     });
     return promise;

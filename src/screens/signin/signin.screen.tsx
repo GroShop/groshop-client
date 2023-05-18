@@ -40,14 +40,15 @@ const SignIn = (props: any) => {
   const handleSignIn = async(data?: any) => {
     try {
       delete data.confirm_password
-      console.log(JSON.stringify(data));
       let res:any= await Models.auth.signup(data);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
       Success(res.message)
-      // props.navigation.navigate('Home');
     } catch (error:any) {
       console.log("error",error);
-      
-      Failure(error.response.data.message)
+      Failure(error.message)
     }
   };
 
@@ -154,7 +155,7 @@ const SignIn = (props: any) => {
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => props.navigation.navigate('Login')}>
+              onPress={() => props.navigation.navigate('Home')}>
               <Text className="font-merriweather-regular text-primary-green text-xs ">
                 Sign In
               </Text>

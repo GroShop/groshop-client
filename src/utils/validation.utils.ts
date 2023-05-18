@@ -2,7 +2,7 @@ import {z} from 'zod';
 
 const Validation: any = {
   loginScheme: z.object({
-    email: z.string().email('Invalid Email').nonempty('Please Enter Email'),
+    email: z.string().nonempty('Please Enter Email').email('Invalid Email'),
     password: z
       .string()
       .min(6, {message: 'Invalid Email'})
