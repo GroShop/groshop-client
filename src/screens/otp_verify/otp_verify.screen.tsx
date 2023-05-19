@@ -14,7 +14,7 @@ import {useSelector} from 'react-redux';
 const OtpVerify = (props: any) => {
   // ref
   const auth: any = useSelector((state: any) => state.auth.data);
-  const modalRef: any = useRef();
+  const verifyRef: any = useRef();
 
   const [state, setState] = useSetState({
     otp: '',
@@ -28,7 +28,7 @@ const OtpVerify = (props: any) => {
           otp: state.otp,
         };
         let res: any = await Models.auth.verifyOtp(query);
-        modalRef.current.openModal();
+        verifyRef.current.openModal();
         Success(res.message);
       } catch (error: any) {
         console.log('error', error);
@@ -36,19 +36,7 @@ const OtpVerify = (props: any) => {
       }
     }
   };
-  const handleResendOtp = async () => {
-    try {
-      let query: any = {
-        email: auth.email,
-      };
-      await Models.auth.sendOtp(query);
-      setState({resend: 60});
-      Success('Otp Resend Successfully');
-    } catch (error: any) {
-      console.log('error', error);
-      Failure(error.message);
-    }
-  };
+
   return (
     <Container>
       <View className="w-[90%] h-full mx-auto">
@@ -77,7 +65,6 @@ const OtpVerify = (props: any) => {
               setState({otp: value});
             }}
             resendData={state.resend}
-            onPress={handleResendOtp}
           />
         </View>
         <TouchableOpacity
@@ -87,7 +74,7 @@ const OtpVerify = (props: any) => {
             Verify
           </Text>
         </TouchableOpacity>
-        <InviteModal ref={modalRef} {...props} />
+        <InviteModal ref={verifyRef} {...props} type={'verifyOtp'}/>
       </View>
     </Container>
   );

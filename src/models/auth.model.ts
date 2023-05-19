@@ -1,58 +1,100 @@
 import instance from 'utils/axios.utils';
 
 const auth = {
-  login: (data:any) => {
+  login: (data: any) => {
     let promise = new Promise((resolve, reject) => {
       let url = 'auth/user_login';
       instance()
         .post(url, data)
-        .then((res:any) => {
+        .then((res: any) => {
           resolve(res.data);
         })
-        .catch((error:any) => {
+        .catch((error: any) => {
           reject(error.response.data);
         });
     });
     return promise;
   },
-  signup: (data:any) => {
+  signup: (data: any) => {
     let promise = new Promise((resolve, reject) => {
       let url = 'auth/user_signup';
       instance()
         .post(url, data)
-        .then((res:any) => {
+        .then((res: any) => {
           resolve(res.data);
         })
-        .catch((error:any) => {
-            reject(error.response.data);
+        .catch((error: any) => {
+          reject(error.response.data);
         });
     });
     return promise;
   },
-  sendOtp: (data:any) => {
+  sendOtp: (data: any) => {
     let promise = new Promise((resolve, reject) => {
       let url = 'auth/send_otp';
       instance()
         .post(url, data)
-        .then((res:any) => {
+        .then((res: any) => {
           resolve(res.data);
         })
-        .catch((error:any) => {
-            reject(error.response.data);
+        .catch((error: any) => {
+          reject(error.response.data);
         });
     });
     return promise;
   },
-  verifyOtp: (data:any) => {
+  verifyOtp: (data: any) => {
     let promise = new Promise((resolve, reject) => {
       let url = 'auth/verify_otp';
       instance()
         .post(url, data)
-        .then((res:any) => {
+        .then((res: any) => {
           resolve(res.data);
         })
-        .catch((error:any) => {
-            reject(error.response.data);
+        .catch((error: any) => {
+          reject(error.response.data);
+        });
+    });
+    return promise;
+  },
+  editPassword: (data: any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/reset_password';
+      instance()
+        .post(url, data)
+        .then((res: any) => {
+          resolve(res.data);
+        })
+        .catch((error: any) => {
+          reject(error.response.data);
+        });
+    });
+    return promise;
+  },
+  getUser: (data: any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/get_user';
+      instance()
+        .post(url, data)
+        .then((res: any) => {
+          resolve(res.data);
+        })
+        .catch((error: any) => {
+          reject(error.response.data);
+        });
+    });
+    return promise;
+  },
+  editUser: (data: any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/edit_user';
+      instance()
+        .post(url, data)
+        .then((res: any) => {
+          resolve(res.data);
+        })
+        .catch((error: any) => {
+          reject(error.response.data);
         });
     });
     return promise;
@@ -85,5 +127,5 @@ const auth = {
   //   });
   //   return promise;
   // },
-}
+};
 export default auth;

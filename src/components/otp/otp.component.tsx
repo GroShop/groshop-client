@@ -1,16 +1,38 @@
+import {Models} from 'imports/models.imports';
 import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import OTPTextInput from 'react-native-otp-textinput';
+import {useSelector} from 'react-redux';
+import {Failure, Success} from 'utils/functions.utils';
 
 interface IOtpComponent {
-  resendData: number;
-  onPress: any;
-  onOtpChange: any;
+  resendData?: number;
+  onOtpChange?: any;
 }
 const OtpComponent = (props: IOtpComponent) => {
-  const [resend, setResend] = useState(props.resendData);
+  const [resend, setResend] = useState(60);
+  const auth: any = useSelector((state: any) => state.auth.data);
+
+  const handleResendOtp = async () => {
+    try {
+      let query: any = {
+        email: auth.email,
+      };
+      await Models.auth.sendOtp(query);
+      setResend(60);
+      resetOtp();
+      Success('Otp Resend Successfully');
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
 
   useEffect(() => {
+    resetOtp();
+  }, []);
+
+  const resetOtp = () => {
     const interval = setInterval(() => {
       setResend(prevResend => {
         if (prevResend === 0) {
@@ -24,7 +46,7 @@ const OtpComponent = (props: IOtpComponent) => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  };
 
   return (
     <View className="">
@@ -52,7 +74,7 @@ const OtpComponent = (props: IOtpComponent) => {
         tintColor={'#689C36'}
       />
       {resend === 0 ? (
-        <TouchableOpacity activeOpacity={0.7} onPress={props.onPress}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handleResendOtp}>
           <Text className="font-merriweather-regular text-right text-xs text-primary-green my-1 items-center justify-center">
             Resend Otp
           </Text>
@@ -67,4 +89,3 @@ const OtpComponent = (props: IOtpComponent) => {
 };
 
 export default OtpComponent;
-2;

@@ -30,10 +30,7 @@ const ForgotPsd = (props: any) => {
     try {
       let res: any = await Models.auth.sendOtp(data);
       auth(res.data);
-      props.navigation.reset({
-        index: 0,
-        routes: [{name: 'OtpVerify'}],
-      });
+      props.navigation.navigate('OtpVerify');
       Success(res.message);
     } catch (error: any) {
       console.log('error', error);

@@ -12,8 +12,8 @@ import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Failure, useSetState} from '../../utils/functions.utils';
-import { Models } from 'imports/models.imports';
-import { Success } from '../../utils/functions.utils';
+import {Models} from 'imports/models.imports';
+import {Success} from '../../utils/functions.utils';
 
 const SignIn = (props: any) => {
   // state
@@ -31,24 +31,24 @@ const SignIn = (props: any) => {
     defaultValues: {
       email: '',
       password: '',
-      confirm_password: '',
+      confirmPassword: '',
       username: '',
     },
     resolver: zodResolver(Validation.signInScheme),
   });
 
-  const handleSignIn = async(data?: any) => {
+  const handleSignIn = async (data?: any) => {
     try {
-      delete data.confirm_password
-      let res:any= await Models.auth.signup(data);
+      delete data.confirm_password;
+      let res: any = await Models.auth.signup(data);
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Login'}],
       });
-      Success(res.message)
-    } catch (error:any) {
-      console.log("error",error);
-      Failure(error.message)
+      Success(res.message);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
     }
   };
 
@@ -103,7 +103,7 @@ const SignIn = (props: any) => {
               type="text"
               placeholder="Confirm Password"
               control={control}
-              name="confirm_password"
+              name="confirmPassword"
               securityPassword={state.confirmPasswordIcon}
               iconOnPress={
                 state.confirmPasswordIcon
