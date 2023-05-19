@@ -22,6 +22,9 @@ const Validation: any = {
     message: "Passwords don't match",
     path: ["confirm_password"], // path of error
   }),
+  forgotScheme: z.object({
+    email: z.string().nonempty('Please Enter Email').email('Invalid Email'),
+  }),
 };
 
 export default Validation;

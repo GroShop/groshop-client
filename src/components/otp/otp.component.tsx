@@ -1,24 +1,40 @@
-import React, { useState} from 'react';
-import { Text,  View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import OTPTextInput from 'react-native-otp-textinput';
-const OtpComponent = (props: any) => {
-  const [otp, setOtp] = useState('');
 
-  const handleOTPChange = (otp: any) => {
-    console.log('OTP entered:', otp);
-  };
+interface IOtpComponent {
+  resendData: number;
+  onPress: any;
+  onOtpChange: any;
+}
+const OtpComponent = (props: IOtpComponent) => {
+  const [resend, setResend] = useState(props.resendData);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setResend(prevResend => {
+        if (prevResend === 0) {
+          clearInterval(interval);
+          return prevResend;
+        } else {
+          return prevResend - 1;
+        }
+      });
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <View className="">
       <OTPTextInput
-        handleTextChange={handleOTPChange}
+        handleTextChange={props.onOtpChange}
         inputCount={4} // Specify the number of OTP digits
         keyboardType="numeric" // Specify the keyboard type (optional)
-        containerStyle={
-          {
-            justifyContent: 'center',
-          }
-        }
+        containerStyle={{
+          justifyContent: 'center',
+        }}
         textInputStyle={{
           width: 45,
           height: 45,
@@ -35,9 +51,17 @@ const OtpComponent = (props: any) => {
         }}
         tintColor={'#689C36'}
       />
-      <Text className="font-merriweather-regular text-right text-xs text-verify my-1">
-        Resend in 00:50
-      </Text>
+      {resend === 0 ? (
+        <TouchableOpacity activeOpacity={0.7} onPress={props.onPress}>
+          <Text className="font-merriweather-regular text-right text-xs text-primary-green my-1 items-center justify-center">
+            Resend Otp
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <Text className="font-merriweather-regular text-right text-xs text-verify my-1 items-center justify-center">
+          Resend in 00:{resend}
+        </Text>
+      )}
     </View>
   );
 };

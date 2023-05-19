@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
@@ -6,14 +6,15 @@ import {
   ImageComponent,
   Input,
   PrimaryButton,
+  Validation,
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
-import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Height, Ratio, Width, useSetState} from '../../utils/functions.utils';
+import {Failure, Ratio, Success} from '../../utils/functions.utils';
+import {Models} from 'imports/models.imports';
+import {auth} from 'utils/redux.utils';
 
 const ForgotPsd = (props: any) => {
- 
   const {
     control,
     handleSubmit,
@@ -22,22 +23,37 @@ const ForgotPsd = (props: any) => {
     defaultValues: {
       email: '',
     },
+    resolver: zodResolver(Validation.forgotScheme),
   });
-  const handleForgotPsd = (data?: any) => {
-    // alert(JSON.stringify(data));
-    props.navigation.navigate("OtpVerify")
+
+  const handleForgotPsd = async (data?: any) => {
+    try {
+      let res: any = await Models.auth.sendOtp(data);
+      auth(res.data);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'OtpVerify'}],
+      });
+      Success(res.message);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
 
   return (
     <Container>
-      <View className="w-[90%] h-full mx-auto">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="w-[90%] mx-auto "
+        style={{height: '100%'}}>
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => props.navigation.goBack()}
-          className="h-[5%] justify-end">
+          className="pt-4 pb-2">
           <ImageComponent src={Assets.backIcon} height={20} width={22} />
         </TouchableOpacity>
-        <View className="items-center justify-evenly h-[50%]">
+        <View className="items-center space-y-3 py-3">
           <Text className="font-raleway-semi-bold text-secondary-black text-3xl  ">
             Forgot Password
           </Text>
@@ -51,7 +67,7 @@ const ForgotPsd = (props: any) => {
             one-time authorization code.
           </Text>
         </View>
-        <View className="h-[14%] pt-1">
+        <View className="py-3">
           <View>
             <Input
               type="text"
@@ -61,13 +77,13 @@ const ForgotPsd = (props: any) => {
             />
           </View>
         </View>
-        <View className="h-[36%] ">
+        <View className="py-2 ">
           <PrimaryButton
-            onClick={()=>handleSubmit(handleForgotPsd)}
+            onClick={() => handleSubmit(handleForgotPsd)}
             text={'Next'}
           />
         </View>
-      </View>
+      </ScrollView>
     </Container>
   );
 };

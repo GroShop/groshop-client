@@ -15,7 +15,7 @@ const App = () => {
   return (
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Splash" component={Splash} />
+          {/* <Stack.Screen name="Splash" component={Splash} /> */}
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="ForgotPsd" component={ForgotPsd} />

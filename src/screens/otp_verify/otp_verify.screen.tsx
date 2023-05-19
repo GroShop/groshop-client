@@ -4,38 +4,51 @@ import {
   Assets,
   Container,
   ImageComponent,
-  Input,
   InviteModal,
   OtpComponent,
-  PrimaryButton,
 } from '../../utils/imports.utils';
-import {useForm} from 'react-hook-form';
-import SocialMedia from '../../components/socialMedia/social_media';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Height, Ratio, Width, useSetState} from '../../utils/functions.utils';
+import {Failure, Success, useSetState} from '../../utils/functions.utils';
+import {Models} from 'imports/models.imports';
+import {useSelector} from 'react-redux';
 
 const OtpVerify = (props: any) => {
   // ref
+  const auth: any = useSelector((state: any) => state.auth.data);
   const modalRef: any = useRef();
-  // state
+
   const [state, setState] = useSetState({
-    passwordIcon: true,
+    otp: '',
+    resend: 60,
   });
-
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
-  const handleOtpVerify = (data?: any) => {
-    // alert(JSON.stringify(data));
+  const handleOtpVerify = async () => {
+    if (auth.otp_verify) {
+      try {
+        let query: any = {
+          email: auth.email,
+          otp: state.otp,
+        };
+        let res: any = await Models.auth.verifyOtp(query);
+        modalRef.current.openModal();
+        Success(res.message);
+      } catch (error: any) {
+        console.log('error', error);
+        Failure(error.message);
+      }
+    }
   };
-
+  const handleResendOtp = async () => {
+    try {
+      let query: any = {
+        email: auth.email,
+      };
+      await Models.auth.sendOtp(query);
+      setState({resend: 60});
+      Success('Otp Resend Successfully');
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
   return (
     <Container>
       <View className="w-[90%] h-full mx-auto">
@@ -54,21 +67,27 @@ const OtpVerify = (props: any) => {
               4 digit code send to
             </Text>
             <Text className="font-merriweather-bold text-secondary-black text-sm ">
-              +62 (302) **** ****
+              {auth.email}
             </Text>
           </View>
         </View>
         <View className=" w-[70%] ml-auto mr-auto mb-10 ">
-          <OtpComponent />
+          <OtpComponent
+            onOtpChange={(value: any) => {
+              setState({otp: value});
+            }}
+            resendData={state.resend}
+            onPress={handleResendOtp}
+          />
         </View>
         <TouchableOpacity
           className="w-full bg-primary-green px-6 py-4 justify-center items-center rounded-lg "
-          onPress={() => modalRef.current.openModal()}>
+          onPress={handleOtpVerify}>
           <Text className="font-merriweather-bold text-[14px] text-neutral-white">
             Verify
           </Text>
         </TouchableOpacity>
-        <InviteModal ref={modalRef} />
+        <InviteModal ref={modalRef} {...props} />
       </View>
     </Container>
   );

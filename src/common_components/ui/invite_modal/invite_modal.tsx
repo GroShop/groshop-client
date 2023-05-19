@@ -1,13 +1,14 @@
 import React, {forwardRef, useImperativeHandle, useRef} from 'react';
-import { Modal, Text, Pressable, View, TouchableOpacity} from 'react-native';
+import {Modal, Text, Pressable, View, TouchableOpacity} from 'react-native';
 import ImageComponent from '../image/image.component';
 import {Ratio, useSetState} from '../../../utils/functions.utils';
 import Assets from '../../../imports/assets.imports';
+import { useSelector } from 'react-redux';
 
 const InviteModal = forwardRef((props: any, ref) => {
   const modalRef: any = useRef();
   const [state, setState] = useSetState({isModalOpen: false});
-  
+
   useImperativeHandle(ref, () => ({
     openModal() {
       setState({isModalOpen: true});
@@ -45,9 +46,15 @@ const InviteModal = forwardRef((props: any, ref) => {
             Your account has been verified
           </Text>
           <TouchableOpacity
-          activeOpacity={0.7}
+            activeOpacity={0.7}
             className="bg-primary-green py-[10px] px-[24px] rounded-xl mt-6"
-            onPress={() => setState({isModalOpen: false})}>
+            onPress={() => {
+              props.navigation.reset({
+                index: 0,
+                routes: [{name: 'Login'}],
+              }),
+                setState({isModalOpen: false});
+            }}>
             <Text className="font-merriweather-bold text-[14px] text-neutral-white">
               Ready To Shop
             </Text>

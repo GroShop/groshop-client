@@ -29,6 +29,34 @@ const auth = {
     });
     return promise;
   },
+  sendOtp: (data:any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/send_otp';
+      instance()
+        .post(url, data)
+        .then((res:any) => {
+          resolve(res.data);
+        })
+        .catch((error:any) => {
+            reject(error.response.data);
+        });
+    });
+    return promise;
+  },
+  verifyOtp: (data:any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/verify_otp';
+      instance()
+        .post(url, data)
+        .then((res:any) => {
+          resolve(res.data);
+        })
+        .catch((error:any) => {
+            reject(error.response.data);
+        });
+    });
+    return promise;
+  },
   // getUser: (id) => {
   //   let promise = new Promise((resolve, reject) => {
   //     let url = 'user/view/' + id;
