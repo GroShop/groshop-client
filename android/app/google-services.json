@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "669942531839-pmfagj5a29kmkurjboe2kiqq2eqs5o56.apps.googleusercontent.com",
+          "client_id": "669942531839-5uk1ricshksubm5hlm0iqm7l5gdi1rrm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.groshop",
-            "certificate_hash": "13140cf4928ae1a713ac13532fdbd97ed5bd7253"
+            "certificate_hash": "c55ef31d8c1a8adb4f19abf73b5be65e3d1ef3cf"
           }
         },
         {
@@ -37,6 +37,13 @@
             {
               "client_id": "669942531839-daljlkoup7lrc25533rhv29o19vcq5m9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "669942531839-os77ero5mh54ue63jhg4k4otqlmagqnf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.Groshop"
+              }
             }
           ]
         }

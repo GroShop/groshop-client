@@ -98,7 +98,7 @@ const Login = (props: any) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View className="space-y-4  py-5">
+        <View className="space-y-5  py-5">
           <PrimaryButton
             onClick={() => handleSubmit(handleLogin)}
             text={'SignUp'}
@@ -106,10 +106,12 @@ const Login = (props: any) => {
           <Text className="font-merriweather-regular text-secondary-black text-xs  text-center">
             Or Sign In with
           </Text>
-        </View>
-        <View className="pb-5">
+          <View>
+
           <SocialMedia />
+          </View>
         </View>
+   
         <View className="py-3">
           <View className="items-center justify-center flex-row ">
             <Text className="font-merriweather-regular text-text-gray text-xs ">
