@@ -1,5 +1,5 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {View, Text, TouchableOpacity, Platform} from 'react-native';
+import React, {useEffect} from 'react';
 import Assets from '../../imports/assets.imports';
 import {ImageComponent} from '../../utils/imports.utils';
 import {
@@ -7,19 +7,46 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {useSetState} from 'utils/functions.utils';
-import {assets} from '../../../react-native.config';
+import auth from '@react-native-firebase/auth';
 
-GoogleSignin.configure({
-  // what API you want to access on behalf of the user, default is email and profile
-  webClientId:
-    '669942531839-daljlkoup7lrc25533rhv29o19vcq5m9.apps.googleusercontent.com',
-});
 const SocialMedia = () => {
   const [state, setState] = useSetState({
     user: {},
   });
 
-  const signIn = async () => {
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      GoogleSignin.configure({
+        webClientId:
+          '669942531839-os77ero5mh54ue63jhg4k4otqlmagqnf.apps.googleusercontent.com',
+      });
+    } else {
+      GoogleSignin.configure({
+        webClientId:
+          '669942531839-daljlkoup7lrc25533rhv29o19vcq5m9.apps.googleusercontent.com',
+      });
+    }
+  }, []);
+
+  const signInIos = async () => {
+    try {
+      const {idToken} = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const userInfo = auth().signInWithCredential(googleCredential);
+      userInfo
+        .then(userInfo => {
+          console.log('user', userInfo);
+          setState({user: userInfo});
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (error: any) {
+      console.log('err', error);
+    }
+  };
+
+  const signInAndroid = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
@@ -45,11 +72,12 @@ const SocialMedia = () => {
       }
     }
   };
+
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       className=" w-[100%] h-12 bg-btn-white rounded-lg  items-center flex-row  space-x-5"
-      onPress={signIn}>
+      onPress={Platform.OS === 'ios' ? signInIos : signInAndroid}>
       <View className="w-[29%] items-end ">
         <ImageComponent src={Assets.googleIcon} height={24} width={24} />
       </View>
