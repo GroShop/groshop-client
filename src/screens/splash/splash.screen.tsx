@@ -1,13 +1,26 @@
 import {View, Text, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import {Assets, Container} from '../../utils/imports.utils';
+import _ from 'lodash';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = (props: any) => {
   useEffect(() => {
-    setTimeout(() => {
-      props.navigation.navigate('Login');
-    }, 1000);
-  });
+    setTimeout(async () => {
+      let token: any = await AsyncStorage.getItem('token');
+      if (!_.isEmpty(token)) {
+        props.navigation.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        });
+      } else {
+        props.navigation.reset({
+          index: 0,
+          routes: [{name: 'Login'}],
+        });
+      }
+    }, 2000);
+  }, []);
   return (
     <Container>
       <View className="items-center justify-center h-full">

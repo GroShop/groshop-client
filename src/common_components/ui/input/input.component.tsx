@@ -27,15 +27,14 @@ const Input = (props: IInputProps) => {
         rules={props.rules || {}}
         control={props.control}
         render={({field: {onChange, value, onBlur}, fieldState: {error}}) => {
-          console.log('value: ' + error);
           return (
             <>
               <View
                 className={`flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ${
-                  error && 'bg-error'
+                  error && 'border-error border-[1px]'
                 }`}>
                 <TextInput
-                  className={`${props.inputStyle}  h-full ${
+                  className={`${props.inputStyle} text-secondary-black  h-full ${
                     props.iconOnPress || props.icon ? 'w-[80%]' : 'w-full'
                   } rounded-lg`}
                   placeholder={props.placeholder}
@@ -64,7 +63,7 @@ const Input = (props: IInputProps) => {
                 )}
               </View>
               {error && (
-                <Text className="text-error text-sm px-1 mt-1.5">
+                <Text className="text-error text-[12px] px-1 pt-1">
                   {error.message}
                 </Text>
               )}

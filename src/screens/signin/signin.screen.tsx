@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
@@ -6,18 +6,23 @@ import {
   ImageComponent,
   Input,
   PrimaryButton,
+  Validation,
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {z} from 'zod';
-import {Height, Width, useSetState} from '../../utils/functions.utils';
+import {Failure, useSetState} from '../../utils/functions.utils';
+import {Models} from 'imports/models.imports';
+import {Success} from '../../utils/functions.utils';
 
 const SignIn = (props: any) => {
+  // state
   const [state, setState] = useSetState({
     passwordIcon: true,
     confirmPasswordIcon: true,
+    privacyPolicy: false,
   });
+
   const {
     control,
     handleSubmit,
@@ -26,15 +31,34 @@ const SignIn = (props: any) => {
     defaultValues: {
       email: '',
       password: '',
+      confirmPassword: '',
+      username: '',
     },
+    resolver: zodResolver(Validation.signInScheme),
   });
-  const handleSignIn = (data?: any) => {
-    // alert(JSON.stringify(data));
+
+  const handleSignIn = async (data?: any) => {
+    try {
+      delete data.confirm_password;
+      let res: any = await Models.auth.signup(data);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
+      Success(res.message);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
+
   return (
     <Container>
-      <View className="w-[90%] h-full mx-auto">
-        <View className="items-center justify-center h-[12%] pt-3 bg-text-gray">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="w-[90%] mx-auto "
+        style={{height: '100%'}}>
+        <View className="items-center  mb-6 pt-6">
           <Text className="font-raleway-semi-bold text-secondary-black text-3xl  ">
             Sign In
           </Text>
@@ -42,13 +66,13 @@ const SignIn = (props: any) => {
             Fill the details and create your new account
           </Text>
         </View>
-        <View className="h-[40%]   flex-col gap-y-3 ">
+        <View className="space-y-3">
           <View>
             <Input
               type="text"
               placeholder="Full Name"
               control={control}
-              name="name"
+              name="username"
             />
           </View>
           <View>
@@ -66,26 +90,26 @@ const SignIn = (props: any) => {
               control={control}
               name="password"
               securityPassword={state.passwordIcon}
-              iconOnPress={  state.passwordIcon
-                ? Assets.eyeInActive
-                :Assets.eyeActive }
+              iconOnPress={
+                state.passwordIcon ? Assets.eyeInActive : Assets.eyeActive
+              }
               onClick={() => {
                 setState({passwordIcon: !state.passwordIcon});
               }}
             />
           </View>
-
-          <View
-            >
+          <View>
             <Input
               type="text"
-              placeholder="ConFirm Password"
+              placeholder="Confirm Password"
               control={control}
-              name="confirm_password"
+              name="confirmPassword"
               securityPassword={state.confirmPasswordIcon}
-              iconOnPress={  state.confirmPasswordIcon
-                ? Assets.eyeInActive
-                :Assets.eyeActive }
+              iconOnPress={
+                state.confirmPasswordIcon
+                  ? Assets.eyeInActive
+                  : Assets.eyeActive
+              }
               onClick={() => {
                 setState({confirmPasswordIcon: !state.confirmPasswordIcon});
               }}
@@ -93,17 +117,26 @@ const SignIn = (props: any) => {
           </View>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => props.navigation.navigate('SignUp')}>
-            <Text className="font-merriweather-regular text-text-gray text-xs ">
-              Didn’t have an account?
+            onPress={() => setState({privacyPolicy: !state.privacyPolicy})}
+            className="flex-row items-center space-x-1 mt-1">
+            <ImageComponent
+              src={
+                state.privacyPolicy
+                  ? Assets.checkBoxActive
+                  : Assets.checkBoxInActive
+              }
+              height={20}
+              width={20}
+            />
+            <Text className="font-merriweather-regular text-secondary-black text-xs ">
+              I have read and agree to the
             </Text>
-
             <Text className="font-merriweather-regular text-primary-green text-xs ">
-              Sign Up
+              Privacy Policy
             </Text>
           </TouchableOpacity>
         </View>
-        <View className="h-[16%]  items-center justify-around ">
+        <View className="mt-8 space-y-6">
           <PrimaryButton
             onClick={() => handleSubmit(handleSignIn)}
             text={'SignUp'}
@@ -112,22 +145,24 @@ const SignIn = (props: any) => {
             Or Sign In with
           </Text>
         </View>
-        <View className="h-[10%] items-center justify-center">
+        <View className="py-8">
           <SocialMedia />
         </View>
-        <View className="items-center justify-center flex-row h-[6%]">
-          <Text className="font-merriweather-regular text-text-gray text-xs ">
-            Didn’t have an account?
-          </Text>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => props.navigation.navigate('SignUp')}>
-            <Text className="font-merriweather-regular text-primary-green text-xs ">
-              Sign Up
+        <View className="my-3">
+          <View className="items-center justify-center flex-row ">
+            <Text className="font-merriweather-regular text-text-gray text-xs ">
+              Didn’t have an account?
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => props.navigation.navigate('Home')}>
+              <Text className="font-merriweather-regular text-primary-green text-xs ">
+                Sign In
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </Container>
   );
 };

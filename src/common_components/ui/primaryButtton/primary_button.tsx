@@ -11,7 +11,7 @@ interface IPrimaryButtonProps {
 const PrimaryButton = (props: IPrimaryButtonProps) => {
   return (
     <TouchableOpacity
-      onPress={props.onClick}
+      onPress={props.onClick()}
       activeOpacity={0.7}
       className="w-full h-14 ">
       <View
