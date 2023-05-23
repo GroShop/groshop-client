@@ -1,26 +1,21 @@
 // @ts-nocheck
 // import close from "../assets/icons/";
-import logo from "../assets/icons/logo.png";
-import signIn from "../assets/icons/sign_in.png";
-import appleIcon from "../assets/icons/apple.png"
-import facebookIcon from "../assets/icons/facebook.png";
-import googleIcon from "../assets/icons/google.png";
-import checkBoxActive from "../assets/icons/checkbox_active.png";
-import checkBoxInActive from "../assets/icons/checkbox_inactive.png";
-import backIcon from "../assets/icons/back_icon.png";
-import eyeActive from "../assets/icons/eye_active.png";
-import eyeInActive from "../assets/icons/eye_inactive.png";
-import radioActive from "../assets/icons/radio_active.png";
-import radioInActive from "../assets/icons/radio_inactive.png";
-import passwordImg from "../assets/icons/password_img.png";
-import tickIcon from "../assets/icons/tick.png";
+import logo from "../assets/icons/logo";
+import signIn from "../assets/icons/sign_in";
+import checkBoxActive from "../assets/icons/checkbox_active";
+import checkBoxInActive from "../assets/icons/checkbox_inactive";
+import backIcon from "../assets/icons/back_icon";
+import eyeActive from "../assets/icons/eye_active";
+import eyeInActive from "../assets/icons/eye_inactive";
+import radioActive from "../assets/icons/radio_active";
+import radioInActive from "../assets/icons/radio_inactive";
+import passwordImg from "../assets/icons/password_img";
+import tickIcon from "../assets/icons/tick";
+import googleIcon from "../assets/icons/google";
 const Assets = {
   // close,
   logo,
   signIn,
-  appleIcon,
-  facebookIcon,
-  googleIcon,
   checkBoxActive,
   checkBoxInActive,
   backIcon,
@@ -29,7 +24,8 @@ const Assets = {
   radioActive,
   radioInActive,
   passwordImg,
-  tickIcon
+  tickIcon,
+  googleIcon
 };
 
 export default Assets;

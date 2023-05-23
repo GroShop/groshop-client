@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text,TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
@@ -12,8 +12,15 @@ import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
-import {Failure, Height, Ratio, Success, Width, useSetState} from '../../utils/functions.utils';
-import { Models } from 'imports/models.imports';
+import {
+  Failure,
+  Height,
+  Ratio,
+  Success,
+  Width,
+  useSetState,
+} from '../../utils/functions.utils';
+import {Models} from 'imports/models.imports';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props: any) => {
@@ -31,19 +38,19 @@ const Login = (props: any) => {
     },
     resolver: zodResolver(Validation.loginScheme),
   });
-  const handleLogin = async(data?: any) => {
-      try {
-        let res:any= await Models.auth.login(data);
-       await AsyncStorage.setItem("token",res.token);
-        props.navigation.reset({
-          index: 0,
-          routes: [{name: 'Home'}],
-        });
-        Success(res.message)
-      } catch (error:any) {
-        console.log("error",error);
-        Failure(error.message)
-    };
+  const handleLogin = async (data?: any) => {
+    try {
+      let res: any = await Models.auth.login(data);
+      await AsyncStorage.setItem('token', res.token);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      });
+      Success(res.message);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
   return (
     <Container>
@@ -61,6 +68,7 @@ const Login = (props: any) => {
             </Text>
           </View>
           <ImageComponent
+            svg
             src={Assets.signIn}
             height={Ratio(265)}
             width={Ratio(250)}
@@ -107,10 +115,10 @@ const Login = (props: any) => {
             Or Sign In with
           </Text>
           <View>
-          <SocialMedia {...props}/>
+            <SocialMedia {...props} />
           </View>
         </View>
-   
+
         <View className="py-3">
           <View className="items-center justify-center flex-row ">
             <Text className="font-merriweather-regular text-text-gray text-xs ">

@@ -34,7 +34,9 @@ const Input = (props: IInputProps) => {
                   error && 'border-error border-[1px]'
                 }`}>
                 <TextInput
-                  className={`${props.inputStyle} text-secondary-black  h-full ${
+                  className={`${
+                    props.inputStyle
+                  } text-secondary-black  h-full ${
                     props.iconOnPress || props.icon ? 'w-[80%]' : 'w-full'
                   } rounded-lg`}
                   placeholder={props.placeholder}
@@ -49,12 +51,13 @@ const Input = (props: IInputProps) => {
                 />
                 {props.icon && (
                   <View>
-                    <ImageComponent src={props.icon} height={20} width={22} />
+                    <ImageComponent src={props.icon} height={20} width={22} svg/>
                   </View>
                 )}
                 {props.iconOnPress && (
                   <TouchableOpacity activeOpacity={0.7} onPress={props.onClick}>
                     <ImageComponent
+                      svg
                       src={props.iconOnPress}
                       height={20}
                       width={22}

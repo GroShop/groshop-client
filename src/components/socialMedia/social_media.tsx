@@ -102,7 +102,7 @@ const SocialMedia = (props: any) => {
       className=" w-[100%] h-12 bg-btn-white rounded-lg  items-center flex-row  space-x-5"
       onPress={Platform.OS === 'ios' ? signInIos : signInAndroid}>
       <View className="w-[29%] items-end ">
-        <ImageComponent src={Assets.googleIcon} height={24} width={24} />
+        <ImageComponent src={Assets.googleIcon} height={24} width={24} svg />
       </View>
       <View className="w-[69%] ">
         <Text className="font-merriweather-bold text-[14px] text-verify">
