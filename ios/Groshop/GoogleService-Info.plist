@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>669942531839-os77ero5mh54ue63jhg4k4otqlmagqnf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.669942531839-os77ero5mh54ue63jhg4k4otqlmagqnf</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>669942531839-9609ee9b3pdg3bc0447kfe7nk1s69lhl.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD5WEeOZghd0jMVT5wtXY2PXWdr0Uf2QOI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>669942531839</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.Groshop</string>
+	<key>PROJECT_ID</key>
+	<string>groshop-3e421</string>
+	<key>STORAGE_BUCKET</key>
+	<string>groshop-3e421.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:669942531839:ios:8c535685e0e57eb521aeca</string>
+</dict>
+</plist>

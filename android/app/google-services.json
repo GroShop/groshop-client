@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "669942531839",
+    "project_id": "groshop-3e421",
+    "storage_bucket": "groshop-3e421.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669942531839:android:1c4a9632dde6c2b121aeca",
+        "android_client_info": {
+          "package_name": "com.groshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669942531839-pmfagj5a29kmkurjboe2kiqq2eqs5o56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.groshop",
+            "certificate_hash": "13140cf4928ae1a713ac13532fdbd97ed5bd7253"
+          }
+        },
+        {
+          "client_id": "669942531839-daljlkoup7lrc25533rhv29o19vcq5m9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzYpWPMUIY8YesDLJpKlpyZAaOxI8V1SM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669942531839-daljlkoup7lrc25533rhv29o19vcq5m9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
