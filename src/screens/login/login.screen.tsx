@@ -107,8 +107,7 @@ const Login = (props: any) => {
             Or Sign In with
           </Text>
           <View>
-
-          <SocialMedia />
+          <SocialMedia {...props}/>
           </View>
         </View>
    

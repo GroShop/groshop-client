@@ -39,7 +39,7 @@ const SignIn = (props: any) => {
 
   const handleSignIn = async (data?: any) => {
     try {
-      delete data.confirm_password;
+      delete data.confirmPassword;
       let res: any = await Models.auth.signup(data);
       props.navigation.reset({
         index: 0,
@@ -145,7 +145,7 @@ const SignIn = (props: any) => {
             Or Sign In with
           </Text>
           <View>
-          <SocialMedia />
+          <SocialMedia {...props}/>
           </View>
         </View>
         <View className="my-3">

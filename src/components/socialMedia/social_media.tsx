@@ -6,10 +6,13 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {useSetState} from 'utils/functions.utils';
+import {Failure, Success, useSetState} from 'utils/functions.utils';
 import auth from '@react-native-firebase/auth';
+import {Models} from 'imports/models.imports';
+import {socialLogIn} from 'utils/constant.utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SocialMedia = () => {
+const SocialMedia = (props: any) => {
   const [state, setState] = useSetState({
     user: {},
   });
@@ -33,16 +36,27 @@ const SocialMedia = () => {
       const {idToken} = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       const userInfo = auth().signInWithCredential(googleCredential);
-      userInfo
+      let query: any = {
+        social_account_type: socialLogIn.GOOGLE,
+      };
+      await userInfo
         .then(userInfo => {
-          console.log('user', userInfo);
-          setState({user: userInfo});
+          query.email = userInfo.user.email;
+          query.username = userInfo.user.displayName;
         })
         .catch(error => {
           console.log(error);
         });
+      let res: any = await Models.auth.socialSignIn(query);
+      await AsyncStorage.setItem('token', res.token);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      });
+      Success(res.message);
     } catch (error: any) {
       console.log('err', error);
+      Failure(error.message);
     }
   };
 
@@ -51,8 +65,18 @@ const SocialMedia = () => {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo);
-      setState({user: userInfo});
+      let query: any = {
+        social_account_type: socialLogIn.GOOGLE,
+        email: userInfo.user.email,
+        username: userInfo.user.name,
+      };
+      let res: any = await Models.auth.socialSignIn(query);
+      await AsyncStorage.setItem('token', res.token);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      });
+      Success(res.message);
     } catch (error: any) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('SIGN_IN_CANCELLED');
@@ -67,8 +91,7 @@ const SocialMedia = () => {
         // play services not available or outdated
       } else {
         console.log('err', error);
-
-        // some other error happened
+        Failure(error);
       }
     }
   };

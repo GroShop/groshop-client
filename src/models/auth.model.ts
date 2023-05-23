@@ -99,6 +99,20 @@ const auth = {
     });
     return promise;
   },
+  socialSignIn: (data: any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/social_signin';
+      instance()
+        .post(url, data)
+        .then((res: any) => {
+          resolve(res.data);
+        })
+        .catch((error: any) => {
+          reject(error.response.data);
+        });
+    });
+    return promise;
+  },
   // getUser: (id) => {
   //   let promise = new Promise((resolve, reject) => {
   //     let url = 'user/view/' + id;
