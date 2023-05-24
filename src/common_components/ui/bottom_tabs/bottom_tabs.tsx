@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {View, Text, TouchableOpacity, Platform} from 'react-native';
+import {View, TouchableOpacity, Platform} from 'react-native';
 import EmailScreen from 'screens/email/email.screen';
 import HomeScreen from 'screens/home/home.screen';
 import Notification from 'screens/notification/notification.screen';
@@ -52,7 +52,7 @@ const BottomTabs = () => {
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
           width: '100%',
-          paddingHorizontal:5
+          paddingHorizontal: 5,
         },
       }}>
       <Tab.Screen
@@ -77,7 +77,11 @@ const BottomTabs = () => {
             <ImageComponent
               width={focused ? 26 : 30}
               height={focused ? 26 : 30}
-              src={focused ? Assets.notificationActive : Assets.notificationInactive}
+              src={
+                focused
+                  ? Assets.notificationActive
+                  : Assets.notificationInactive
+              }
               svg
             />
           ),

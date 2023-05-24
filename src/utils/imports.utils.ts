@@ -6,6 +6,7 @@ import ImageComponent from '../common_components/ui/image/image.component';
 import OtpComponent from '../components/otp/otp.component';
 import InviteModal from '../common_components/ui/invite_modal/invite_modal';
 import BottomTabs from '../common_components/ui/bottom_tabs/bottom_tabs';
+import SearchInput from '../common_components/ui/search_input/search_input.component';
 import Validation from './validation.utils';
 
 export {
@@ -18,4 +19,5 @@ export {
   InviteModal,
   Validation,
   BottomTabs,
+  SearchInput
 };

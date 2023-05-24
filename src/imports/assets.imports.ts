@@ -21,8 +21,8 @@ import profileActive from "../assets/icons/profile_active";
 import messageInactive from "../assets/icons/message_inactive";
 import messageActive from "../assets/icons/message_active";
 import cartIcon from "../assets/icons/cart_icon";
-// import googleIcon from "../assets/icons/google";
-// import googleIcon from "../assets/icons/google";
+import userIcon from "../assets/icons/user";
+import searchIcon from "../assets/icons/search";
 // import googleIcon from "../assets/icons/google";
 // import googleIcon from "../assets/icons/google";
 const Assets = {
@@ -47,7 +47,9 @@ const Assets = {
   messageActive,
   profileActive,
   profileInactive,
-  cartIcon
+  cartIcon,
+  userIcon,
+  searchIcon
 };
 
 export default Assets;
