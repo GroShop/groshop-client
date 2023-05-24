@@ -12,6 +12,19 @@ import radioInActive from "../assets/icons/radio_inactive";
 import passwordImg from "../assets/icons/password_img";
 import tickIcon from "../assets/icons/tick";
 import googleIcon from "../assets/icons/google";
+import homeInactive from "../assets/icons/home_inactive";
+import homeActive from "../assets/icons/home_active";
+import notificationInactive from "../assets/icons/notification_inactive";
+import notificationActive from "../assets/icons/notification_active";
+import profileInactive from "../assets/icons/profile_inactive";
+import profileActive from "../assets/icons/profile_active";
+import messageInactive from "../assets/icons/message_inactive";
+import messageActive from "../assets/icons/message_active";
+import cartIcon from "../assets/icons/cart_icon";
+// import googleIcon from "../assets/icons/google";
+// import googleIcon from "../assets/icons/google";
+// import googleIcon from "../assets/icons/google";
+// import googleIcon from "../assets/icons/google";
 const Assets = {
   // close,
   logo,
@@ -25,7 +38,16 @@ const Assets = {
   radioInActive,
   passwordImg,
   tickIcon,
-  googleIcon
+  googleIcon,
+  homeInactive,
+  homeActive,
+  notificationActive,
+  notificationInactive,
+  messageInactive,
+  messageActive,
+  profileActive,
+  profileInactive,
+  cartIcon
 };
 
 export default Assets;
