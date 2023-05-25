@@ -51,7 +51,7 @@ const SocialMedia = (props: any) => {
       await AsyncStorage.setItem('token', res.token);
       props.navigation.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{name: 'BottomTabs'}],
       });
       Success(res.message);
     } catch (error: any) {

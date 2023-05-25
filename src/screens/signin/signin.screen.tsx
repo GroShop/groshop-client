@@ -120,7 +120,7 @@ const SignIn = (props: any) => {
             onPress={() => setState({privacyPolicy: !state.privacyPolicy})}
             className="flex-row items-center space-x-1 mt-1">
             <ImageComponent
-            svg
+              svg
               src={
                 state.privacyPolicy
                   ? Assets.checkBoxActive
@@ -146,7 +146,7 @@ const SignIn = (props: any) => {
             Or Sign In with
           </Text>
           <View>
-          <SocialMedia {...props}/>
+            <SocialMedia {...props} />
           </View>
         </View>
         <View className="my-3">

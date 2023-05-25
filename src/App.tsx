@@ -18,13 +18,13 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
 
         {/* <Stack.Screen name="Splash" component={Splash} /> */}
-        <Stack.Screen name="BottomTabs" component={BottomTabs} />
         {/* <Stack.Screen name="Login" component={Login} /> */}
         {/* <Stack.Screen name="SignIn" component={SignIn} /> */}
          {/* <Stack.Screen name="ForgotPsd" component={ForgotPsd} /> */}
         {/* <Stack.Screen name="OtpVerify" component={OtpVerify} /> */}
         {/* <Stack.Screen name="ResetPassword" component={ResetPassword} /> */}
-        {/* <Stack.Screen name="HomeScreen" component={HomeScreen} />  */}
+        <Stack.Screen name="BottomTabs" component={BottomTabs} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

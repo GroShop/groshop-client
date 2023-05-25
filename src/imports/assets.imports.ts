@@ -23,7 +23,7 @@ import messageActive from "../assets/icons/message_active";
 import cartIcon from "../assets/icons/cart_icon";
 import userIcon from "../assets/icons/user";
 import searchIcon from "../assets/icons/search";
-// import googleIcon from "../assets/icons/google";
+import productIcon from "../assets/icons/product";
 // import googleIcon from "../assets/icons/google";
 const Assets = {
   // close,
@@ -49,7 +49,8 @@ const Assets = {
   profileInactive,
   cartIcon,
   userIcon,
-  searchIcon
+  searchIcon,
+  productIcon,
 };
 
 export default Assets;

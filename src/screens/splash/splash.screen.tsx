@@ -6,8 +6,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = (props: any) => {
   useEffect(() => {
+    
     setTimeout(async () => {
-      let token: any = await AsyncStorage.getItem('token');
+      let token: any =''
       if (!_.isEmpty(token)) {
         props.navigation.reset({
           index: 0,
@@ -36,3 +37,4 @@ const Splash = (props: any) => {
 };
 
 export default Splash;
+// await AsyncStorage.getItem('token');
