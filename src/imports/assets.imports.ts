@@ -24,7 +24,7 @@ import cartIcon from "../assets/icons/cart_icon";
 import userIcon from "../assets/icons/user";
 import searchIcon from "../assets/icons/search";
 import productIcon from "../assets/icons/product";
-// import googleIcon from "../assets/icons/google";
+import promotions from "../assets/image/promotions.jpg";
 const Assets = {
   // close,
   logo,
@@ -51,6 +51,7 @@ const Assets = {
   userIcon,
   searchIcon,
   productIcon,
+  promotions,
 };
 
 export default Assets;

@@ -9,7 +9,7 @@ import ForgotPsd from './screens/forgot_password/forgot_password.screen';
 import ResetPassword from './screens/reset_password/reset_password.screen';
 import OtpVerify from './screens/otp_verify/otp_verify.screen';
 import HomeScreen from './screens/home/home.screen';
-import { BottomTabs } from 'utils/imports.utils';
+import { BottomTabs, ImageSlider } from 'utils/imports.utils';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -23,7 +23,8 @@ const App = () => {
          {/* <Stack.Screen name="ForgotPsd" component={ForgotPsd} /> */}
         {/* <Stack.Screen name="OtpVerify" component={OtpVerify} /> */}
         {/* <Stack.Screen name="ResetPassword" component={ResetPassword} /> */}
-        <Stack.Screen name="BottomTabs" component={BottomTabs} />
+        {/* <Stack.Screen name="BottomTabs" component={BottomTabs} /> */}
+        <Stack.Screen name="ImageSlider" component={ImageSlider} />
 
       </Stack.Navigator>
     </NavigationContainer>

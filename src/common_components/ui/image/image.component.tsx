@@ -66,8 +66,8 @@ const ImageComponent = (props: ImageProps) => {
               resizeMode: resize ? resize : "contain",
             },
             // @ts-ignore
-            height && {height},
             width && {width},
+            height && {height},
           ]}
           source={
             isUrl(src)
