@@ -23,9 +23,7 @@ const App = () => {
          {/* <Stack.Screen name="ForgotPsd" component={ForgotPsd} /> */}
         {/* <Stack.Screen name="OtpVerify" component={OtpVerify} /> */}
         {/* <Stack.Screen name="ResetPassword" component={ResetPassword} /> */}
-        {/* <Stack.Screen name="BottomTabs" component={BottomTabs} /> */}
-        <Stack.Screen name="ImageSlider" component={ImageSlider} />
-
+        <Stack.Screen name="BottomTabs" component={BottomTabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );

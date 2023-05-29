@@ -24,7 +24,7 @@ import cartIcon from "../assets/icons/cart_icon";
 import userIcon from "../assets/icons/user";
 import searchIcon from "../assets/icons/search";
 import productIcon from "../assets/icons/product";
-import promotions from "../assets/image/promotions.jpg";
+import promotions from "../assets/icons/promotions";
 const Assets = {
   // close,
   logo,

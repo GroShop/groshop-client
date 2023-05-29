@@ -2,16 +2,16 @@ import {View, Text, FlatList, Animated} from 'react-native';
 import React, {useRef} from 'react';
 import {Assets, Container, ImageComponent} from 'utils/imports.utils';
 import {useSetState, width} from 'utils/functions.utils';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const ImageSlider = (props: any) => {
+const FilterSlider = (props: any) => {
   const slideRef = useRef(new Animated.Value(0)).current;
   const [state, setState] = useSetState({
     dotIndex: 0,
+    active:"All"
   });
   let slides = [
-       Assets.promotions,
-       Assets.promotions,
-       Assets.promotions,
+      "All","Flash Sale","Discount","Best offer","Buy Again","New"
   ];
 
   const handleScroll = (event: any) => {
@@ -35,31 +35,31 @@ const ImageSlider = (props: any) => {
     // setState({dotIndex: viewableItems[0].index});
   }).current;
 
+  const handleSlider=(data:any)=>{
+setState({active: data.item})
+  }
+
   const handleviewabilityConfig = useRef({
     itemVisiblePercentThreshold: 50,
   }).current;
   return (
-    <Container>
-      <View className="h-[180px] w-full">
+      <View className="w-full">
         <FlatList
           data={slides}
-          renderItem={(item: any) => (
-            <View style={{width: width, height: 150 }}>
-                <ImageComponent
-                  src={Assets.promotions}
-                  height={150}
-                />
-            </View>
+          renderItem={(item: any,index:number) => (
+            <TouchableOpacity className={`mr-4  ${item.item===state.active&&'border-b-2 border-primary-green '}pb-1`} onPress={()=>handleSlider(item)} activeOpacity={0.7}>
+               <Text className={` text-[12px] ${item.item===state.active? 'text-primary-green font-merriweather-bold':'text-text-gray font-merriweather-regular' } `}>{item.item}</Text>
+            </TouchableOpacity>
           )}
           horizontal
-          pagingEnabled
+          // pagingEnabled
           snapToAlignment="center"
           showsHorizontalScrollIndicator={false}
-          onViewableItemsChanged={handleViewableItemsChanged}
-          viewabilityConfig={handleviewabilityConfig}
-          onScroll={handleScroll}
+          // onViewableItemsChanged={handleViewableItemsChanged}
+          // viewabilityConfig={handleviewabilityConfig}
+          // onScroll={handleScroll}
         />
-        <View className="flex-row  items-center justify-center">
+        {/* <View className="flex-row  items-center justify-center">
           {slides.map((item: any, index: number) => {
             const inputRange = [
               (index - 1) * width,
@@ -83,10 +83,9 @@ const ImageSlider = (props: any) => {
                 style={[{width: dotWidth, backgroundColor}]}></Animated.View>
             );
           })}
-        </View>
+        </View> */}
       </View>
-    </Container>
   );
 };
 
-export default ImageSlider;
+export default FilterSlider;
