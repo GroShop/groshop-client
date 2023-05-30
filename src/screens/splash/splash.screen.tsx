@@ -8,11 +8,11 @@ const Splash = (props: any) => {
   useEffect(() => {
     
     setTimeout(async () => {
-      let token: any =''
+      let token: any =AsyncStorage.getItem('token')
       if (!_.isEmpty(token)) {
         props.navigation.reset({
           index: 0,
-          routes: [{name: 'Home'}],
+          routes: [{name: 'BottomTabs'}],
         });
       } else {
         props.navigation.reset({
@@ -28,7 +28,7 @@ const Splash = (props: any) => {
         <View className="rounded-full bg-primary-green w-32 h-32 items-center justify-center">
           <ImageComponent src={Assets.logo} svg height={80} width={80}/>
         </View>
-        <Text className="m-5 font-raleway-semi-bold font-bold text-3xl">
+        <Text className="m-5 font-raleway-semi-bold font-bold text-3xl text-secondary-black">
           Groshop
         </Text>
       </View>

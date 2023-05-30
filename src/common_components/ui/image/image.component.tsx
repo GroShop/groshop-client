@@ -36,7 +36,7 @@ const ImageComponent = (props: ImageProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isUrl = (source: any) => {
     if (typeof source === "string") return true;
-    return false;
+    return false;``
   };
 
   return (

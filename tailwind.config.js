@@ -31,7 +31,7 @@ module.exports = {
       'dark-mode': '#191A19',
       'light-green': '#E6F8D5',
       'neutral-white': '#F7FFFA',
-      'transparent-black': '#80000000'
+      'product-gray':'#FCFFFD'
     },
     // width: {
     //   '15%': '15%',

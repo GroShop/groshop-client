@@ -6,7 +6,7 @@ import Notification from 'screens/notification/notification.screen';
 import ShopScreen from 'screens/shop/shop.screen';
 import UserScreen from 'screens/user/user.screen';
 import ImageComponent from '../image/image.component';
-import Assets from 'imports/assets.imports';
+import Assets from '../../../imports/assets.imports';
 
 const Tab = createBottomTabNavigator();
 

@@ -1,7 +1,7 @@
 import {View, Text, FlatList, Animated} from 'react-native';
 import React, {useRef} from 'react';
-import {Assets, Container, ImageComponent} from 'utils/imports.utils';
-import {useSetState, width} from 'utils/functions.utils';
+import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
+import {useSetState, width} from '../../utils/functions.utils';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const FilterSlider = (props: any) => {

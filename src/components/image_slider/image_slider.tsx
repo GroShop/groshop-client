@@ -1,7 +1,7 @@
 import {View, Text, FlatList, Animated} from 'react-native';
 import React, {useRef} from 'react';
-import {Assets, Container, ImageComponent} from 'utils/imports.utils';
-import {useSetState, width} from 'utils/functions.utils';
+import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
+import {useSetState, width} from '../../utils/functions.utils';
 
 const ImageSlider = (props: any) => {
   const slideRef = useRef(new Animated.Value(0)).current;
@@ -39,15 +39,15 @@ const ImageSlider = (props: any) => {
     itemVisiblePercentThreshold: 50,
   }).current;
   return (
-    <Container>
       <View className="h-[180px] w-full">
         <FlatList
           data={slides}
           renderItem={(item: any) => (
-            <View style={{width: width, height: 150 }}>
+            <View style={{width: width-40, height: 150 }}>
                 <ImageComponent
                   src={Assets.promotions}
                   height={150}
+                  svg
                 />
             </View>
           )}
@@ -58,6 +58,7 @@ const ImageSlider = (props: any) => {
           onViewableItemsChanged={handleViewableItemsChanged}
           viewabilityConfig={handleviewabilityConfig}
           onScroll={handleScroll}
+          autom
         />
         <View className="flex-row  items-center justify-center">
           {slides.map((item: any, index: number) => {
@@ -85,7 +86,6 @@ const ImageSlider = (props: any) => {
           })}
         </View>
       </View>
-    </Container>
   );
 };
 

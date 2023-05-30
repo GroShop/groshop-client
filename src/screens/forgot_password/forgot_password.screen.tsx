@@ -11,8 +11,8 @@ import {
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Failure, Ratio, Success} from '../../utils/functions.utils';
-import {Models} from 'imports/models.imports';
-import {auth} from 'utils/redux.utils';
+import {Models} from '../../imports/models.imports';
+import {auth} from '../../utils/redux.utils';
 
 const ForgotPsd = (props: any) => {
   const {

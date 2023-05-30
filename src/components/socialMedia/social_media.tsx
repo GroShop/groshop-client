@@ -6,10 +6,10 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {Failure, Success, useSetState} from 'utils/functions.utils';
+import {Failure, Success, useSetState} from '../../utils/functions.utils';
 import auth from '@react-native-firebase/auth';
 import {Models} from 'imports/models.imports';
-import {socialLogIn} from 'utils/constant.utils';
+import {socialLogIn} from '../../utils/constant.utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SocialMedia = (props: any) => {
@@ -74,7 +74,7 @@ const SocialMedia = (props: any) => {
       await AsyncStorage.setItem('token', res.token);
       props.navigation.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{name: 'BottomTabs'}],
       });
       Success(res.message);
     } catch (error: any) {

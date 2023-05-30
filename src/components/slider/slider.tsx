@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import{ SliderBox} from "react-native-image-slider-box"
-import Assets from 'imports/assets.imports';
+import Assets from '../../imports/assets.imports';
 import FastImage from 'react-native-fast-image';
 const Slider = () => {
   let slides = [

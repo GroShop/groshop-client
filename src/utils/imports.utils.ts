@@ -8,7 +8,8 @@ import InviteModal from '../common_components/ui/invite_modal/invite_modal';
 import BottomTabs from '../common_components/ui/bottom_tabs/bottom_tabs';
 import SearchInput from '../common_components/ui/search_input/search_input.component';
 import ImageSlider from '../components/image_slider/image_slider';
-import FilterSlider from '../components/fliter_slider/fliter_slider'
+import FilterSlider from '../components/fliter_slider/fliter_slider';
+import ProductCard from '../components/product/product_card';
 import Validation from './validation.utils';
 
 export {
@@ -23,5 +24,6 @@ export {
   BottomTabs,
   SearchInput,
   ImageSlider,
-  FilterSlider
+  FilterSlider,
+  ProductCard
 };

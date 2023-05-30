@@ -20,7 +20,7 @@ import {
   Width,
   useSetState,
 } from '../../utils/functions.utils';
-import {Models} from 'imports/models.imports';
+import {Models} from '../../imports/models.imports';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props: any) => {

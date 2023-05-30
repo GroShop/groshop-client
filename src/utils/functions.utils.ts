@@ -19,7 +19,7 @@ export const {width, height} = Dimensions.get("window");
 export const aspectRatio = height / width;
 export const getBaseURL = () => {
   // let baseURL = "http://localhost:8001";
-  let baseURL = "http://192.168.1.42:8001";
+  let baseURL = "http://192.168.1.11:8001";
   if (process.env.REACT_APP_NODE_ENV === "development") {
     baseURL = "http://localhost:8001";
   } else if (process.env.REACT_APP_NODE_ENV === "stage") {
