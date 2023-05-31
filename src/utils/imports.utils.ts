@@ -11,6 +11,7 @@ import ImageSlider from '../components/image_slider/image_slider';
 import FilterSlider from '../components/fliter_slider/fliter_slider';
 import ProductCard from '../components/product/product_card';
 import Validation from './validation.utils';
+import RatingComponent from '../components/rating/rating.component';
 
 export {
   Container,
@@ -25,5 +26,6 @@ export {
   SearchInput,
   ImageSlider,
   FilterSlider,
-  ProductCard
+  ProductCard,
+  RatingComponent,
 };

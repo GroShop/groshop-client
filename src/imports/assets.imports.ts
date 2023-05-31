@@ -26,6 +26,10 @@ import searchIcon from "../assets/icons/search";
 import productIcon from "../assets/icons/product";
 import promotions from "../assets/icons/promotions";
 import buyCart from "../assets/icons/buy_cart";
+import favoriteIcon from "../assets/icons/favorite";
+import plusIcon from "../assets/icons/plus_quantity";
+import minusIcon from "../assets/icons/minus_quantity";
+import cartActive from "../assets/icons/cart_active";
 const Assets = {
   // close,
   logo,
@@ -53,7 +57,11 @@ const Assets = {
   searchIcon,
   productIcon,
   promotions,
-  buyCart
+  buyCart,
+  favoriteIcon,
+  plusIcon,
+  minusIcon,
+  cartActive
 };
 
 export default Assets;

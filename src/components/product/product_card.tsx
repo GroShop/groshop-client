@@ -1,10 +1,10 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Assets, ImageComponent} from '../../utils/imports.utils';
+import {Assets, ImageComponent, RatingComponent} from '../../utils/imports.utils';
 
-const ProductCard = () => {
+const ProductCard = (props:any) => {
   return (
-    <TouchableOpacity className="rounded-lg border-text-gray w-[156px] h-[176px] border-2  relative">
+    <TouchableOpacity className="rounded-lg border-text-gray w-[156px] h-[176px] border-2  relative" onPress={()=>props.navigation.navigate("ProductScreen")}>
       <View className="bg-primary-green w-[37px] rounded-tl-lg  rounded-br-lg h-[24px] items-center justify-center ">
         <Text className="font-merriweather-regular  text-neutral-white  ">
           10%
@@ -34,6 +34,7 @@ const ProductCard = () => {
           <View className="items-center justify-center  bg-primary-green  h-[36px] w-[36px]  rounded-full">
             <ImageComponent src={Assets.buyCart} svg height={24} width={24} />
           </View>
+         
         </View>
       </View>
     </TouchableOpacity>
