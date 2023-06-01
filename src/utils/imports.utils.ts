@@ -12,6 +12,8 @@ import FilterSlider from '../components/fliter_slider/fliter_slider';
 import ProductCard from '../components/product/product_card';
 import Validation from './validation.utils';
 import RatingComponent from '../components/rating/rating.component';
+import CategoriesComponent from '../components/categories/categories.component';
+import FilterSearch from '../components/filter_search/flitter_search';
 
 export {
   Container,
@@ -28,4 +30,6 @@ export {
   FilterSlider,
   ProductCard,
   RatingComponent,
+  CategoriesComponent,
+  FilterSearch
 };

@@ -2,6 +2,7 @@ import {View, Text, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
+  CategoriesComponent,
   Container,
   FilterSlider,
   ImageComponent,
@@ -51,84 +52,13 @@ const HomeScreen = (props:any) => {
             type="text"
             placeholder="Search anything here"
             control={control}
+            onPress={()=>props.navigation.navigate('FilterProduct')}
           />
         </View>
-        <View className="flex-row items-center justify-between py-3 px-[20px] ">
-          <View className="flex-col items-center w-[48px]  space-y-1 ">
-            <View
-              className={`border-[2px]  w-full border-input-bg h-[48px] items-center  justify-center rounded-lg`}>
-              <ImageComponent
-                src={Assets.productIcon}
-                height={42}
-                width={42}
-                svg
-              />
-            </View>
-            <Text className="font-merriweather-regular text-[11px] text-secondary-black">
-              Fruit
-            </Text>
-          </View>
-          <View className="flex-col items-center w-[48px]  space-y-1 ">
-            <View
-              className={`border-[2px]  w-full border-input-bg h-[48px] items-center  justify-center rounded-lg`}>
-              <ImageComponent
-                src={Assets.productIcon}
-                height={42}
-                width={42}
-                svg
-              />
-            </View>
-            <Text className="font-merriweather-regular text-[11px] text-secondary-black">
-              Fruit
-            </Text>
-          </View>
-          <View className="flex-col items-center w-[48px]  space-y-1 ">
-            <View
-              className={`border-[2px]  w-full border-input-bg h-[48px] items-center  justify-center rounded-lg`}>
-              <ImageComponent
-                src={Assets.productIcon}
-                height={42}
-                width={42}
-                svg
-              />
-            </View>
-            <Text className="font-merriweather-regular text-[11px] text-secondary-black">
-              Fruit
-            </Text>
-          </View>
-
-          <View className="flex-col items-center w-[48px]  space-y-1 ">
-            <View
-              className={`border-[2px]  w-full border-input-bg h-[48px] items-center  justify-center rounded-lg`}>
-              <ImageComponent
-                src={Assets.productIcon}
-                height={42}
-                width={42}
-                svg
-              />
-            </View>
-            <Text className="font-merriweather-regular text-[11px] text-secondary-black">
-              Fruit
-            </Text>
-          </View>
-          <View className="flex-col items-center w-[48px]  space-y-1 ">
-            <View
-              className={`border-[2px]  w-full border-input-bg h-[48px] items-center  justify-center rounded-lg`}>
-              <ImageComponent
-                src={Assets.productIcon}
-                height={42}
-                width={42}
-                svg
-              />
-            </View>
-            <Text className="font-merriweather-regular text-[11px] text-secondary-black">
-              Fruit
-            </Text>
-          </View>
-        </View>
+       <View className='px-[20px] py-4'>
+        <CategoriesComponent/>
+       </View>
         <View className="w-full items-center justify-center ">
-          {/* <ImageComponent src={Assets.promotions} height={150} svg /> */}
-          {/* <Slider/> */}
           <ImageSlider height={150} imageData={slides} />
         </View>
         <View className="w-full items-center justify-center p-5 ">

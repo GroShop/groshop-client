@@ -10,6 +10,7 @@ import ResetPassword from './screens/reset_password/reset_password.screen';
 import OtpVerify from './screens/otp_verify/otp_verify.screen';
 import { BottomTabs, ImageSlider } from './utils/imports.utils';
 import ProductScreen from './screens/product_screen/product.screen';
+import FilterProduct from 'screens/filter_product/filter_product';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -25,6 +26,7 @@ const App = () => {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         <Stack.Screen name="ProductScreen" component={ProductScreen} />
+        <Stack.Screen name="FilterProduct" component={FilterProduct} />
       </Stack.Navigator>
     </NavigationContainer>
   );

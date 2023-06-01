@@ -10,18 +10,18 @@ interface ISearchInputProps {
   onPress?: any;
   name: any;
   rules?: any;
-  control: any;
+  control?: any;
   style?: string;
   inputStyle?: string;
   type?: any;
   placeholderColor?: string;
   securityPassword?: boolean;
-  onClick?: any;
+  onClick?: any; 
 }
 
 const SearchInput = (props: ISearchInputProps) => {
   return (
-    <View className={`w-full ${props.style}`}>
+    <TouchableOpacity className={`w-full ${props.style}`} activeOpacity={0.0} onPress={()=>props.onPress()}>
       <Controller
         name={props.name}
         rules={props.rules || {}}
@@ -56,7 +56,7 @@ const SearchInput = (props: ISearchInputProps) => {
           );
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 

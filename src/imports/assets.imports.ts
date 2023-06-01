@@ -1,5 +1,5 @@
 // @ts-nocheck
-// import close from "../assets/icons/";
+import closeIcon from "../assets/icons/close";
 import logo from "../assets/icons/logo";
 import signIn from "../assets/icons/sign_in";
 import checkBoxActive from "../assets/icons/checkbox_active";
@@ -30,8 +30,10 @@ import favoriteIcon from "../assets/icons/favorite";
 import plusIcon from "../assets/icons/plus_quantity";
 import minusIcon from "../assets/icons/minus_quantity";
 import cartActive from "../assets/icons/cart_active";
+import filterIcon from "../assets/icons/filter";
+
 const Assets = {
-  // close,
+  closeIcon,
   logo,
   signIn,
   checkBoxActive,
@@ -61,7 +63,8 @@ const Assets = {
   favoriteIcon,
   plusIcon,
   minusIcon,
-  cartActive
+  cartActive,
+  filterIcon
 };
 
 export default Assets;
