@@ -59,31 +59,7 @@ setState({active: data.item})
           // viewabilityConfig={handleviewabilityConfig}
           // onScroll={handleScroll}
         />
-        {/* <View className="flex-row  items-center justify-center">
-          {slides.map((item: any, index: number) => {
-            const inputRange = [
-              (index - 1) * width,
-              index * width,
-              (index + 1) * width,
-            ];
-            const dotWidth = slideRef.interpolate({
-              inputRange,
-              outputRange: [12, 30, 12],
-              extrapolate: 'clamp',
-            });
-            const backgroundColor = slideRef.interpolate({
-              inputRange,
-              outputRange: ['#ACADAC', '#689C36', '#ACADAC'],
-              extrapolate: 'clamp',
-            });
-            return (
-              <Animated.View
-                className="w-[12px] h-[12px] rounded-full bg-text-gray mx-0.5"
-                key={index.toString()}
-                style={[{width: dotWidth, backgroundColor}]}></Animated.View>
-            );
-          })}
-        </View> */}
+       
       </View>
   );
 };

@@ -4,7 +4,7 @@ import {
   Assets,
   Container,
   ImageComponent,
-  Input,
+  PrimaryInput,
   PrimaryButton,
   Validation,
 } from '../../utils/imports.utils';
@@ -66,7 +66,7 @@ const ForgotPsd = (props: any) => {
         </View>
         <View className="py-3">
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Email"
               control={control}

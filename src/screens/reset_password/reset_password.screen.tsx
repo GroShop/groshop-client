@@ -4,7 +4,7 @@ import {
   Assets,
   Container,
   ImageComponent,
-  Input,
+  PrimaryInput,
   InviteModal,
   PrimaryButton,
   Validation,
@@ -90,7 +90,7 @@ const ResetPassword = (props: any) => {
         </Text>
         <View className="py-5 space-y-4">
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Password"
               control={control}
@@ -105,7 +105,7 @@ const ResetPassword = (props: any) => {
             />
           </View>
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Confirm Password"
               control={control}

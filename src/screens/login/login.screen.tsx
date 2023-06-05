@@ -4,7 +4,7 @@ import {
   Assets,
   Container,
   ImageComponent,
-  Input,
+  PrimaryInput,
   PrimaryButton,
   Validation,
 } from '../../utils/imports.utils';
@@ -76,7 +76,7 @@ const Login = (props: any) => {
         </View>
         <View className="space-y-3">
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Email"
               control={control}
@@ -84,7 +84,7 @@ const Login = (props: any) => {
             />
           </View>
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Password"
               control={control}

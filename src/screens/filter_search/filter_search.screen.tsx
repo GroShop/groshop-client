@@ -4,48 +4,24 @@ import {
   Assets,
   CategoriesComponent,
   Container,
-  FilterSearch,
   ImageComponent,
-  Input,
+  PrimaryInput,
   ProductCard,
 } from 'utils/imports.utils';
 import {useForm} from 'react-hook-form';
 import {ScrollView} from 'react-native-gesture-handler';
 
-const FilterProduct = (props: any) => {
+const FilterSearch = (props: any) => {
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm({
     defaultValues: {
-      filterProduct: '',
+      filterSearch: '',
     },
   });
-  const data = [
-    'Orange',
-    'Guvi',
-    'Apple',
-    'Mango',
-    'Veel',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-  ];
+  const data = ['Orange', 'Guvi', 'Apple', 'Mango', 'Veel'];
   return (
     <Container>
       <View className="p-[20px] ">
@@ -63,7 +39,7 @@ const FilterProduct = (props: any) => {
               />
             </TouchableOpacity>
             <View className="w-[87%] mx-auto">
-              <Input
+              <PrimaryInput
                 name="filter_product"
                 control={control}
                 type="text"
@@ -74,7 +50,7 @@ const FilterProduct = (props: any) => {
           <View className="w-[20%]  items-end">
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => props.navigation.goBack()}
+              onPress={() => props.navigation.navigate('FilterProduct')}
               className="w-[56px] h-[56px] items-center bg-primary-green justify-center rounded-[10px]">
               <ImageComponent
                 src={Assets.filterIcon}
@@ -97,7 +73,29 @@ const FilterProduct = (props: any) => {
               Last Search
             </Text>
 
-            <FilterSearch />
+            <ScrollView className="w-full">
+              {data.map((item: any, index: number) => (
+                <TouchableOpacity
+                  className="flex-row justify-between"
+                  // onPress={() => setState({product: index})}
+                  activeOpacity={0.7}>
+                  <Text className="font-merriweather-regular text-sm text-text-gray">
+                    {item}
+                  </Text>
+                  <TouchableOpacity
+                    className=""
+                    // onPress={() => setState({product: index})}
+                    activeOpacity={0.7}>
+                    <ImageComponent
+                      src={Assets.closeIcon}
+                      height={28}
+                      width={28}
+                      svg
+                    />
+                  </TouchableOpacity>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
           </View>
         </View>
         {/* <View className=" h-[8%]  justify-center">
@@ -125,4 +123,4 @@ const FilterProduct = (props: any) => {
   );
 };
 
-export default FilterProduct;
+export default FilterSearch;

@@ -52,7 +52,7 @@ const HomeScreen = (props:any) => {
             type="text"
             placeholder="Search anything here"
             control={control}
-            onPress={()=>props.navigation.navigate('FilterProduct')}
+            onPress={()=>props.navigation.navigate('FilterSearch')}
           />
         </View>
        <View className='px-[20px] py-4'>

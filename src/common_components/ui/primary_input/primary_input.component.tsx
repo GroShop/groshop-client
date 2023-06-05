@@ -4,7 +4,7 @@ import Assets from '../../../imports/assets.imports';
 import {Controller} from 'react-hook-form';
 import ImageComponent from '../image/image.component';
 
-interface IInputProps {
+interface IPrimaryInputProps {
   icon?: any;
   placeholder?: string;
   iconOnPress?: any;
@@ -18,10 +18,9 @@ interface IInputProps {
   inputWrapperStyle?: string;
   securityPassword?: boolean;
   onClick?: any;
-  keyboardType?:any
 }
 
-const Input = (props: IInputProps) => {
+const PrimaryInput = (props: IPrimaryInputProps) => {
   return (
     <View className={`w-full ${props.style}`}>
       <Controller
@@ -32,13 +31,13 @@ const Input = (props: IInputProps) => {
           return (
             <>
               <View
-                className={`flex-row items-center justify-between rounded-lg ${props.inputWrapperStyle} ${
+                className={`flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ${props.inputWrapperStyle} ${
                   error && 'border-error border-[1px]'
                 }`}>
                 <TextInput
                   className={`${
                     props.inputStyle
-                  } text-secondary-black font-merriweather-regular h-full text-[14px] ${
+                  } text-secondary-black  h-full ${
                     props.iconOnPress || props.icon ? 'w-[80%]' : 'w-full'
                   } rounded-lg`}
                   placeholder={props.placeholder}
@@ -50,7 +49,6 @@ const Input = (props: IInputProps) => {
                   secureTextEntry={props.securityPassword}
                   onChangeText={onChange}
                   value={value}
-                  keyboardType={props.keyboardType}
                 />
                 {props.icon && (
                   <View>
@@ -81,4 +79,4 @@ const Input = (props: IInputProps) => {
   );
 };
 
-export default Input;
+export default PrimaryInput;

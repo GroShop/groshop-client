@@ -1,5 +1,6 @@
 import Container from '../common_components/hoc/container/container_hoc';
 import Assets from '../imports/assets.imports';
+import PrimaryInput from '../common_components/ui/primary_input/primary_input.component';
 import Input from '../common_components/ui/input/input.component';
 import PrimaryButton from '../common_components/ui/primaryButtton/primary_button';
 import ImageComponent from '../common_components/ui/image/image.component';
@@ -18,7 +19,7 @@ import FilterSearch from '../components/filter_search/flitter_search';
 export {
   Container,
   Assets,
-  Input,
+  PrimaryInput,
   PrimaryButton,
   ImageComponent,
   OtpComponent,
@@ -31,5 +32,6 @@ export {
   ProductCard,
   RatingComponent,
   CategoriesComponent,
-  FilterSearch
+  FilterSearch,
+  Input
 };
