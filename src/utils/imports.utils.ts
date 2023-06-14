@@ -15,6 +15,8 @@ import Validation from './validation.utils';
 import RatingComponent from '../components/rating/rating.component';
 import CategoriesComponent from '../components/categories/categories.component';
 import FilterSearch from '../components/filter_search/flitter_search';
+import AddressComponent from '../components/address/address.component';
+import CheckoutCart from '../components/checkout_cart/checkout_cart.component';
 
 export {
   Container,
@@ -33,5 +35,7 @@ export {
   RatingComponent,
   CategoriesComponent,
   FilterSearch,
-  Input
+  Input,
+  AddressComponent,
+  CheckoutCart
 };

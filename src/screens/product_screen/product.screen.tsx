@@ -122,8 +122,6 @@ const ProductScreen = (props: any) => {
               />
               <PrimaryButton
                 btnStyle="bg-primary-green w-[156px]"
-                iconHeight={18}
-                iconWidth={18}
                 text={'Buy Now'}
               />
             </View>

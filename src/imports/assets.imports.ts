@@ -31,6 +31,12 @@ import plusIcon from "../assets/icons/plus_quantity";
 import minusIcon from "../assets/icons/minus_quantity";
 import cartActive from "../assets/icons/cart_active";
 import filterIcon from "../assets/icons/filter";
+import shopCart from "../assets/icons/shop_cart";
+import trashIcon from "../assets/icons/trash";
+import voucherIcon from "../assets/icons/voucher";
+import arrowRight from "../assets/icons/arrow_right";
+import homeOutline from "../assets/icons/home_outline";
+
 
 const Assets = {
   closeIcon,
@@ -64,7 +70,12 @@ const Assets = {
   plusIcon,
   minusIcon,
   cartActive,
-  filterIcon
+  filterIcon,
+  shopCart,
+  trashIcon,
+  voucherIcon,
+  arrowRight,
+  homeOutline
 };
 
 export default Assets;

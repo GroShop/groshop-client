@@ -1,16 +1,16 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View, TouchableOpacity, Platform} from 'react-native';
-import EmailScreen from 'screens/email/email.screen';
-import HomeScreen from 'screens/home/home.screen';
+import EmailScreen from '../../../screens/email/email.screen';
+import HomeScreen from '../../../screens/home/home.screen';
 import Notification from 'screens/notification/notification.screen';
-import ShopScreen from 'screens/shop/shop.screen';
-import UserScreen from 'screens/user/user.screen';
+import UserScreen from '../../../screens/user/user.screen';
 import ImageComponent from '../image/image.component';
 import Assets from '../../../imports/assets.imports';
+import CartScreen from '../../../screens/cart/cart.screen';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabs = () => {
+const BottomTabs = (props:any) => {
   const CustomBarButton = (props: any) => (
     <TouchableOpacity
       activeOpacity={0.6}
@@ -88,8 +88,15 @@ const BottomTabs = () => {
         }}
       />
       <Tab.Screen
-        name="ShopScreen"
-        component={ShopScreen}
+        name="CartScreen"
+        component={CartScreen}
+        listeners={{
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            props.navigation.navigate("CartScreen")
+          },
+        }}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <ImageComponent width={30} height={30} src={Assets.cartIcon} svg />
