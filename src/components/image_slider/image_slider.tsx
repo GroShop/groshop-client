@@ -1,87 +1,88 @@
 import {View, Text, FlatList, Animated} from 'react-native';
-import React, {useRef} from 'react';
-import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
-import {useSetState, width} from '../../utils/functions.utils';
+import React, {useEffect, useMemo, useRef} from 'react';
+import Assets from '../../imports/assets.imports';
+import {ImageComponent} from '../../utils/imports.utils';
+import {height, useSetState, width} from 'utils/functions.utils';
+import {ExpandingDot} from 'react-native-animated-pagination-dots';
 
-const ImageSlider = (props: any) => {
-  const slideRef = useRef(new Animated.Value(0)).current;
+interface IImageslider{
+  data?:any
+}
+
+const ItemSliderComponent = (props:IImageslider) => {
+  // ref
+  const flatListRef: any = useRef(null);
+ 
+console.log("pro",props.data)
+  // state
   const [state, setState] = useSetState({
-    dotIndex: 0,
+    currentIndex: '',
   });
 
-  const handleScroll = (event: any) => {
-    Animated.event(
-      [
-        {
-          nativeEvent: {
-            contentOffset: {
-              x: slideRef,
-            },
-          },
-        },
-      ],
-      {
-        useNativeDriver: false,
-      },
-    )(event);
+  const renderItem = (data: any) => {
+    return (
+      <View className="justify-center items-center">
+        <ImageComponent
+          resize="contain"
+          width={width * 0.9}
+          height={'90%'}
+          src={data.item}
+        />
+      </View>
+    );
+  };
+  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const Separator = () => {
+    return <View className="ml-8"></View>;
   };
 
-  const handleViewableItemsChanged = useRef(({viewableItems}: any) => {
-    // setState({dotIndex: viewableItems[0].index});
-  }).current;
-
-  const handleviewabilityConfig = useRef({
-    itemVisiblePercentThreshold: 50,
-  }).current;
   return (
-    <View className="w-full">
+  props.data? 
+     <View className="w-full h-full">
       <FlatList
-        data={props.imageData}
-        renderItem={(item: any) => (
-          <View style={{width: width, alignItems: 'center'}}>
-            <ImageComponent
-              src={item.item}
-              height={props.height}
-              width={props.width}
-              svg
-            />
-          </View>
-        )}
+        ref={flatListRef}
+        style={{width: '100%'}}
         horizontal
-        pagingEnabled
-        snapToAlignment="center"
+        contentContainerStyle={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: 20,
+        }}
         showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={handleViewableItemsChanged}
-        viewabilityConfig={handleviewabilityConfig}
-        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        decelerationRate={'normal'}
+        data={props.data}
+        ItemSeparatorComponent={Separator}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          {
+            useNativeDriver: false,
+          },
+        )}
+        renderItem={renderItem}
       />
-      <View className="flex-row pt-2 items-center justify-center">
-        {props.imageData.map((item: any, index: number) => {
-          const inputRange = [
-            (index - 1) * width,
-            index * width,
-            (index + 1) * width,
-          ];
-          const dotWidth = slideRef.interpolate({
-            inputRange,
-            outputRange: [12, 30, 12],
-            extrapolate: 'clamp',
-          });
-          const backgroundColor = slideRef.interpolate({
-            inputRange,
-            outputRange: ['#ACADAC', '#689C36', '#ACADAC'],
-            extrapolate: 'clamp',
-          });
-          return (
-            <Animated.View
-              className="w-[11px] h-[11px] rounded-full bg-text-gray mx-0.5"
-              key={index.toString()}
-              style={[{width: dotWidth, backgroundColor}]}></Animated.View>
-          );
-        })}
+      <View>
+        <ExpandingDot
+          data={props.data}
+          expandingDotWidth={15}
+          scrollX={scrollX}
+          inActiveDotOpacity={0.6}
+          activeDotColor="#689C36"
+          dotStyle={{
+            width: 6,
+            height: 6,
+            backgroundColor: '#ACADAC',
+            borderRadius: 5,
+            marginHorizontal: 5,
+          }}
+          containerStyle={{
+            bottom: 20,
+          }}
+        />
       </View>
-    </View>
+    </View>:
+    <></>
   );
 };
 
-export default ImageSlider;
+export default ItemSliderComponent;

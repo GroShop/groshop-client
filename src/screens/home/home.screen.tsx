@@ -1,5 +1,5 @@
 import {View, Text, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Assets,
   CategoriesComponent,
@@ -11,8 +11,14 @@ import {
   SearchInput,
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
+import {Models} from 'imports/models.imports';
+import {Failure, useSetState} from 'utils/functions.utils';
 
-const HomeScreen = (props:any) => {
+const HomeScreen = (props: any) => {
+  const [state, setState] = useSetState({
+    allProduct: [],
+  });
+
   const {
     control,
     handleSubmit,
@@ -23,18 +29,27 @@ const HomeScreen = (props:any) => {
     },
   });
 
+  let slides = [Assets.productIcon, Assets.productIcon, Assets.productIcon];
+  const getManyProduct = async () => {
+    try {
+      let res: any = await Models.product.getManyProduct({});
+      console.log(typeof res.data)
+      setState({allProduct: res.data.docs});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+  useEffect(() => {
+    getManyProduct();
+  }, []);
 
-    let slides = [
-       Assets.promotions,
-       Assets.promotions,
-       Assets.promotions,
-  ];
   return (
     <Container>
       <ScrollView
         showsVerticalScrollIndicator={false}
         className="w-full "
-        style={{height: '100%' }}>
+        style={{height: '100%'}}>
         <View className="items-center flex-row justify-between py-4 px-[20px] ">
           <View>
             <Text className="font-raleway-semi-bold text-2xl text-secondary-black ">
@@ -52,21 +67,20 @@ const HomeScreen = (props:any) => {
             type="text"
             placeholder="Search anything here"
             control={control}
-            onPress={()=>props.navigation.navigate('FilterSearch')}
+            onPress={() => props.navigation.navigate('FilterSearch')}
           />
         </View>
-       <View className='px-[20px] py-4'>
-        <CategoriesComponent/>
-       </View>
-        <View className="w-full items-center justify-center ">
-          <ImageSlider height={150} imageData={slides} />
+        <View className="px-[20px] py-4">
+          <CategoriesComponent />
+        </View>
+        <View className="h-[160px]">
+          <ImageSlider data={slides} />
         </View>
         <View className="w-full items-center justify-center p-5 ">
           <FilterSlider />
         </View>
-        <View className="w-full flex-row justify-between px-[20px]">
-          <ProductCard {...props}/>
-          <ProductCard />
+        <View className="w-full flex-row justify-between flex-wrap px-5 ">
+          <ProductCard {...props}  data={state.allProduct}/>
         </View>
       </ScrollView>
     </Container>
