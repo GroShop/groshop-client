@@ -64,7 +64,7 @@ const ProductScreen = (props: any) => {
                 activeOpacity={0.7}
                 onPress={() => props.navigation.goBack()}>
                 <ImageComponent
-                  src={Assets.favoriteIcon}
+                  src={Assets.favoriteIconInactive}
                   svg
                   height={24}
                   width={24}

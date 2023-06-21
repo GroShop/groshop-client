@@ -34,10 +34,6 @@ module.exports = {
       'product-gray': '#FCFFFD',
       success: '#E6F8D5',
     },
-    // width: {
-    //   '15%': '15%',
-    //   '90%': '90%',
-    // },
     extend: {},
   },
   plugins: [],

@@ -14,6 +14,7 @@ import FilterSearch from './screens/filter_search/filter_search.screen';
 import FilterProduct from './screens/filter_product/filter_product.screen';
 import CartScreen from './screens/cart/cart.screen';
 import CheckoutScreen from './screens/checkout/checkout.screen';
+import WhisList from 'screens/whislist/whislist.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -32,9 +33,10 @@ const App = () => {
         <Stack.Screen name="FilterSearch" component={FilterSearch} />
         <Stack.Screen name="FilterProduct" component={FilterProduct} />
         <Stack.Screen name="CartScreen" component={CartScreen} />
-        <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+        <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />  
+        <Stack.Screen name="WhisList" component={WhisList} />
 
-      </Stack.Navigator>
+      </Stack.Navigator>  
     </NavigationContainer>
   );
 };

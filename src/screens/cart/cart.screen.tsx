@@ -377,10 +377,7 @@ const CartScreen = (props: any) => {
 export default CartScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#f4f4f4',
-    flex: 1,
-  },
+
   backTextWhite: {
     color: '#FFF',
   },
@@ -423,10 +420,10 @@ const styles = StyleSheet.create({
     width: 75,
     paddingRight: 17,
   },
-  backRightBtnLeft: {
-    backgroundColor: '#1f65ff',
-    right: 75,
-  },
+  // backRightBtnLeft: {
+  //   backgroundColor: '#1f65ff',
+  //   right: 75,
+  // },
   backRightBtnRight: {
     backgroundColor: '#DF2E2E',
     right: 0,
@@ -438,14 +435,14 @@ const styles = StyleSheet.create({
     width: 25,
     marginRight: 7,
   },
-  title: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#666',
-  },
-  details: {
-    fontSize: 12,
-    color: '#999',
-  },
+  // title: {
+  //   fontSize: 14,
+  //   fontWeight: 'bold',
+  //   marginBottom: 5,
+  //   color: '#666',
+  // },
+  // details: {
+  //   fontSize: 12,
+  //   color: '#999',
+  // },
 });
