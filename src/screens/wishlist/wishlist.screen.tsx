@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
 import {ScrollView} from 'react-native-gesture-handler';
 
-const WhishList = (props: any) => {
+const WishList = (props: any) => {
   return (
     <Container>
       <View className="items-center flex-row justify-center m-5">
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 });
-export default WhishList;
+export default WishList;
