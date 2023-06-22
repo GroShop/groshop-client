@@ -21,8 +21,8 @@ interface ISearchInputProps {
 
 const SearchInput = (props: ISearchInputProps) => {
   return (
-    <TouchableOpacity className={`w-full ${props.style}`} activeOpacity={0.0} onPress={()=>props.onPress()}>
-      <Controller
+    <TouchableOpacity className={`w-full ${props.style}`} activeOpacity={0.7} onPress={()=>props.onPress()}>
+      {/* <Controller
         name={props.name}
         rules={props.rules || {}}
         control={props.control}
@@ -55,7 +55,19 @@ const SearchInput = (props: ISearchInputProps) => {
             </>
           );
         }}
-      />
+      /> */}
+              <View
+                className={`flex-row items-center  px-2.5 space-x-2 bg-input-bg h-14 rounded-lg `}>
+                <View className='w-[8%]'>
+                  <ImageComponent
+                    src={Assets.searchIcon}
+                    height={24}
+                    width={24}
+                    svg
+                  />
+                </View>
+               <Text className='text-text-gray'>{props.placeholder}</Text>
+              </View>
     </TouchableOpacity>
   );
 };

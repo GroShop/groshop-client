@@ -7,12 +7,14 @@ import { StyledComponent } from 'nativewind';
 interface IProductCard{
   data?:any;
   navigation:any;
+  type?:string;
+  onPress?:any;
 }
 
 const ProductCard = (props:IProductCard) => {
 return(
 props.data&&props.data.map((item:any,index:number)=>(
-    <TouchableOpacity activeOpacity={0.2} className="rounded-lg  w-[156px] h-[176px]  shadow-md  relative my-2 bg-product-gray" style={Platform.OS==="android"?css.shadow:null} key={index} onPress={()=>props.navigation.navigate(`ProductScreen`,{product_id:item._id})}>
+    <TouchableOpacity activeOpacity={0.2} className="rounded-lg  w-[156px] h-[176px]  shadow-md  relative my-2 bg-product-gray" style={Platform.OS==="android"?css.shadow:null} key={index} onPress={()=>{props.type==="filterSearch"? props.onPress(item._id,item.name):props.navigation.navigate(`ProductScreen`,{product_id:item._id})}}>
       <View className="bg-primary-green w-[37px] rounded-tl-lg  rounded-br-lg h-[24px] items-center justify-center ">
         <Text className="font-merriweather-regular  text-neutral-white  ">
         {item.discount}%
@@ -39,7 +41,7 @@ props.data&&props.data.map((item:any,index:number)=>(
               </Text>
             </View>
           </View>
-          <TouchableOpacity  activeOpacity={0.4} className="items-center justify-center  bg-primary-green  h-[36px] w-[36px]  rounded-full" onPress={()=>props.navigation.navigate(`ProductScreen`,{product_id:item._id})}>
+          <TouchableOpacity  activeOpacity={0.4} className="items-center justify-center  bg-primary-green  h-[36px] w-[36px]  rounded-full" onPress={()=>{props.type==="filterSearch"? props.onPress(item._id,item.name):props.navigation.navigate(`ProductScreen`,{product_id:item._id})}}>
             <ImageComponent src={Assets.buyCart} svg height={24} width={24} />
           </TouchableOpacity>
         </View>

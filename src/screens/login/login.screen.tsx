@@ -22,6 +22,7 @@ import {
 } from '../../utils/functions.utils';
 import {Models} from '../../imports/models.imports';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth } from 'utils/redux.utils';
 
 const Login = (props: any) => {
   const [state, setState] = useSetState({

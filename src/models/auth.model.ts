@@ -73,7 +73,7 @@ const auth = {
   },
   getUser: (data: any) => {
     let promise = new Promise((resolve, reject) => {
-      let url = 'auth/get_user';
+      let url = 'auth//view_user';
       instance()
         .post(url, data)
         .then((res: any) => {

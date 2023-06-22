@@ -19,6 +19,7 @@ interface IInputProps {
   securityPassword?: boolean;
   onClick?: any;
   keyboardType?:any
+  currency?: string;
 }
 
 const Input = (props: IInputProps) => {
@@ -35,6 +36,11 @@ const Input = (props: IInputProps) => {
                 className={`flex-row items-center justify-between rounded-lg ${props.inputWrapperStyle} ${
                   error && 'border-error border-[1px]'
                 }`}>
+                  {props.currency && (
+                  <View>
+                    <Text className='text-secondary-black font-merriweather-regular  text-[14px]'>{props.currency} </Text>
+                  </View>
+                )}
                 <TextInput
                   className={`${
                     props.inputStyle

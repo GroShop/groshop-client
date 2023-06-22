@@ -1,5 +1,5 @@
 import store from '../store/store';
-import {USER} from './types.utils';
+import {FILTERPRODUCT, USER} from './types.utils';
 
 export const auth = (payload: any) => {
   store.dispatch({
@@ -7,3 +7,10 @@ export const auth = (payload: any) => {
     payload: payload,
   });
 };
+export const filterProduct = (payload: any) => {
+  store.dispatch({
+    type: FILTERPRODUCT,
+    payload: payload,
+  });
+};
+

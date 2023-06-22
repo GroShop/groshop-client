@@ -10,39 +10,46 @@ import {
   ProductCard,
   SearchInput,
 } from '../../utils/imports.utils';
-import {useForm} from 'react-hook-form';
 import {Models} from 'imports/models.imports';
 import {Failure, useSetState} from 'utils/functions.utils';
+import { auth } from 'utils/redux.utils';
+import { useSelector } from 'react-redux';
 
 const HomeScreen = (props: any) => {
   const [state, setState] = useSetState({
     allProduct: [],
   });
 
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm({
-    defaultValues: {
-      filterProduct: '',
-    },
-  });
-
   let slides = [Assets.productIcon, Assets.productIcon, Assets.productIcon];
   const getManyProduct = async () => {
     try {
       let res: any = await Models.product.getManyProduct({});
-      console.log(typeof res.data)
+      console.log(typeof res.data);
       setState({allProduct: res.data.docs});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
     }
   };
+
+  const getUser = async () => {
+    try {
+      let res: any = await Models.auth.getUser({});
+     auth(res.data)
+    //  console.log("dtaa",res.data)
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+
+
+
   useEffect(() => {
     getManyProduct();
+    getUser()
   }, []);
+  console.log("authorization",auth)
 
   return (
     <Container>
@@ -64,9 +71,7 @@ const HomeScreen = (props: any) => {
         <View className="py-2 px-[20px]">
           <SearchInput
             name="filterProduct"
-            type="text"
             placeholder="Search anything here"
-            control={control}
             onPress={() => props.navigation.navigate('FilterSearch')}
           />
         </View>
@@ -80,7 +85,7 @@ const HomeScreen = (props: any) => {
           <FilterSlider />
         </View>
         <View className="w-full flex-row justify-between flex-wrap px-5 ">
-          <ProductCard {...props}  data={state.allProduct}/>
+          <ProductCard {...props} data={state.allProduct} />
         </View>
       </ScrollView>
     </Container>

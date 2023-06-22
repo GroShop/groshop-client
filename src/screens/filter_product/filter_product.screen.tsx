@@ -1,7 +1,8 @@
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import React, {useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import {
   Assets,
+  CategoriesComponent,
   Container,
   ImageComponent,
   Input,
@@ -10,18 +11,13 @@ import {
   Validation,
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {
-  Failure,
-  Ratio,
-  Success,
-  useSetState,
-} from '../../utils/functions.utils';
-import {Models} from '../../imports/models.imports';
-import {auth} from '../../utils/redux.utils';
+import {Failure, useSetState} from '../../utils/functions.utils';
 import {useSelector} from 'react-redux';
 import {FlatList} from 'react-native';
 import Slider from 'react-native-slider';
+import _ from 'lodash';
+import {Models} from 'imports/models.imports';
+import {filterProduct} from 'utils/redux.utils';
 
 const FilterProduct = (props: any) => {
   // ref
@@ -32,25 +28,25 @@ const FilterProduct = (props: any) => {
 
   // state
   const [state, setState] = useSetState({
-    passwordIcon: true,
-    confirmPasswordIcon: true,
-    privacyPolicy: false,
-    value: 0,
+    categories: '',
+    tag: '',
+    rating: {},
+    max_price: 200,
   });
 
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm({
-    defaultValues: {
-      password: '',
-      confirmPassword: '',
-    },
-    resolver: zodResolver(Validation.resetScheme),
-  });
+  // const {
+  //   control,
+  //   setValue,
+  //   watch,
+  //   formState: {errors},
+  // } = useForm({
+  //   defaultValues: {
+  //     min_price: '1',
+  //     max_price: '200',
+  //   },
+  // });
 
-  let slides = [
+  let tags = [
     'All',
     'Flash Sale',
     'Discount',
@@ -58,12 +54,57 @@ const FilterProduct = (props: any) => {
     'Buy Again',
     'New',
   ];
-  const handleSlider = (data: any) => {
-    setState({active: data.item});
+
+  let ratings = [
+    {name: '2 or higher', min_rating: 20, max_rating: 40},
+    {name: '4 or higher', min_rating: 60, max_rating: 80},
+    {name: '3 or higher', min_rating: 40, max_rating: 60},
+    {name: '5 star only', min_rating: 80, max_rating: 100},
+  ];
+
+  const getManyProduct = async () => {
+    try {
+      let query: any = {
+        min_price: 1,
+        max_price: state.max_price,
+      };
+      if (!_.isEmpty(state.rating)) {
+        query.min_rating = state.rating.min_rating;
+        query.max_rating = state.rating.max_rating;
+      }
+      if (!_.isEmpty(state.categories)) {
+        query.categories = state.categories;
+      }
+      if (!_.isEmpty(state.tag)) {
+        query.tag = state.tag;
+      }
+      let res: any = await Models.product.getManyProduct(query);
+      filterProduct(res.data);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
+
+  const handleSlider = (data: any, check: string) => {
+    if (check === 'rating') {
+      if (data.name === state.rating.name) {
+        setState({rating: ''});
+      } else {
+        setState({rating: data});
+      }
+    } else {
+      if (data.item === state.tag) {
+        setState({tag: ''});
+      } else {
+        setState({tag: data.item});
+      }
+    }
+  };
+
   return (
     <Container>
-      <ScrollView
+      <View
         showsVerticalScrollIndicator={false}
         className="w-[90%] mx-auto "
         style={{height: '100%'}}>
@@ -76,33 +117,44 @@ const FilterProduct = (props: any) => {
           </TouchableOpacity>
           <View className="items-center w-[90%] ">
             <Text className="font-raleway-semi-bold text-secondary-black text-[20px]  mr-[10px]">
-              Reset Password
+              Filter
             </Text>
           </View>
         </View>
         <View>
-          <Text className="font-raleway-semi-bold text-xl text-secondary-black py-3">
+          <Text className="font-raleway-semi-bold text-xl text-secondary-black pb-3">
             Categories
+          </Text>
+          <View className="py-1 pb-2">
+            <CategoriesComponent
+              onPress={(value: any) => setState({categories: value})}
+            />
+          </View>
+        </View>
+        <View>
+          <Text className="font-raleway-semi-bold text-xl text-secondary-black pb-3">
+            Trending
           </Text>
           <View className="py-1">
             <FlatList
-              data={slides}
-              renderItem={(item: any, index: number) => (
+              data={tags}
+              renderItem={(data: any, index: number) => (
                 <TouchableOpacity
                   className={`mr-4  ${
-                    item.item === state.active
+                    data.item === state.tag
                       ? ' border-primary-green bg-primary-green'
                       : 'border-text-gray'
                   } rounded-lg px-4 py-[6px] border-2  `}
-                  onPress={() => handleSlider(item)}
-                  activeOpacity={0.7}>
+                  onPress={() => handleSlider(data, 'tag')}
+                  activeOpacity={0.7}
+                  key={index}>
                   <Text
                     className={` text-[12px] ${
-                      item.item === state.active
+                      data.item === state.tag
                         ? 'text-neutral-white font-merriweather-bold'
                         : 'text-text-gray font-merriweather-regular'
                     } `}>
-                    {item.item}
+                    {data.item}
                   </Text>
                 </TouchableOpacity>
               )}
@@ -121,57 +173,103 @@ const FilterProduct = (props: any) => {
             Price
           </Text>
           <View className="py-1 flex-row items-center justify-between">
-            <View className="w-[120px] ">
-              <Input
+            <View className="w-[120px] border-text-gray border-2  items-center justify-center py-[7px] rounded-lg">
+              {/* <Input
                 name="min_price"
                 control={control}
-                inputWrapperStyle="bg-light-mode border-2 h-[40px] border-text-gray px-5"
+                inputWrapperStyle="bg-light-mode border-2 h-[40px] border-text-gray px-2"
                 keyboardType={'numeric'}
-              />
+                currency="₹"
+              /> */}
+              <Text
+                className={` text-base font-merriweather-bold text-secondary-black items-center
+                      mr-2
+                     `}>
+                ₹ 1
+              </Text>
             </View>
             <View className=" ">
               <Text className="font-merriweather-regular text-secondary-black text-[14px] ">
                 to
               </Text>
             </View>
-            <View className="w-[120px] ">
-              <Input
+            <View className="w-[120px] border-text-gray border-2  items-center justify-center py-[7px] rounded-lg ">
+              {/* <Input
                 name="max_price"
                 control={control}
                 inputWrapperStyle="bg-light-mode border-2 h-[40px] border-text-gray px-2"
                 keyboardType={'numeric'}
-              />
+                currency="₹"
+              /> */}
+              <Text
+                className={` text-base font-merriweather-bold text-secondary-black items-center
+                      mr-2
+                     `}>
+                ₹ {state.max_price}
+              </Text>
             </View>
           </View>
-        <Slider
-          minimumTrackTintColor="#689C36"
-          thumbStyle={{
-            width: 20,
-            height: 20,
-            borderRadius: 60 / 2,
-            backgroundColor: '#689C36',
-            borderColor: '#D7F4BB',
-            borderWidth: 3,
-          }}
-          value={state.value}
-          onValueChange={(value: any) => {
-            setState({value});
-          }}
-        />
+          <Slider
+            minimumValue={1}
+            maximumValue={200}
+            minimumTrackTintColor="#689C36"
+            thumbStyle={{
+              width: 20,
+              height: 20,
+              borderRadius: 60 / 2,
+              backgroundColor: '#689C36',
+              borderColor: '#D7F4BB',
+              borderWidth: 3,
+            }}
+            value={state.max_price}
+            onValueChange={(value: any) => {
+              setState({max_price: Math.round(value)});
+            }}
+          />
         </View>
         <View>
           <Text className="font-raleway-semi-bold text-xl text-secondary-black py-3">
-          Rating
+            Rating
           </Text>
+          <View className=" flex-row flex-wrap ">
+            {ratings.map((item, index: number) => (
+              <TouchableOpacity
+                className={` mr-4 mb-4 ${
+                  item.name === state.rating.name
+                    ? ' border-primary-green bg-primary-green'
+                    : 'border-text-gray'
+                } rounded-lg px-4 py-[6px] border-2  flex-row items-center space-x-2 w-[130px]`}
+                onPress={() => handleSlider(item, 'rating')}
+                activeOpacity={0.7}
+                key={index}>
+                <ImageComponent src={Assets.star} height={24} width={24} svg />
+                <Text
+                  className={` text-[12px] ${
+                    item.name === state.rating.name
+                      ? 'text-neutral-white font-merriweather-bold'
+                      : 'text-text-gray font-merriweather-regular'
+                  } `}>
+                  {item.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
-        <View className="pt-9">
-          <PrimaryButton
-            // onClick={() => handleSubmit(handleFilterProduct)}
-            text={'Reset Password'}
-          />
-          <InviteModal ref={resetRef} type={'FilterProduct'} />
         </View>
-      </ScrollView>
+        <View className="flex-row items-end justify-between flex-1 mb-7">
+          <PrimaryButton
+            btnStyle="bg-light-mode border-[1px] border-primary-green  w-[156px] h-[45px]"
+            btnText="text-primary-green "
+            iconHeight={18}
+            iconWidth={18}
+            text={'Cancel'}
+          />
+          <PrimaryButton
+            btnStyle="bg-primary-green w-[156px] h-[45px]"
+            onPress={getManyProduct}
+            text={'Show Results'}
+          />
+        </View>
+      </View>
     </Container>
   );
 };

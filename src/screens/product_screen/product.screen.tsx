@@ -25,10 +25,20 @@ const ProductScreen = (props: any) => {
     productWeight: 1,
   });
 
+  const createSearchProduct = async () => {
+    try {
+      let res: any = await Models.searchProduct.createSearchProduct(productId);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+
   const getProduct = async () => {
     try {
       let res: any = await Models.product.getProduct(productId);
       setState({productData: res.data});
+      createSearchProduct();
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);

@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Assets,
   CategoriesComponent,
@@ -10,22 +10,95 @@ import {
 } from 'utils/imports.utils';
 import {useForm} from 'react-hook-form';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import {Models} from 'imports/models.imports';
+import {Failure, useSetState} from 'utils/functions.utils';
+import _ from 'lodash';
+import {useIsFocused} from '@react-navigation/native';
 
 const FilterSearch = (props: any) => {
+  const auth: any = useSelector((state: any) => state.auth.data);
+
+  // navigation
+  const isFocused = useIsFocused();
+  const [state, setState] = useSetState({
+    productData: [],
+    lastProductData: {},
+  });
   const {
     control,
-    handleSubmit,
+    resetField,
+    watch,
     formState: {errors},
   } = useForm({
     defaultValues: {
       filterSearch: '',
     },
   });
-  const data = ['Orange', 'Guvi', 'Apple', 'Mango', 'Veel'];
+
+  const getManyProduct = async () => {
+    try {
+      let query = {
+        search: watch().filterSearch,
+      };
+      let res: any = await Models.product.getManyProduct(query);
+      setState({productData: res.data.docs});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+  const createSearchProduct = async (_id: string, name: string) => {
+    try {
+      let query = {
+        search_product: _id,
+      };
+      props.navigation.navigate(`ProductScreen`, {product_id: _id});
+      await Models.searchProduct.createSearchProduct(query);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+  const deleteSearchProduct = async (_id: string) => {
+    try {
+      let query = {
+        search_product: _id,
+      };
+      let res: any = await Models.searchProduct.editSearchProduct(query);
+      setState({lastProductData: res.data});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+  const getManySearchProduct = async () => {
+    try {
+      let res: any = await Models.searchProduct.getSearchProduct({});
+      setState({lastProductData: res.data});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+  useEffect(() => {
+    if (!_.isEmpty(watch().filterSearch)) {
+      getManyProduct();
+    } else {
+      setState({productData: []});
+    }
+  }, [watch().filterSearch]);
+  useEffect(() => {
+    getManySearchProduct();
+    if (isFocused) {
+      resetField('filterSearch');
+    }
+  }, [isFocused]);
+
   return (
     <Container>
-      <View className="p-[20px] ">
-        <View className="flex-row items-center justify-between  h-[10%] ">
+      <View className=" mt-3">
+        <View className="flex-row items-center justify-between py-3  px-5">
           <View className="w-[80%] flex-row items-center">
             <TouchableOpacity
               activeOpacity={0.7}
@@ -40,7 +113,7 @@ const FilterSearch = (props: any) => {
             </TouchableOpacity>
             <View className="w-[87%] mx-auto">
               <PrimaryInput
-                name="filter_product"
+                name="filterSearch"
                 control={control}
                 type="text"
                 placeholder="Search"
@@ -61,43 +134,83 @@ const FilterSearch = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View className="h-[90%]">
-          <View>
-            <Text className="font-raleway-semi-bold text-xl text-secondary-black py-3">
-              Last Seen
-            </Text>
-            <CategoriesComponent />
+        {_.isEmpty(watch().filterSearch) ? (
+          <View className="px-5">
+            {!_.isEmpty(state.lastProductData.product) && (
+              <View>
+                <Text className="font-raleway-semi-bold text-xl text-secondary-black py-3">
+                  Last Seen
+                </Text>
+                <CategoriesComponent
+                  data={state.lastProductData.product}
+                  type={'filterSearch'}
+                  onPress={(value: string) => {
+                    props.navigation.navigate(`ProductScreen`, {
+                      product_id: value,
+                    });
+                  }}
+                />
+              </View>
+            )}
+            {!_.isEmpty(state.lastProductData.search_product) && (
+              <View>
+                <Text className="font-raleway-semi-bold text-xl text-secondary-black py-3">
+                  Last Search
+                </Text>
+                <ScrollView className="w-full h-[145px]">
+                  {state.lastProductData.search_product.map(
+                    (item: any, index: number) => (
+                      <View className="flex-row justify-between space-y-0.5">
+                        <TouchableOpacity
+                          activeOpacity={0.7}
+                          onPress={() =>
+                            props.navigation.navigate(`ProductScreen`, {
+                              product_id: item._id,
+                            })
+                          }>
+                          <Text className="font-merriweather-regular text-sm text-text-gray">
+                            {item.name}
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          className=""
+                          onPress={() => deleteSearchProduct(item._id)}
+                          activeOpacity={0.7}>
+                          <ImageComponent
+                            src={Assets.closeIcon}
+                            height={28}
+                            width={28}
+                            svg
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    ),
+                  )}
+                </ScrollView>
+              </View>
+            )}
           </View>
-          <View>
-            <Text className="font-raleway-semi-bold text-xl text-secondary-black py-3">
-              Last Search
+        ) : !_.isEmpty(state.productData) ? (
+          <ScrollView
+            contentContainerStyle={{paddingBottom: 100}}
+            showsVerticalScrollIndicator={false}
+            className="bg-product-gray h-full px-4">
+            <View className="w-full flex-row justify-between flex-wrap px-1">
+              <ProductCard
+                {...props}
+                data={state.productData}
+                type={'filterSearch'}
+                onPress={createSearchProduct}
+              />
+            </View>
+          </ScrollView>
+        ) : (
+          <View className="w-full h-[80%] justify-center items-center">
+            <Text className="font-merriweather-bold text-lg text-text-gray">
+              No Data Found
             </Text>
-
-            <ScrollView className="w-full">
-              {data.map((item: any, index: number) => (
-                <TouchableOpacity
-                  className="flex-row justify-between"
-                  // onPress={() => setState({product: index})}
-                  activeOpacity={0.7}>
-                  <Text className="font-merriweather-regular text-sm text-text-gray">
-                    {item}
-                  </Text>
-                  <TouchableOpacity
-                    className=""
-                    // onPress={() => setState({product: index})}
-                    activeOpacity={0.7}>
-                    <ImageComponent
-                      src={Assets.closeIcon}
-                      height={28}
-                      width={28}
-                      svg
-                    />
-                  </TouchableOpacity>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
           </View>
-        </View>
+        )}
         {/* <View className=" h-[8%]  justify-center">
           <Text className="font-raleway-semi-bold text-xl text-secondary-black ">
             Result for : Fruit
