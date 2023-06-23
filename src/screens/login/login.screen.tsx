@@ -48,11 +48,21 @@ const Login = (props: any) => {
         routes: [{name: 'BottomTabs'}],
       });
       Success(res.message);
+      // getUser()
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
     }
   };
+  // const getUser = async () => {
+  //   try {
+  //     let res: any = await Models.auth.getUser({});
+  //     auth(res.data);
+  //   } catch (error: any) {
+  //     console.log('error', error);
+  //     Failure(error.message);
+  //   }
+  // };
   return (
     <Container>
       <ScrollView
@@ -123,7 +133,7 @@ const Login = (props: any) => {
         <View className="py-3">
           <View className="items-center justify-center flex-row ">
             <Text className="font-merriweather-regular text-text-gray text-xs ">
-              Didn’t have an account?{' '}
+              Didn’t have an account?
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}

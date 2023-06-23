@@ -8,7 +8,7 @@ import {
   OtpComponent,
 } from '../../utils/imports.utils';
 import {Failure, Success, useSetState} from '../../utils/functions.utils';
-import {Models} from '../../imports/models.imports';
+import Models from '../../imports/models.imports';
 import {useSelector} from 'react-redux';
 
 const OtpVerify = (props: any) => {

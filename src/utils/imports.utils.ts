@@ -17,6 +17,7 @@ import CategoriesComponent from '../components/categories/categories.component';
 import FilterSearch from '../components/filter_search/flitter_search';
 import AddressComponent from '../components/address/address.component';
 import CheckoutCart from '../components/checkout_cart/checkout_cart.component';
+import ScrollViewComponent from '../components/scrollView/scrollview.component'
 
 export {
   Container,
@@ -37,5 +38,6 @@ export {
   FilterSearch,
   Input,
   AddressComponent,
-  CheckoutCart
+  CheckoutCart,
+  ScrollViewComponent
 };

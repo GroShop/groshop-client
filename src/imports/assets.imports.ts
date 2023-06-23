@@ -23,8 +23,7 @@ import messageActive from "../assets/icons/message_active";
 import cartIcon from "../assets/icons/cart_icon";
 import userIcon from "../assets/icons/user";
 import searchIcon from "../assets/icons/search";
-import productIcon from "../assets/icons/product";
-import promotions from "../assets/icons/promotions";
+import productIcon from "../assets/icons/product.png";
 import buyCart from "../assets/icons/buy_cart";
 import favoriteIconInactive from "../assets/icons/favorite_inactive";
 import favoriteIconActive from "../assets/icons/favorite_active";
@@ -66,7 +65,6 @@ const Assets = {
   userIcon,
   searchIcon,
   productIcon,
-  promotions,
   buyCart,
   plusIcon,
   minusIcon,

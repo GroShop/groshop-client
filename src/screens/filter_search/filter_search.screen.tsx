@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   Assets,
@@ -7,12 +7,13 @@ import {
   ImageComponent,
   PrimaryInput,
   ProductCard,
+  ScrollViewComponent,
 } from 'utils/imports.utils';
 import {useForm} from 'react-hook-form';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
-import {Models} from 'imports/models.imports';
-import {Failure, useSetState} from 'utils/functions.utils';
+import  Models from '../../imports/models.imports';
+import {Failure, useSetState} from '../../utils/functions.utils';
 import _ from 'lodash';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -157,7 +158,7 @@ const FilterSearch = (props: any) => {
                 <Text className="font-raleway-semi-bold text-xl text-secondary-black py-3">
                   Last Search
                 </Text>
-                <ScrollView className="w-full h-[145px]">
+                <ScrollViewComponent>
                   {state.lastProductData.search_product.map(
                     (item: any, index: number) => (
                       <View className="flex-row justify-between space-y-0.5">
@@ -186,16 +187,14 @@ const FilterSearch = (props: any) => {
                       </View>
                     ),
                   )}
-                </ScrollView>
+                </ScrollViewComponent>
               </View>
             )}
           </View>
         ) : !_.isEmpty(state.productData) ? (
-          <ScrollView
-            contentContainerStyle={{paddingBottom: 100}}
-            showsVerticalScrollIndicator={false}
-            className="bg-product-gray h-full px-4">
-            <View className="w-full flex-row justify-between flex-wrap px-1">
+          <ScrollViewComponent
+            className="bg-product-gray">
+            <View className="w-full flex-row justify-between flex-wrap px-5">
               <ProductCard
                 {...props}
                 data={state.productData}
@@ -203,7 +202,7 @@ const FilterSearch = (props: any) => {
                 onPress={createSearchProduct}
               />
             </View>
-          </ScrollView>
+          </ScrollViewComponent>
         ) : (
           <View className="w-full h-[80%] justify-center items-center">
             <Text className="font-merriweather-bold text-lg text-text-gray">

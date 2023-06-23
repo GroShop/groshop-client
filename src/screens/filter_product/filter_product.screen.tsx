@@ -1,28 +1,20 @@
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import React, {useEffect, useMemo, useRef} from 'react';
+import {View, Text, TouchableOpacity, } from 'react-native';
 import {
   Assets,
   CategoriesComponent,
   Container,
   ImageComponent,
-  Input,
-  InviteModal,
   PrimaryButton,
-  Validation,
 } from '../../utils/imports.utils';
-import {useForm} from 'react-hook-form';
 import {Failure, useSetState} from '../../utils/functions.utils';
 import {useSelector} from 'react-redux';
 import {FlatList} from 'react-native';
 import Slider from 'react-native-slider';
 import _ from 'lodash';
-import {Models} from 'imports/models.imports';
-import {filterProduct} from 'utils/redux.utils';
+import Models from '../../imports/models.imports';
+import {filterProduct} from '../../utils/redux.utils';
 
 const FilterProduct = (props: any) => {
-  // ref
-  const resetRef: any = useRef();
-
   // redux
   const auth: any = useSelector((state: any) => state.auth.data);
 
@@ -33,18 +25,6 @@ const FilterProduct = (props: any) => {
     rating: {},
     max_price: 200,
   });
-
-  // const {
-  //   control,
-  //   setValue,
-  //   watch,
-  //   formState: {errors},
-  // } = useForm({
-  //   defaultValues: {
-  //     min_price: '1',
-  //     max_price: '200',
-  //   },
-  // });
 
   let tags = [
     'All',
@@ -79,7 +59,8 @@ const FilterProduct = (props: any) => {
         query.tag = state.tag;
       }
       let res: any = await Models.product.getManyProduct(query);
-      filterProduct(res.data);
+      props.navigation.navigate('Categories');
+      filterProduct(res.data.docs);
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -104,10 +85,7 @@ const FilterProduct = (props: any) => {
 
   return (
     <Container>
-      <View
-        showsVerticalScrollIndicator={false}
-        className="w-[90%] mx-auto "
-        style={{height: '100%'}}>
+      <View className="w-[90%] mx-auto " style={{height: '100%'}}>
         <View className="items-center flex-row py-6">
           <TouchableOpacity
             activeOpacity={0.7}
@@ -159,12 +137,8 @@ const FilterProduct = (props: any) => {
                 </TouchableOpacity>
               )}
               horizontal
-              // pagingEnabled
               snapToAlignment="center"
               showsHorizontalScrollIndicator={false}
-              // onViewableItemsChanged={handleViewableItemsChanged}
-              // viewabilityConfig={handleviewabilityConfig}
-              // onScroll={handleScroll}
             />
           </View>
         </View>
@@ -174,13 +148,6 @@ const FilterProduct = (props: any) => {
           </Text>
           <View className="py-1 flex-row items-center justify-between">
             <View className="w-[120px] border-text-gray border-2  items-center justify-center py-[7px] rounded-lg">
-              {/* <Input
-                name="min_price"
-                control={control}
-                inputWrapperStyle="bg-light-mode border-2 h-[40px] border-text-gray px-2"
-                keyboardType={'numeric'}
-                currency="₹"
-              /> */}
               <Text
                 className={` text-base font-merriweather-bold text-secondary-black items-center
                       mr-2
@@ -194,13 +161,6 @@ const FilterProduct = (props: any) => {
               </Text>
             </View>
             <View className="w-[120px] border-text-gray border-2  items-center justify-center py-[7px] rounded-lg ">
-              {/* <Input
-                name="max_price"
-                control={control}
-                inputWrapperStyle="bg-light-mode border-2 h-[40px] border-text-gray px-2"
-                keyboardType={'numeric'}
-                currency="₹"
-              /> */}
               <Text
                 className={` text-base font-merriweather-bold text-secondary-black items-center
                       mr-2

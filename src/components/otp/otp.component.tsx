@@ -1,4 +1,4 @@
-import {Models} from 'imports/models.imports';
+import Models from '../../imports/models.imports';
 import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import OTPTextInput from 'react-native-otp-textinput';

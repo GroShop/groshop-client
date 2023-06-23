@@ -17,7 +17,7 @@ import {
   Success,
   useSetState,
 } from '../../utils/functions.utils';
-import {Models} from '../../imports/models.imports';
+import Models from '../../imports/models.imports';
 import {auth} from '../../utils/redux.utils';
 import {useSelector} from 'react-redux';
 
@@ -57,7 +57,7 @@ const ResetPassword = (props: any) => {
       resetRef.current.openModal();
       props.navigation.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{name: 'BottomTabs'}],
       });
       Success(res.message);
     } catch (error: any) {

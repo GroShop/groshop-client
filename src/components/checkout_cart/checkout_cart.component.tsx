@@ -10,7 +10,6 @@ const CheckoutCart = () => {
         src={Assets.productIcon}
         height={80}
         width={80}
-        svg
       />
     </View>
     <View>

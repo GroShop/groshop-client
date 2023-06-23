@@ -8,13 +8,14 @@ import SignIn from './screens/signin/signin.screen';
 import ForgotPsd from './screens/forgot_password/forgot_password.screen';
 import ResetPassword from './screens/reset_password/reset_password.screen';
 import OtpVerify from './screens/otp_verify/otp_verify.screen';
-import { BottomTabs, ImageSlider } from './utils/imports.utils';
+import { BottomTabs} from './utils/imports.utils';
 import ProductScreen from './screens/product_screen/product.screen';
 import FilterSearch from './screens/filter_search/filter_search.screen';
 import FilterProduct from './screens/filter_product/filter_product.screen';
 import CartScreen from './screens/cart/cart.screen';
 import CheckoutScreen from './screens/checkout/checkout.screen';
 import WishList from 'screens/wishlist/wishlist.screen';
+import Categories from 'screens/categories/categories.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -35,6 +36,7 @@ const App = () => {
         <Stack.Screen name="CartScreen" component={CartScreen} />
         <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />  
         <Stack.Screen name="WishList" component={WishList} />
+        <Stack.Screen name="Categories" component={Categories} />
 
       </Stack.Navigator>  
     </NavigationContainer>

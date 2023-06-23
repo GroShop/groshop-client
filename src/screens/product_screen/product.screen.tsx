@@ -7,11 +7,12 @@ import {
   ImageSlider,
   PrimaryButton,
   RatingComponent,
-} from 'utils/imports.utils';
+  ScrollViewComponent,
+} from '../../utils/imports.utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useRoute} from '@react-navigation/native';
-import {Models} from 'imports/models.imports';
-import {Failure, useSetState} from 'utils/functions.utils';
+import Models from '../../imports/models.imports';
+import {Failure, useSetState} from '../../utils/functions.utils';
 import _ from 'lodash';
 
 const ProductScreen = (props: any) => {
@@ -53,9 +54,7 @@ const ProductScreen = (props: any) => {
 
   return (
     <Container backgroundColor="#E6F8D5">
-      <ScrollView
-        className="w-full h-full"
-        showsVerticalScrollIndicator={false}>
+     <ScrollViewComponent>
         <View className="w-full h-[358px]">
           <View className="w-full h-[250px] bg-success relative  rounded-b-full"></View>
           <View className=" w-full absolute h-[300px]">
@@ -184,7 +183,7 @@ const ProductScreen = (props: any) => {
             />
           </View>
         </View>
-      </ScrollView>
+        </ScrollViewComponent>
     </Container>
   );
 };

@@ -71,7 +71,7 @@ const WishList = (props: any) => {
                 className="items-center justify-center absolute right-0 bottom-1 bg-primary-green  h-[36px] w-[36px]  rounded-full"
                 onPress={() =>
                   props.navigation.navigate(`ProductScreen`, {
-                    product_id: item._id,
+                    // product_id: item._id,
                   })
                 }>
                 <ImageComponent
