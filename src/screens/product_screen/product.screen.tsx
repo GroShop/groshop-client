@@ -24,6 +24,7 @@ const ProductScreen = (props: any) => {
   const [state, setState] = useSetState({
     productData: {},
     productWeight: 1,
+    wishlistProduct: [],
   });
 
   const createSearchProduct = async () => {
@@ -46,15 +47,39 @@ const ProductScreen = (props: any) => {
     }
   };
 
+  const getWishlist = async () => {
+    try {
+      let res: any = await Models.wishlist.getWishlist({});
+      setState({wishlistProduct: res.data.wishlist_product});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+
+  const createWishlist = async () => {
+    try {
+      let query = {
+        wishlist_product: productId.product_id,
+      };
+      let res: any = await Models.wishlist.createWishlist(query);
+      setState({wishlistProduct: res.data.wishlist_product});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+
   useEffect(() => {
     if (!_.isEmpty(productId)) {
       getProduct();
+      getWishlist();
     }
   }, [productId]);
 
   return (
     <Container backgroundColor="#E6F8D5">
-     <ScrollViewComponent>
+      <ScrollViewComponent>
         <View className="w-full h-[358px]">
           <View className="w-full h-[250px] bg-success relative  rounded-b-full"></View>
           <View className=" w-full absolute h-[300px]">
@@ -70,10 +95,18 @@ const ProductScreen = (props: any) => {
                 />
               </TouchableOpacity>
               <TouchableOpacity
+                className="w-[34px] items-center"
                 activeOpacity={0.7}
-                onPress={() => props.navigation.goBack()}>
+                onPress={createWishlist}>
                 <ImageComponent
-                  src={Assets.favoriteIconInactive}
+                  src={
+                    _.some(
+                      state.wishlistProduct,
+                      e => e._id === productId?.product_id,
+                    )
+                      ? Assets.favoriteIconActive
+                      : Assets.favoriteIconInactive
+                  }
                   svg
                   height={24}
                   width={24}
@@ -183,7 +216,7 @@ const ProductScreen = (props: any) => {
             />
           </View>
         </View>
-        </ScrollViewComponent>
+      </ScrollViewComponent>
     </Container>
   );
 };
