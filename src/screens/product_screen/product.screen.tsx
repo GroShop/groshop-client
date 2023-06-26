@@ -12,7 +12,7 @@ import {
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useRoute} from '@react-navigation/native';
 import Models from '../../imports/models.imports';
-import {Failure, useSetState} from '../../utils/functions.utils';
+import {Failure, Success, useSetState} from '../../utils/functions.utils';
 import _ from 'lodash';
 
 const ProductScreen = (props: any) => {
@@ -70,12 +70,28 @@ const ProductScreen = (props: any) => {
     }
   };
 
+  const createCart = async () => {
+    try {
+      let query = {
+       cart_product: productId.product_id,
+       weight:state.productWeight,
+      };
+      let res: any = await Models.cart.createCart(query);
+      Success(res.message)
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
+  };
+
   useEffect(() => {
     if (!_.isEmpty(productId)) {
       getProduct();
       getWishlist();
     }
   }, [productId]);
+
+  
 
   return (
     <Container backgroundColor="#E6F8D5">
@@ -209,6 +225,7 @@ const ProductScreen = (props: any) => {
               iconHeight={18}
               iconWidth={18}
               text={'Add To Cart'}
+              onPress={createCart}
             />
             <PrimaryButton
               btnStyle="bg-primary-green w-[156px]"
