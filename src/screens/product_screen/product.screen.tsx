@@ -152,7 +152,7 @@ const ProductScreen = (props: any) => {
             <RatingComponent RatingValue={state.productData?.rating} />
             <View className="flex-row items-center space-x-1">
               <Text className="font-merriweather-regular  text-secondary-black text-xs">
-                4
+              {state.productData?.rating}
               </Text>
               <Text className="font-merriweather-regular  text-text-gray  text-xs">
                 (1.5k reviews)

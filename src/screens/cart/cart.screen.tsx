@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import Models from 'imports/models.imports';
+import _ from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,42 +12,20 @@ import {
 } from 'react-native';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
+import {Failure, Success, useSetState} from 'utils/functions.utils';
 import {
   Assets,
   Container,
   ImageComponent,
   PrimaryButton,
 } from 'utils/imports.utils';
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-// import Notifications from '../model/Notifications';
-const Notifications = [
-  {
-    id: 1,
-    title: 'Your pizza order placed successfully',
-    details:
-      'Your pizza order to snack corner has been accepted and being processed.',
-  },
-  {
-    id: 2,
-    title: 'Your bengali thali order has been delivered',
-    details: 'Your bengali thali has been delivered by Delicious Bong Recipe.',
-  },
-  {
-    id: 3,
-    title: 'Out for delivery',
-    details: 'Bengali thali will reach to you within 30 minutes.',
-  },
-];
 
 const CartScreen = (props: any) => {
-  const [listData, setListData] = useState(
-    Notifications.map((NotificationItem, index) => ({
-      key: `${index}`,
-      title: NotificationItem.title,
-      details: NotificationItem.details,
-    })),
-  );
+  const [state, setState] = useSetState({
+    cartData: [],
+    totalAmount: 0,
+    duplicateCartData:[]
+  });
 
   const closeRow = (rowMap: any, rowKey: any) => {
     if (rowMap[rowKey]) {
@@ -55,38 +35,101 @@ const CartScreen = (props: any) => {
 
   const deleteRow = (rowMap: any, rowKey: any) => {
     closeRow(rowMap, rowKey);
-    const newData = [...listData];
-    const prevIndex = listData.findIndex(item => item.key === rowKey);
+    const newData = [...state.cartData];
+    const prevIndex = state.cartData.findIndex(
+      (item: any) => item.key === rowKey,
+    );
+    deleteCart(state.cartData[prevIndex]._id);
     newData.splice(prevIndex, 1);
-    setListData(newData);
+    setState({cartData: newData});
   };
 
-  const onRowDidOpen = rowKey => {
-    console.log('This row opened', rowKey);
+  const getManyCart = async () => {
+    try {
+      let res: any = await Models.cart.getManyCart({});
+      let cartData: any = res.data.map((data: any, index: number) => ({
+        key: `${index}`,
+        ...data,
+      }));
+      setState({cartData,duplicateCartData: cartData});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
 
-  const onLeftActionStatusChange = rowKey => {
-    console.log('onLeftActionStatusChange', rowKey);
+  const deleteCart = async (body: string) => {
+    try {
+      await Models.cart.deleteCart({cart_id: body});
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
 
-  const onRightActionStatusChange = rowKey => {
-    console.log('onRightActionStatusChange', rowKey);
+  const addWishlist = async (body: any) => {
+    try {
+      let query = {
+        wishlist_product: body.product_id,
+        cart: 'CART WISHLIST',
+      };
+      await Models.wishlist.createWishlist(query);
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
 
-  const onRightAction = rowKey => {
-    console.log('onRightAction', rowKey);
+  const editCart = async (body: any) => {
+    try {
+      // console.log("wight ",body.weight)
+      
+      await Models.cart.editCart(body);
+      const prevIndex = state.duplicateCartData.findIndex(
+        (item: any) => item._id === body.cart_id,
+      );
+      let cartData= state.cartData
+      cartData[prevIndex].weight= body.weight 
+      totalAmount(cartData)
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
 
-  const onLeftAction = rowKey => {
-    console.log('onLeftAction', rowKey);
+  const totalAmount = (data:any) => {
+    let totalAmount = 0;
+    if (!_.isEmpty(state.cartData)) {
+      for (let data of state.cartData) {
+        totalAmount =
+          totalAmount +
+          data.cart_product.price * data.weight -
+          (data.cart_product.price * data.weight * data.cart_product.discount) /
+            100;
+      }
+    }
+    setState({totalAmount})
   };
+
+  useEffect(() => {
+    getManyCart();
+  }, []);
+
+
+  useEffect(() => {
+    // if(!_.isEmpty(state.cartData)) {
+    totalAmount(state.cartData);
+    // }
+  }, [state.cartData]);
+
 
   const VisibleItem = (props: any) => {
     const {
       data,
       rowHeightAnimatedValue,
       removeRow,
-      leftActionState,
+      addWishlist,
+      weightProduct,
       rightActionState,
     } = props;
 
@@ -99,7 +142,11 @@ const CartScreen = (props: any) => {
         removeRow();
       });
     }
-
+    const [state, setState] = useSetState({
+      productWeight: data.item.weight,
+    });
+    const {cart_product, _id} = data.item;
+    
     return (
       <Animated.View
         style={[styles.rowFront, {height: rowHeightAnimatedValue}]}>
@@ -107,31 +154,60 @@ const CartScreen = (props: any) => {
           <View className="flex-row  items-center space-x-3 mx-2">
             <View className="">
               <ImageComponent
-                src={Assets.productIcon}
+                src={cart_product.product_pic}
                 height={80}
                 width={80}
               />
             </View>
-            <View>
+            <View className="">
               <Text className="font-merriweather-bold text-secondary-black  text-base ">
-                Orange
+                {cart_product.name}
               </Text>
               <Text className="font-merriweather-regular text-secondary-black text-sm">
-                1 kg
+                {state.productWeight} kg
               </Text>
-              <Text className="font-merriweather-bold text-secondary-black text-base ">
-                $7.50
-              </Text>
+              <View className="flex-row items-center space-x-1">
+                <Text className="font-raleway-semi-bold  text-text-gray  text-[14px] line-through">
+                  ₹{cart_product.price * state.productWeight}
+                </Text>
+                <Text className="font-merriweather-bold text-primary-green text-base ">
+                  ₹
+                  {cart_product.price * state.productWeight -
+                    (cart_product.price *
+                      state.productWeight *
+                      cart_product.discount) /
+                      100}
+                </Text>
+              </View>
             </View>
           </View>
           <View className="flex-row justify-between items-center pb-1">
-            <TouchableOpacity className="">
+            <TouchableOpacity
+              className=""
+              onPress={() => {
+                let query = {
+                  cart_id: _id,
+                  product_id: cart_product._id,
+                };
+                addWishlist(query);
+                removeRow();
+              }}>
               <Text className="font-merriweather-bold text-primary-green text-[11px] ">
                 Move to wishlist
               </Text>
             </TouchableOpacity>
             <View className="flex-row items-center bg-input-bg rounded-lg">
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  if (state.productWeight !== 1) {
+                    let query = {
+                      cart_id: _id,
+                      weight: state.productWeight - 1,
+                    };
+                    setState({productWeight: state.productWeight - 1}),
+                      weightProduct(query);
+                  }
+                }}>
                 <ImageComponent
                   src={Assets.minusIcon}
                   svg
@@ -141,10 +217,18 @@ const CartScreen = (props: any) => {
               </TouchableOpacity>
               <View className="px-2 ">
                 <Text className="font-merriweather-regular text-secondary-black text-[14px] ">
-                  1
+                  {state.productWeight}
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  let query = {
+                    cart_id: _id,
+                    weight: state.productWeight + 1,
+                  };
+                  setState({productWeight: state.productWeight + 1});
+                  weightProduct(query);
+                }}>
                 <ImageComponent
                   src={Assets.plusIcon}
                   svg
@@ -161,12 +245,13 @@ const CartScreen = (props: any) => {
 
   const renderItem = (data: any, rowMap: any) => {
     const rowHeightAnimatedValue = new Animated.Value(128);
-
     return (
       <VisibleItem
         data={data}
         rowHeightAnimatedValue={rowHeightAnimatedValue}
         removeRow={() => deleteRow(rowMap, data.item.key)}
+        weightProduct={editCart}
+        addWishlist={addWishlist}
       />
     );
   };
@@ -231,7 +316,6 @@ const CartScreen = (props: any) => {
                       {
                         scale: swipeAnimatedValue.interpolate({
                           inputRange: [-90, -30],
-
                           outputRange: [1, 0],
                           extrapolate: 'clamp',
                         }),
@@ -313,28 +397,28 @@ const CartScreen = (props: any) => {
             <View className="h-[300px] ">
               <SwipeListView
                 className="bottom-2"
-                data={listData}
+                data={state.cartData}
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}
-                leftOpenValue={75}
+                // leftOpenValue={75}
                 rightOpenValue={-75}
                 disableRightSwipe
-                onRowDidOpen={onRowDidOpen}
+                // onRowDidOpen={onRowDidOpen}
                 showsVerticalScrollIndicator={false}
                 // leftActivationValue={75}
                 // rightActivationValue={-120}
                 // leftActionValue={0}
                 // rightActionValue={-500}
-                onLeftAction={onLeftAction}
-                onRightAction={onRightAction}
-                onLeftActionStatusChange={onLeftActionStatusChange}
-                onRightActionStatusChange={onRightActionStatusChange}
+                // onLeftAction={onLeftAction}
+                // onRightAction={onRightAction}
+                // onLeftActionStatusChange={onLeftActionStatusChange}
+                // onRightActionStatusChange={onRightActionStatusChange}
               />
             </View>
           </View>
         </View>
       </View>
-      <View className="h-[24%] space-y-4 w-[90%] mx-auto justify-end pb-8">
+      <View className="flex-1 space-y-6 w-[90%] mx-auto justify-end mb-9">
         <View className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg">
           <View className=" flex-row space-x-2 items-center">
             <View className="bg-neutral-white h-[40px] w-[40px] items-center justify-center rounded-lg">
@@ -357,12 +441,12 @@ const CartScreen = (props: any) => {
               Total
             </Text>
             <Text className="font-raleway-bold text-primary-green text-[24px] ">
-              $15.85
+              ${state.totalAmount}
             </Text>
           </View>
           <View>
             <PrimaryButton
-            onPress={()=>props.navigation.navigate('CheckoutScreen')}
+              onPress={() => props.navigation.navigate('CheckoutScreen')}
               btnStyle="bg-primary-green w-[156px] h-[40px]"
               text={'Checkout'}
             />
@@ -376,7 +460,6 @@ const CartScreen = (props: any) => {
 export default CartScreen;
 
 const styles = StyleSheet.create({
-
   backTextWhite: {
     color: '#FFF',
   },
@@ -401,7 +484,7 @@ const styles = StyleSheet.create({
   },
   rowBack: {
     alignItems: 'center',
-    backgroundColor: '#DDD',
+    backgroundColor: '#DF2E2E',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
