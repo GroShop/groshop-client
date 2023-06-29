@@ -16,6 +16,7 @@ import CartScreen from './screens/cart/cart.screen';
 import CheckoutScreen from './screens/checkout/checkout.screen';
 import WishList from './screens/wishlist/wishlist.screen';
 import Categories from './screens/categories/categories.screen';
+import Voucher from 'screens/voucher/voucher.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ const App = () => {
         <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
         <Stack.Screen name="WishList" component={WishList} />
         <Stack.Screen name="Categories" component={Categories} />
+        <Stack.Screen name="Voucher" component={Voucher} />
       </Stack.Navigator>
     </NavigationContainer>
   );

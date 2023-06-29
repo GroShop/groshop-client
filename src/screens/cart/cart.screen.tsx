@@ -420,7 +420,7 @@ const CartScreen = (props: any) => {
       </View>
       <View className="flex-1 space-y-6 w-[90%] mx-auto justify-end mb-9">
         <View className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg">
-          <View className=" flex-row space-x-2 items-center">
+          <TouchableOpacity className=" flex-row space-x-2 items-center" onPress={() => props.navigation.navigate('Voucher')}>
             <View className="bg-neutral-white h-[40px] w-[40px] items-center justify-center rounded-lg">
               <ImageComponent
                 src={Assets.voucherIcon}
@@ -432,7 +432,7 @@ const CartScreen = (props: any) => {
             <Text className="font-raleway-bold text-base text-secondary-black">
               Select Voucher
             </Text>
-          </View>
+          </TouchableOpacity>
           <ImageComponent src={Assets.arrowRight} height={24} width={24} svg />
         </View>
         <View className="flex-row items-center justify-between">

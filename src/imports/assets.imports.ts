@@ -37,6 +37,9 @@ import voucherIcon from "../assets/icons/voucher";
 import arrowRight from "../assets/icons/arrow_right";
 import homeOutline from "../assets/icons/home_outline";
 import star from "../assets/icons/star";
+import timeIcon from "../assets/icons/time";
+import shippingIcon from "../assets/icons/shipping";
+
 
 
 const Assets = {
@@ -77,7 +80,9 @@ const Assets = {
   homeOutline,
   favoriteIconInactive,
   favoriteIconActive,
-  star
+  star,
+  timeIcon,
+  shippingIcon
 };
 
 export default Assets;
