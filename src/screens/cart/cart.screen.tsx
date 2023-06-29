@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
+import {useSelector} from 'react-redux';
 import {Failure, Success, useSetState} from 'utils/functions.utils';
 import {
   Assets,
@@ -19,12 +20,18 @@ import {
   ImageComponent,
   PrimaryButton,
 } from 'utils/imports.utils';
+import { Cart } from 'utils/redux.utils';
 
 const CartScreen = (props: any) => {
+  // redux
+  const voucher: any = useSelector((state: any) => state.voucher.data);
+
+  // state
   const [state, setState] = useSetState({
     cartData: [],
     totalAmount: 0,
-    duplicateCartData:[]
+    originalAmount: 0,
+    duplicateCartData: [],
   });
 
   const closeRow = (rowMap: any, rowKey: any) => {
@@ -51,7 +58,7 @@ const CartScreen = (props: any) => {
         key: `${index}`,
         ...data,
       }));
-      setState({cartData,duplicateCartData: cartData});
+      setState({cartData, duplicateCartData: cartData});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -83,38 +90,38 @@ const CartScreen = (props: any) => {
   const editCart = async (body: any) => {
     try {
       // console.log("wight ",body.weight)
-      
+
       await Models.cart.editCart(body);
       const prevIndex = state.duplicateCartData.findIndex(
         (item: any) => item._id === body.cart_id,
       );
-      let cartData= state.cartData
-      cartData[prevIndex].weight= body.weight 
-      totalAmount(cartData)
+      let cartData = state.cartData;
+      cartData[prevIndex].weight = body.weight;
+      totalAmount(cartData);
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
     }
   };
 
-  const totalAmount = (data:any) => {
+  const totalAmount = (data: any) => {
     let totalAmount = 0;
+    let originalAmount = 0;
     if (!_.isEmpty(state.cartData)) {
       for (let data of state.cartData) {
-        totalAmount =
-          totalAmount +
+        totalAmount +=
           data.cart_product.price * data.weight -
           (data.cart_product.price * data.weight * data.cart_product.discount) /
             100;
+        originalAmount += data.cart_product.price * data.weight;
       }
     }
-    setState({totalAmount})
+    setState({totalAmount, originalAmount});
   };
 
   useEffect(() => {
     getManyCart();
   }, []);
-
 
   useEffect(() => {
     // if(!_.isEmpty(state.cartData)) {
@@ -122,7 +129,29 @@ const CartScreen = (props: any) => {
     // }
   }, [state.cartData]);
 
-
+  const checkoutCart=()=>{
+    props.navigation.navigate('CheckoutScreen')
+    let cartData={
+      totalAmount: handleAmount(),
+      originalAmount:state.originalAmount,
+      product:state.cartData,
+      voucher
+    }
+    Cart(cartData)
+  }
+  const handleAmount = () => {
+    if (!_.isEmpty(voucher)) {
+      if (voucher.name === 'Discount') {
+        return Math.round(
+          state.totalAmount - (state.totalAmount * voucher.discount) / 100,
+        );
+      } else {
+        return state.totalAmount;
+      }
+    } else {
+      return state.totalAmount;
+    }
+  };
   const VisibleItem = (props: any) => {
     const {
       data,
@@ -146,7 +175,7 @@ const CartScreen = (props: any) => {
       productWeight: data.item.weight,
     });
     const {cart_product, _id} = data.item;
-    
+
     return (
       <Animated.View
         style={[styles.rowFront, {height: rowHeightAnimatedValue}]}>
@@ -278,6 +307,9 @@ const CartScreen = (props: any) => {
         useNativeDriver: false,
       }).start();
     }
+
+
+ 
 
     return (
       <Animated.View style={[styles.rowBack, {height: rowHeightAnimatedValue}]}>
@@ -419,8 +451,11 @@ const CartScreen = (props: any) => {
         </View>
       </View>
       <View className="flex-1 space-y-6 w-[90%] mx-auto justify-end mb-9">
-        <View className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg">
-          <TouchableOpacity className=" flex-row space-x-2 items-center" onPress={() => props.navigation.navigate('Voucher')}>
+        <TouchableOpacity
+          className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg"
+          onPress={() => props.navigation.navigate('Voucher')}
+          activeOpacity={0.7}>
+          <View className=" flex-row space-x-2 items-center">
             <View className="bg-neutral-white h-[40px] w-[40px] items-center justify-center rounded-lg">
               <ImageComponent
                 src={Assets.voucherIcon}
@@ -430,23 +465,40 @@ const CartScreen = (props: any) => {
               />
             </View>
             <Text className="font-raleway-bold text-base text-secondary-black">
-              Select Voucher
+              {!_.isEmpty(voucher)
+                ? voucher.name === 'Discount'
+                  ? `${voucher.name} ${voucher.discount}%`
+                  : voucher.name
+                : 'Select Voucher'}
             </Text>
-          </TouchableOpacity>
+          </View>
           <ImageComponent src={Assets.arrowRight} height={24} width={24} svg />
-        </View>
+        </TouchableOpacity>
         <View className="flex-row items-center justify-between">
-          <View className="">
+          <View className=" space-y-0.5">
             <Text className="font-merriweather-bold text-secondary-black text-base ">
               Total
             </Text>
-            <Text className="font-raleway-bold text-primary-green text-[24px] ">
-              ${state.totalAmount}
-            </Text>
+            <View className="flex-row items-center space-x-0.5">
+              <Text className="font-raleway-bold text-text-gray text-[16px] line-through">
+                ₹{state.originalAmount}
+              </Text>
+              <Text className="font-raleway-bold text-primary-green text-[24px] ">
+                ₹
+                {!_.isEmpty(voucher)
+                  ? voucher.name === 'Discount'
+                    ? Math.round(
+                        state.totalAmount -
+                          (state.totalAmount * voucher.discount) / 100,
+                      )
+                    : state.totalAmount
+                  : state.totalAmount}
+              </Text>
+            </View>
           </View>
           <View>
             <PrimaryButton
-              onPress={() => props.navigation.navigate('CheckoutScreen')}
+              onPress={checkoutCart}
               btnStyle="bg-primary-green w-[156px] h-[40px]"
               text={'Checkout'}
             />

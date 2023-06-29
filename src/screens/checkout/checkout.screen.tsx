@@ -7,10 +7,14 @@ import {
   Container,
   ImageComponent,
   PrimaryButton,
+  ScrollViewComponent,
 } from 'utils/imports.utils';
 import {ScrollView} from 'react-native';
+import { useSelector } from 'react-redux';
 
 const CheckoutScreen = (props: any) => {
+  const cart: any = useSelector((state: any) => state.cart.data);
+console.log(cart.product[0]);
   return (
     <Container>
       <View className="w-[90%] mx-auto">
@@ -80,28 +84,16 @@ const CheckoutScreen = (props: any) => {
                   </Text>
                 </View>
               </View>
-              <ScrollView
+              <ScrollViewComponent
                 className="space-y-3 h-[220px]"
-                showsVerticalScrollIndicator={false}>
-                <View>
-                  <CheckoutCart />
+              >
+                {cart.product.map((item:any,index:number)=>(
+                <View key={index}>
+                  <CheckoutCart  data={item}/>
                 </View>
-                <View>
-                  <CheckoutCart />
-                </View>
-                <View>
-                  <CheckoutCart />
-                </View>
-                <View>
-                  <CheckoutCart />
-                </View>
-                <View>
-                  <CheckoutCart />
-                </View>
-                <View>
-                  <CheckoutCart />
-                </View>
-              </ScrollView>
+                ))
+                }
+              </ScrollViewComponent>
             </View>
           </View>
           <View className="space-y-2 my-2">
