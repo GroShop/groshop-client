@@ -19,10 +19,11 @@ import _ from 'lodash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = (props: any) => {
-
   const [state, setState] = useSetState({
     allProductData: [],
     user: {},
+    categories: '',
+    tags: '',
   });
   // redux
   // const auth:any = useSelector((state:any)=>{state.auth.data})
@@ -30,8 +31,11 @@ const HomeScreen = (props: any) => {
   const getManyProduct = async (data?: string, key?: string) => {
     try {
       let query: any = {};
-      if (!_.isEmpty(data)) {
-        query = {[`${key}`]: data};
+      if (!_.isEmpty(state.categories)) {
+        query.categories = state.categories;
+      }
+      if (!_.isEmpty(state.tags)) {
+        query.tag = state.tags;
       }
       let res: any = await Models.product.getManyProduct(query);
       setState({allProductData: res.data.docs});
@@ -53,9 +57,12 @@ const HomeScreen = (props: any) => {
   };
 
   useEffect(() => {
-    getManyProduct();
     getUser();
   }, []);
+
+  useEffect(() => {
+    getManyProduct();
+  }, [state.categories, state.tags]);
 
   return (
     <Container>
@@ -80,16 +87,14 @@ const HomeScreen = (props: any) => {
         </View>
         <View className="px-[20px] py-4">
           <CategoriesComponent
-            onPress={(value: any) => getManyProduct(value, 'categories')}
+            onPress={(value: any) => setState({categories: value})}
           />
         </View>
         <View className="h-[160px]">
           <ImageSlider data={slides} />
         </View>
         <View className="w-full items-center justify-center p-5 ">
-          <FilterSlider
-            onPress={(value: any) => getManyProduct(value, 'tag')}
-          />
+          <FilterSlider onPress={(value: any) => setState({tags: value})} />
         </View>
         {!_.isEmpty(state.allProductData) ? (
           <View className="w-full flex-row justify-between flex-wrap px-5 ">

@@ -14,12 +14,32 @@ const Categories = (props: ICategories) => {
   const [state, setState] = useSetState({
     product: '',
   });
-  const categoriesData:any = [
-    {product_pic:"https://res.cloudinary.com/denokpulg/image/upload/v1687253060/Groshop/Product/pngwing.com_7_ug5c4i.png",name:"Fruit"},
-    {product_pic:"https://res.cloudinary.com/denokpulg/image/upload/v1687442552/Groshop/Product/pngwing.com_34_rx6wkg.png",name:"Meat"},
-    {product_pic:"https://res.cloudinary.com/denokpulg/image/upload/v1687442691/Groshop/Product/pngwing.com_35_qp9gte.png",name:"Vegetable"},
-    {product_pic:"https://res.cloudinary.com/denokpulg/image/upload/v1687442863/Groshop/Product/pngegg_aney1u.png",name:"Milk & Egg"},
-    {product_pic:"https://res.cloudinary.com/denokpulg/image/upload/v1687495630/Groshop/Product/pngwing.com_36_lo2n1d.png",name:"Sea Food"},
+  const categoriesData: any = [
+    {
+      product_pic:
+        'https://res.cloudinary.com/denokpulg/image/upload/v1687253060/Groshop/Product/pngwing.com_7_ug5c4i.png',
+      name: 'Fruit',
+    },
+    {
+      product_pic:
+        'https://res.cloudinary.com/denokpulg/image/upload/v1687442552/Groshop/Product/pngwing.com_34_rx6wkg.png',
+      name: 'Meat',
+    },
+    {
+      product_pic:
+        'https://res.cloudinary.com/denokpulg/image/upload/v1687442691/Groshop/Product/pngwing.com_35_qp9gte.png',
+      name: 'Vegetable',
+    },
+    {
+      product_pic:
+        'https://res.cloudinary.com/denokpulg/image/upload/v1687442863/Groshop/Product/pngegg_aney1u.png',
+      name: 'Milk & Egg',
+    },
+    {
+      product_pic:
+        'https://res.cloudinary.com/denokpulg/image/upload/v1687495630/Groshop/Product/pngwing.com_36_lo2n1d.png',
+      name: 'Sea Food',
+    },
   ];
   return props.type === 'filterSearch' ? (
     <ScrollView
@@ -31,12 +51,12 @@ const Categories = (props: ICategories) => {
           <TouchableOpacity
             className="flex-col items-center   space-y-1 mr-4 "
             onPress={() => {
-               props.onPress(item._id);
+              props.onPress(item._id);
             }}
             activeOpacity={0.7}>
             <View
               className={`border-[2px]  w-full  ${
-                state.product === index 
+                state.product === index
                   ? 'border-primary-green'
                   : ' border-input-bg'
               } h-[48px] items-center  justify-center rounded-lg`}>
@@ -51,24 +71,22 @@ const Categories = (props: ICategories) => {
   ) : (
     <View className="flex-row justify-between">
       {categoriesData &&
-       categoriesData.map((item: any, index: number) => (
+        categoriesData.map((item: any, index: number) => (
           <TouchableOpacity
             className="flex-col items-center w-[]  space-y-1 "
             onPress={() => {
-              if (state.product=== index) {
+              if (state.product === index) {
                 setState({product: ''});
-                props.onPress("");
+                props.onPress('');
               } else {
                 setState({product: index});
                 props.onPress(item.name);
               }
-             
-          
             }}
             activeOpacity={0.7}>
             <View
               className={`border-[2px] px-[2px] w-full  ${
-                state.product === index 
+                state.product === index
                   ? 'border-primary-green'
                   : ' border-input-bg'
               } h-[48px] items-center  justify-center rounded-lg`}>

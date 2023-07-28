@@ -37,7 +37,7 @@ const ItemSliderComponent = (props:IImageslider) => {
 
   return (
   props.data? 
-     <View className="w-full h-full">
+     <View className="w-full h-full ">
       <FlatList
         ref={flatListRef}
         style={{width: '100%'}}
@@ -60,7 +60,7 @@ const ItemSliderComponent = (props:IImageslider) => {
         )}
         renderItem={renderItem}
       />
-      <View className='relative'>
+      <View className=''>
         <ExpandingDot
           data={props.data}
           expandingDotWidth={15}
@@ -75,7 +75,7 @@ const ItemSliderComponent = (props:IImageslider) => {
             marginHorizontal: 5,
           }}
           containerStyle={{
-            bottom: 20,
+            top: 4,
           }}
         />
       </View>

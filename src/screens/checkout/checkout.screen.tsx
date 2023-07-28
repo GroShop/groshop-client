@@ -9,12 +9,10 @@ import {
   PrimaryButton,
   ScrollViewComponent,
 } from 'utils/imports.utils';
-import {ScrollView} from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const CheckoutScreen = (props: any) => {
   const cart: any = useSelector((state: any) => state.cart.data);
-console.log(cart.product[0]);
   return (
     <Container>
       <View className="w-[90%] mx-auto">
@@ -31,13 +29,15 @@ console.log(cart.product[0]);
             </Text>
           </View>
         </View>
-        <ScrollView className="mb-20" showsVerticalScrollIndicator={false}>
+        <ScrollViewComponent inlineStyle={{paddingBottom: 80}}>
           <View className="  flex-row  justify-between items-center mt-5">
             <Text className="font-raleway-semi-bold text-secondary-black text-[20px]">
               Delivery Address
             </Text>
-            <TouchableOpacity activeOpacity={0.7}>
-              <Text className="font-raleway-semi-bold text-primary-green text-[12px]  ">
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => props.navigation.navigate('Address')}>
+              <Text className="font-raleway-semi-bold text-primary-green text-[12px] px-1 ">
                 Change
               </Text>
             </TouchableOpacity>
@@ -84,16 +84,17 @@ console.log(cart.product[0]);
                   </Text>
                 </View>
               </View>
-              <ScrollViewComponent
-                className="space-y-3 h-[220px]"
-              >
-                {cart.product.map((item:any,index:number)=>(
-                <View key={index}>
-                  <CheckoutCart  data={item}/>
-                </View>
-                ))
-                }
-              </ScrollViewComponent>
+              <View className="h-[220px]">
+                <ScrollViewComponent
+                  className="space-y-3 "
+                  inlineStyle={{paddingBottom: 10}}>
+                  {cart.product.map((item: any, index: number) => (
+                    <View key={index}>
+                      <CheckoutCart data={item} />
+                    </View>
+                  ))}
+                </ScrollViewComponent>
+              </View>
             </View>
           </View>
           <View className="space-y-2 my-2">
@@ -188,7 +189,7 @@ console.log(cart.product[0]);
               />
             </View>
           </View>
-        </ScrollView>
+        </ScrollViewComponent>
       </View>
     </Container>
   );

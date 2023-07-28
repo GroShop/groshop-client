@@ -20,8 +20,7 @@ import {
   ImageComponent,
   PrimaryButton,
 } from 'utils/imports.utils';
-import { Cart } from 'utils/redux.utils';
-
+import {Cart} from 'utils/redux.utils';
 const CartScreen = (props: any) => {
   // redux
   const voucher: any = useSelector((state: any) => state.voucher.data);
@@ -104,11 +103,11 @@ const CartScreen = (props: any) => {
     }
   };
 
-  const totalAmount = (data: any) => {
+  const totalAmount = (items: any) => {
     let totalAmount = 0;
     let originalAmount = 0;
-    if (!_.isEmpty(state.cartData)) {
-      for (let data of state.cartData) {
+    if (!_.isEmpty(items)) {
+      for (let data of items) {
         totalAmount +=
           data.cart_product.price * data.weight -
           (data.cart_product.price * data.weight * data.cart_product.discount) /
@@ -124,21 +123,21 @@ const CartScreen = (props: any) => {
   }, []);
 
   useEffect(() => {
-    // if(!_.isEmpty(state.cartData)) {
-    totalAmount(state.cartData);
-    // }
+    if (!_.isEmpty(state.cartData)) {
+      totalAmount(state.cartData);
+    }
   }, [state.cartData]);
 
-  const checkoutCart=()=>{
-    props.navigation.navigate('CheckoutScreen')
-    let cartData={
+  const checkoutCart = () => {
+    props.navigation.navigate('CheckoutScreen');
+    let cartData = {
       totalAmount: handleAmount(),
-      originalAmount:state.originalAmount,
-      product:state.cartData,
-      voucher
-    }
-    Cart(cartData)
-  }
+      originalAmount: state.originalAmount,
+      product: state.cartData,
+      voucher,
+    };
+    Cart(cartData);
+  };
   const handleAmount = () => {
     if (!_.isEmpty(voucher)) {
       if (voucher.name === 'Discount') {
@@ -307,9 +306,6 @@ const CartScreen = (props: any) => {
         useNativeDriver: false,
       }).start();
     }
-
-
- 
 
     return (
       <Animated.View style={[styles.rowBack, {height: rowHeightAnimatedValue}]}>
