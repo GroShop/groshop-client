@@ -113,6 +113,20 @@ const auth = {
     });
     return promise;
   },
+  addAddress: (data: any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/add_address';
+      instance()
+        .post(url, data)
+        .then((res: any) => {
+          resolve(res.data);
+        })
+        .catch((error: any) => {
+          reject(error.response.data);
+        });
+    });
+    return promise;
+  },
   // getUser: (id) => {
   //   let promise = new Promise((resolve, reject) => {
   //     let url = 'user/view/' + id;

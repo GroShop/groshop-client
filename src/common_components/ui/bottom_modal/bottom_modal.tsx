@@ -23,7 +23,7 @@ const BottomModal = forwardRef((props: IBottomModal, ref) => {
 
   return (
     <RBSheet
-    keyboardAvoidingViewEnabled={false}
+      keyboardAvoidingViewEnabled={false}
       ref={modalRef}
       animationType="slide"
       closeOnPressMask={true}
@@ -38,7 +38,7 @@ const BottomModal = forwardRef((props: IBottomModal, ref) => {
           paddingHorizontal: 4,
         },
         wrapper: {
-          backgroundColor: 'transparent',
+          // backgroundColor: 'transparent',
           borderWidth: 1,
           borderColor: '#ffff',
           // padding:

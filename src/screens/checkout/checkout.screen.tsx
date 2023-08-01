@@ -10,9 +10,12 @@ import {
   ScrollViewComponent,
 } from 'utils/imports.utils';
 import {useSelector} from 'react-redux';
+import _ from 'lodash';
 
 const CheckoutScreen = (props: any) => {
   const cart: any = useSelector((state: any) => state.cart.data);
+  const auth: any = useSelector((state: any) => state.auth.data);
+
   return (
     <Container>
       <View className="w-[90%] mx-auto">
@@ -38,32 +41,57 @@ const CheckoutScreen = (props: any) => {
               activeOpacity={0.7}
               onPress={() => props.navigation.navigate('Address')}>
               <Text className="font-raleway-semi-bold text-primary-green text-[12px] px-1 ">
-                Change
+                {!_.isEmpty(auth?.address) ? 'Change' : 'Add Address'}
               </Text>
             </TouchableOpacity>
           </View>
-          <View className="bg-btn-white h-[105px] my-2 rounded-lg">
-            <View className="w-[95%] mx-auto">
-              <View className="flex-row space-x-2  items-center  mt-3 ">
-                <View className="h-[40px] w-[40px] rounded-full bg-neutral-white justify-center items-center ">
-                  <ImageComponent
-                    src={Assets.homeOutline}
-                    height={24}
-                    width={24}
-                    svg
-                  />
-                </View>
-                <View>
-                  <Text className="font-merriweather-bold text-[14px]  text-secondary-black">
-                    My Home
-                  </Text>
-                </View>
-              </View>
-              <View className="mt-2">
-                <AddressComponent />
-              </View>
-            </View>
-          </View>
+          {auth?.address &&
+            auth.address.map((item: any, index: number) => {
+              return (
+                item.default_address && (
+                  <View
+                    className="bg-btn-white max-h-[150px] my-2 rounded-lg pb-3"
+                    key={index}>
+                    <View className="w-[95%] mx-auto">
+                      <View className="flex-row space-x-2  items-center  mt-3 ">
+                        <View className="h-[40px] w-[40px] rounded-full bg-neutral-white justify-center items-center ">
+                          <ImageComponent
+                            src={
+                              item.place === 'Office'
+                                ? Assets.officeIcon
+                                : Assets.homeOutline
+                            }
+                            height={24}
+                            width={24}
+                            svg
+                          />
+                        </View>
+                        <View>
+                          <Text className="font-merriweather-bold text-[14px]  text-secondary-black">
+                            {item.place}
+                          </Text>
+                        </View>
+                      </View>
+                      <View className="mt-2">
+                        <View className="space-y-0.5">
+                          <View className="flex-row space-x-1">
+                            <Text className="font-merriweather-bold text-[12px]  text-secondary-black">
+                              {item?.name}
+                            </Text>
+                            <Text className="font-merriweather-regular text-[12px]  text-secondary-black">
+                              {item?.phone_number}
+                            </Text>
+                          </View>
+                          <Text className="font-merriweather-regular text-[12px]  text-secondary-black">
+                            {item?.address}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                )
+              );
+            })}
           <View className="bg-btn-white  my-2 rounded-lg h-[300px]">
             <View className="w-[95%] mx-auto">
               <View className="flex-row space-x-2.5  items-center h-[66px] ">

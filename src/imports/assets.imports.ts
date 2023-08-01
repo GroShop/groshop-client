@@ -28,6 +28,7 @@ import buyCart from "../assets/icons/buy_cart";
 import favoriteIconInactive from "../assets/icons/favorite_inactive";
 import favoriteIconActive from "../assets/icons/favorite_active";
 import plusIcon from "../assets/icons/plus_quantity";
+import plus from "../assets/icons/plus";
 import minusIcon from "../assets/icons/minus_quantity";
 import cartActive from "../assets/icons/cart_active";
 import filterIcon from "../assets/icons/filter";
@@ -39,6 +40,8 @@ import homeOutline from "../assets/icons/home_outline";
 import star from "../assets/icons/star";
 import timeIcon from "../assets/icons/time";
 import shippingIcon from "../assets/icons/shipping";
+import officeIcon from "../assets/icons/office_icon";
+import editIcon from "../assets/icons/edit_icon";
 
 
 
@@ -82,7 +85,10 @@ const Assets = {
   favoriteIconActive,
   star,
   timeIcon,
-  shippingIcon
+  shippingIcon,
+  officeIcon,
+  editIcon,
+  plus
 };
 
 export default Assets;

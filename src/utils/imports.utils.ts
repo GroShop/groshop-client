@@ -19,6 +19,8 @@ import FilterSearch from '../components/filter_search/flitter_search';
 import AddressComponent from '../components/address/address.component';
 import CheckoutCart from '../components/checkout_cart/checkout_cart.component';
 import ScrollViewComponent from '../components/scrollView/scrollview.component'
+import DropDown from 'common_components/ui/dropdown/dropdown.ui';
+import Textarea from 'common_components/ui/textarea/textarea.ui';
 
 export {
   Container,
@@ -41,5 +43,7 @@ export {
   AddressComponent,
   CheckoutCart,
   ScrollViewComponent,
-  BottomModal
+  BottomModal,
+  DropDown,
+  Textarea
 };

@@ -19,7 +19,7 @@ export const {width, height} = Dimensions.get("window");
 export const aspectRatio = height / width;
 export const getBaseURL = () => {
   // let baseURL = "http://localhost:8001";
-  let baseURL = "http://192.168.1.4:8001";
+  let baseURL = "http://192.168.1.10:8001";
   if (process.env.REACT_APP_NODE_ENV === "development") {
     baseURL = "http://localhost:8001";
   } else if (process.env.REACT_APP_NODE_ENV === "stage") {
@@ -317,3 +317,7 @@ export const getMediaType = (url: String) => {
     return "video";
   }
 };
+
+export const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);

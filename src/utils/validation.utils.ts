@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import {phoneRegex} from './functions.utils';
 
 const Validation: any = {
 
@@ -41,7 +42,12 @@ const Validation: any = {
       message: "Passwords don't match",
       path: ['confirmPassword'], // path of error
     }),
-
+  addressScheme: z.object({
+    name:z.string().nonempty('Please Enter Name'), 
+    phone_number: z.string().regex(phoneRegex, 'Invalid Number!').max(10,'Phone number at least 10 ').min(10,'Phone number at least 10 '),
+    place: z.string().nonempty('Please Enter Place'),
+    address: z.string().nonempty('Please Enter Address'),
+  }),
 };
 
 export default Validation;

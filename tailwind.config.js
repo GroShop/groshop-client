@@ -18,6 +18,10 @@ module.exports = {
       'merriweather-thin': ['Merriweather-Thin'],
       'merriweather-medium': ['Merriweather-Medium'],
       'merriweather-semibold': ['Merriweather-Semibold'],
+      'inter-regular': ['Inter-Regular'],
+      'inter-medium': ['Inter-Medium'],
+      'inter-semibold': ['Inter-SemiBold'],
+      'inter-bold': ['Inter-Bold'],
     },
     colors: {
       'primary-green': '#689C36',
