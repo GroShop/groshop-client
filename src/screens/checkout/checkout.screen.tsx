@@ -11,10 +11,49 @@ import {
 } from 'utils/imports.utils';
 import {useSelector} from 'react-redux';
 import _ from 'lodash';
+// @ts-ignore
+import RazorpayCheckout from 'react-native-razorpay';
+import {Colors} from 'utils/theme.utils';
 
 const CheckoutScreen = (props: any) => {
   const cart: any = useSelector((state: any) => state.cart.data);
+  const voucher: any = useSelector((state: any) => state.voucher.data);
   const auth: any = useSelector((state: any) => state.auth.data);
+
+  const razorPayment = async () => {
+    var options = {
+      description: 'Credits towards consultation',
+      // image: 'https://i.imgur.com/3g7nmJC.jpg',
+      currency: 'INR',
+      key: 'rzp_test_5E9saBhBEvuN7m',
+      amount: totalPayAmount() * 100,
+      name: auth.name,
+      // order_id: 'order_DslnoIgkIDL8Zt', //Replace this with an order_id created using Orders API.
+      prefill: {
+        email: auth.email,
+        // contact: '9191919191',
+        name: auth.name,
+      },
+      theme: {color: Colors['primary-green']},
+    };
+    RazorpayCheckout.open(options)
+      .then((data: any) => {
+        // handle success
+        console.log('data', data);
+      })
+      .catch((error: any) => {
+        // handle failure
+        console.log('error', error);
+      });
+  };
+
+  const totalPayAmount = () => {
+    return !_.isEmpty(voucher) && voucher?.name !== 'Free Shipping'
+      ? Math.round(
+          cart.totalAmount + 100 - (cart.totalAmount * voucher.discount) / 100,
+        )
+      : Math.round(cart.totalAmount - 100);
+  };
 
   return (
     <Container>
@@ -144,7 +183,10 @@ const CheckoutScreen = (props: any) => {
             <Text className="font-raleway-semi-bold text-secondary-black text-[20px]">
               Voucher
             </Text>
-            <View className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg">
+            <TouchableOpacity
+              className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg"
+              onPress={() => props.navigation.navigate('Voucher')}
+              activeOpacity={0.7}>
               <View className=" flex-row space-x-2 items-center">
                 <View className="bg-neutral-white h-[40px] w-[40px] items-center justify-center rounded-lg">
                   <ImageComponent
@@ -155,7 +197,11 @@ const CheckoutScreen = (props: any) => {
                   />
                 </View>
                 <Text className="font-raleway-bold text-base text-secondary-black">
-                  Discount 10%
+                  {!_.isEmpty(voucher)
+                    ? voucher.name === 'Discount'
+                      ? `${voucher.name} ${voucher.discount}%`
+                      : voucher.name
+                    : 'Select Voucher'}
                 </Text>
               </View>
               <ImageComponent
@@ -164,7 +210,7 @@ const CheckoutScreen = (props: any) => {
                 width={24}
                 svg
               />
-            </View>
+            </TouchableOpacity>
           </View>
           <View className="py-5 space-y-1.5">
             <View className="flex-row justify-between items-center">
@@ -172,31 +218,47 @@ const CheckoutScreen = (props: any) => {
                 Subtotal
               </Text>
               <Text className="font-merriweather-regular text-secondary-black text-[12px]">
-                $15.85
+                ₹{cart.originalAmount}
+              </Text>
+            </View>
+            <View className="flex-row justify-between items-center">
+              <Text className="font-merriweather-regular text-secondary-black text-[12px]">
+                Discount Product
+              </Text>
+              <Text className="font-merriweather-regular text-secondary-black text-[12px]">
+                -₹{cart.originalAmount - cart.totalAmount}
               </Text>
             </View>
             <View className="flex-row justify-between items-center">
               <Text className="font-merriweather-regular text-secondary-black text-[12px]">
                 Delivery Fee
               </Text>
-              <Text className="font-merriweather-regular text-secondary-black text-[12px]">
-                $2
-              </Text>
+              {voucher?.name !== 'Free Shipping' ? (
+                <Text className="font-merriweather-regular text-secondary-black text-[12px]">
+                  ₹100
+                </Text>
+              ) : (
+                <Text className="font-merriweather-regular text-primary-green text-[12px]">
+                  Free
+                </Text>
+              )}
             </View>
-            <View className="flex-row justify-between items-center">
-              <Text className="font-merriweather-regular text-secondary-black text-[12px]">
-                Discount Voucher 10%
-              </Text>
-              <Text className="font-merriweather-regular text-secondary-black text-[12px]">
-                -$1.58
-              </Text>
-            </View>
+            {!_.isEmpty(voucher) && voucher?.name !== 'Free Shipping' && (
+              <View className="flex-row justify-between items-center">
+                <Text className="font-merriweather-regular text-secondary-black text-[12px]">
+                  Discount Voucher {voucher.discount}%
+                </Text>
+                <Text className="font-merriweather-regular text-secondary-black text-[12px]">
+                  -₹{Math.round((cart.totalAmount * voucher.discount) / 100)}
+                </Text>
+              </View>
+            )}
             <View className="flex-row justify-between items-center pt-1">
               <Text className="font-merriweather-bold text-secondary-black text-base">
                 Total Payment
               </Text>
               <Text className="font-raleway-bold text-primary-green text-[20px]">
-                $16.27
+                ₹{totalPayAmount()}
               </Text>
             </View>
           </View>
@@ -206,12 +268,12 @@ const CheckoutScreen = (props: any) => {
                 Total
               </Text>
               <Text className="font-raleway-bold text-primary-green text-[24px] ">
-                $15.85
+                ₹{totalPayAmount()}
               </Text>
             </View>
             <View>
               <PrimaryButton
-                onPress={() => props.navigation.navigate('CheckoutScreen')}
+                onPress={razorPayment}
                 btnStyle="bg-primary-green w-[156px] h-[40px]"
                 text={'Select Payment'}
               />

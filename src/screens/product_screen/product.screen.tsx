@@ -73,7 +73,7 @@ const ProductScreen = (props: any) => {
   const createCart = async () => {
     try {
       let query = {
-        cart_product: productId.product_id,
+        product: productId.product_id,
         weight: state.productWeight,
       };
       let res: any = await Models.cart.createCart(query);

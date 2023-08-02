@@ -9,25 +9,25 @@ interface ICheckoutCart{
 
 
 const CheckoutCart = (props:ICheckoutCart) => {
-  const { cart_product } = props.data
+  const { product } = props.data
   return (
     <View className="flex-row  items-center space-x-3 mx-2 h-[100px] bg-neutral-white rounded-lg px-3">
     <View className="">
       <ImageComponent
-        src={cart_product.product_pic}
+        src={product.product_pic}
         height={80}
         width={80}
       />
     </View>
     <View>
       <Text className="font-merriweather-bold text-secondary-black  text-base ">
-        {cart_product.name}
+        {product.name}
       </Text>
       <Text className="font-merriweather-regular text-secondary-black text-sm">
        {props.data.weight} kg
       </Text>
       <Text className="font-merriweather-bold text-secondary-black text-base ">
-        ${cart_product.price*props.data.weight}
+        ${product.price*props.data.weight}
       </Text>
     </View>
   </View>

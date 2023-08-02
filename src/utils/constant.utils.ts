@@ -6,3 +6,7 @@ export const statusBarHeight = getStatusBarHeight();
 export enum socialLogIn{
   GOOGLE='Google'
 }
+
+export enum CART{
+  PAYMENT_SUCCESS = "Payment Success",
+  }

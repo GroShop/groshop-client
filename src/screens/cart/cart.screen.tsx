@@ -13,6 +13,7 @@ import {
 
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {useSelector} from 'react-redux';
+import {CART} from 'utils/constant.utils';
 import {Failure, Success, useSetState} from 'utils/functions.utils';
 import {
   Assets,
@@ -31,6 +32,7 @@ const CartScreen = (props: any) => {
     totalAmount: 0,
     originalAmount: 0,
     duplicateCartData: [],
+    cartId: '',
   });
 
   const closeRow = (rowMap: any, rowKey: any) => {
@@ -45,28 +47,35 @@ const CartScreen = (props: any) => {
     const prevIndex = state.cartData.findIndex(
       (item: any) => item.key === rowKey,
     );
-    deleteCart(state.cartData[prevIndex]._id);
+    deleteCart(state.cartData[prevIndex]);
     newData.splice(prevIndex, 1);
     setState({cartData: newData});
   };
 
   const getManyCart = async () => {
     try {
-      let res: any = await Models.cart.getManyCart({});
-      let cartData: any = res.data.map((data: any, index: number) => ({
-        key: `${index}`,
-        ...data,
-      }));
-      setState({cartData, duplicateCartData: cartData});
+      let res: any = await Models.cart.getCart({});
+      let cartData: any = res.data?.cart_product.map(
+        (data: any, index: number) => ({
+          key: `${index}`,
+          ...data,
+        }),
+      );
+      setState({cartData, cartId: res.data._id, duplicateCartData: cartData});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
     }
   };
 
-  const deleteCart = async (body: string) => {
+  const deleteCart = async (body: any) => {
     try {
-      await Models.cart.deleteCart({cart_id: body});
+      let query = {
+        cart_id: state.cartId,
+        product: body.product._id,
+        weight: body.weight,
+      };
+      await Models.cart.deleteCart(query);
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -88,15 +97,35 @@ const CartScreen = (props: any) => {
 
   const editCart = async (body: any) => {
     try {
-      // console.log("wight ",body.weight)
-
-      await Models.cart.editCart(body);
-      const prevIndex = state.duplicateCartData.findIndex(
-        (item: any) => item._id === body.cart_id,
-      );
+      // console.log("wight ",body)
       let cartData = state.cartData;
-      cartData[prevIndex].weight = body.weight;
+      let duplicateCartData = [];
+      for (let i = 0; i < cartData.length; i++) {
+        if (_.isEqual(cartData[i].product._id, body.product_id)) {
+          duplicateCartData.push({
+            product: body.product_id,
+            weight: body.weight,
+          });
+          cartData[i].weight = body.weight;
+        } else {
+          duplicateCartData.push({
+            product: cartData[i].product._id,
+            weight: cartData[i].weight,
+          });
+        }
+      }
+
+      let query = {
+        cart_id: state.cartId,
+        cart_product: duplicateCartData,
+      };
       totalAmount(cartData);
+      await Models.cart.editCart(query);
+      // const prevIndex = state.duplicateCartData.findIndex(
+      //   (item: any) => item._id === body.cart_id,
+      // );
+      // let cartData = state.cartData;
+      // cartData[prevIndex].weight = body.weight;
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -109,10 +138,9 @@ const CartScreen = (props: any) => {
     if (!_.isEmpty(items)) {
       for (let data of items) {
         totalAmount +=
-          data.cart_product.price * data.weight -
-          (data.cart_product.price * data.weight * data.cart_product.discount) /
-            100;
-        originalAmount += data.cart_product.price * data.weight;
+          data.product.price * data.weight -
+          (data.product.price * data.weight * data.product.discount) / 100;
+        originalAmount += data.product.price * data.weight;
       }
     }
     setState({totalAmount, originalAmount});
@@ -173,7 +201,7 @@ const CartScreen = (props: any) => {
     const [state, setState] = useSetState({
       productWeight: data.item.weight,
     });
-    const {cart_product, _id} = data.item;
+    const {product, _id} = data.item;
 
     return (
       <Animated.View
@@ -182,28 +210,26 @@ const CartScreen = (props: any) => {
           <View className="flex-row  items-center space-x-3 mx-2">
             <View className="">
               <ImageComponent
-                src={cart_product.product_pic}
+                src={product.product_pic}
                 height={80}
                 width={80}
               />
             </View>
             <View className="">
               <Text className="font-merriweather-bold text-secondary-black  text-base ">
-                {cart_product.name}
+                {product.name}
               </Text>
               <Text className="font-merriweather-regular text-secondary-black text-sm">
                 {state.productWeight} kg
               </Text>
               <View className="flex-row items-center space-x-1">
                 <Text className="font-raleway-semi-bold  text-text-gray  text-[14px] line-through">
-                  ₹{cart_product.price * state.productWeight}
+                  ₹{product.price * state.productWeight}
                 </Text>
                 <Text className="font-merriweather-bold text-primary-green text-base ">
                   ₹
-                  {cart_product.price * state.productWeight -
-                    (cart_product.price *
-                      state.productWeight *
-                      cart_product.discount) /
+                  {product.price * state.productWeight -
+                    (product.price * state.productWeight * product.discount) /
                       100}
                 </Text>
               </View>
@@ -214,8 +240,7 @@ const CartScreen = (props: any) => {
               className=""
               onPress={() => {
                 let query = {
-                  cart_id: _id,
-                  product_id: cart_product._id,
+                  product_id: product._id,
                 };
                 addWishlist(query);
                 removeRow();
@@ -229,11 +254,11 @@ const CartScreen = (props: any) => {
                 onPress={() => {
                   if (state.productWeight !== 1) {
                     let query = {
-                      cart_id: _id,
                       weight: state.productWeight - 1,
+                      product_id: product._id,
                     };
-                    setState({productWeight: state.productWeight - 1}),
-                      weightProduct(query);
+                    weightProduct(query);
+                    setState({productWeight: state.productWeight - 1});
                   }
                 }}>
                 <ImageComponent
@@ -253,9 +278,10 @@ const CartScreen = (props: any) => {
                   let query = {
                     cart_id: _id,
                     weight: state.productWeight + 1,
+                    product_id: product._id,
                   };
-                  setState({productWeight: state.productWeight + 1});
                   weightProduct(query);
+                  setState({productWeight: state.productWeight + 1});
                 }}>
                 <ImageComponent
                   src={Assets.plusIcon}
