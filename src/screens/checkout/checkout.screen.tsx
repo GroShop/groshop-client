@@ -14,6 +14,8 @@ import _ from 'lodash';
 // @ts-ignore
 import RazorpayCheckout from 'react-native-razorpay';
 import {Colors} from 'utils/theme.utils';
+import {BOOKING_PAYMENT} from 'utils/constant.utils';
+import Models from 'imports/models.imports';
 
 const CheckoutScreen = (props: any) => {
   const cart: any = useSelector((state: any) => state.cart.data);
@@ -21,21 +23,50 @@ const CheckoutScreen = (props: any) => {
   const auth: any = useSelector((state: any) => state.auth.data);
 
   const razorPayment = async () => {
-    var options = {
-      description: 'Credits towards consultation',
-      // image: 'https://i.imgur.com/3g7nmJC.jpg',
-      currency: 'INR',
-      key: 'rzp_test_5E9saBhBEvuN7m',
+    let query: any = {
+      order: {
+        currency: 'INR',
+        amount: totalPayAmount() * 100,
+        receipt: 'receipt#1',
+      },
+      cart: cart._id,
       amount: totalPayAmount() * 100,
+      payment_type: BOOKING_PAYMENT.ONLINE_PAYMENT,
+    };
+    if (!_.isEmpty(auth.address)) {
+      for (let data of auth.address) {
+        if (data.default_address) {
+          delete data._id;
+          query.address = data;
+        }
+      }
+    }
+    if (!_.isEmpty(voucher)) {
+      query.voucher = voucher._id;
+    }
+    const res:any= await Models.booking.createBooking(query) 
+
+
+//     const randomNumber = Math.floor(Math.random() * 10) + 1;
+// const currentDate = new Date();
+// currentDate.setHours(currentDate.getHours() + randomNumber);
+  console.log('res.data',res.data);
+  
+    var options:any = {
+      // description: 'Credits towards consultation',
+      key: 'rzp_test_5E9saBhBEvuN7m',
       name: auth.name,
-      // order_id: 'order_DslnoIgkIDL8Zt', //Replace this with an order_id created using Orders API.
+      order_id:res.data.razorpay_order_id, 
       prefill: {
         email: auth.email,
-        // contact: '9191919191',
+        contact: res.data?.address.phone_number,
         name: auth.name,
       },
       theme: {color: Colors['primary-green']},
     };
+    if(!_.isEmpty(auth?.profile_picture)){
+      options.image=auth.profile_picture
+    }
     RazorpayCheckout.open(options)
       .then((data: any) => {
         // handle success

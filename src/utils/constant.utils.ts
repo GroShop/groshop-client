@@ -10,3 +10,8 @@ export enum socialLogIn{
 export enum CART{
   PAYMENT_SUCCESS = "Payment Success",
   }
+
+
+export enum BOOKING_PAYMENT{
+  ONLINE_PAYMENT='Online Payment'
+}

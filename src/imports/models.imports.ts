@@ -4,6 +4,7 @@ import searchProduct from '../models/search_product.model';
 import wishlist from '../models/whislist.model';
 import cart from '../models/cart.model';
 import voucher from '../models/voucher.model';
+import booking from '../models/booking.model';
 
  const Models = {
   auth,
@@ -11,7 +12,8 @@ import voucher from '../models/voucher.model';
   searchProduct,
   wishlist,
   cart,
-  voucher
+  voucher,
+  booking
 };
 
 export default Models
