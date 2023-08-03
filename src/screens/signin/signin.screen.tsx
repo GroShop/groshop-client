@@ -4,7 +4,7 @@ import {
   Assets,
   Container,
   ImageComponent,
-  Input,
+  PrimaryInput,
   PrimaryButton,
   Validation,
 } from '../../utils/imports.utils';
@@ -12,7 +12,7 @@ import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Failure, useSetState} from '../../utils/functions.utils';
-import {Models} from 'imports/models.imports';
+import {Models} from '../../imports/models.imports';
 import {Success} from '../../utils/functions.utils';
 
 const SignIn = (props: any) => {
@@ -39,7 +39,7 @@ const SignIn = (props: any) => {
 
   const handleSignIn = async (data?: any) => {
     try {
-      delete data.confirm_password;
+      delete data.confirmPassword;
       let res: any = await Models.auth.signup(data);
       props.navigation.reset({
         index: 0,
@@ -68,7 +68,7 @@ const SignIn = (props: any) => {
         </View>
         <View className="space-y-3">
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Full Name"
               control={control}
@@ -76,7 +76,7 @@ const SignIn = (props: any) => {
             />
           </View>
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Email"
               control={control}
@@ -84,7 +84,7 @@ const SignIn = (props: any) => {
             />
           </View>
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Password"
               control={control}
@@ -99,7 +99,7 @@ const SignIn = (props: any) => {
             />
           </View>
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Confirm Password"
               control={control}
@@ -120,6 +120,7 @@ const SignIn = (props: any) => {
             onPress={() => setState({privacyPolicy: !state.privacyPolicy})}
             className="flex-row items-center space-x-1 mt-1">
             <ImageComponent
+              svg
               src={
                 state.privacyPolicy
                   ? Assets.checkBoxActive
@@ -145,7 +146,7 @@ const SignIn = (props: any) => {
             Or Sign In with
           </Text>
           <View>
-          <SocialMedia />
+            <SocialMedia {...props} />
           </View>
         </View>
         <View className="my-3">

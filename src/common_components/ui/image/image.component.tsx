@@ -3,6 +3,7 @@ import React from "react";
 import {StyleSheet} from "react-native";
 import FastImage from "react-native-fast-image";
 
+
 interface ImageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   src: any;
@@ -35,7 +36,7 @@ const ImageComponent = (props: ImageProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isUrl = (source: any) => {
     if (typeof source === "string") return true;
-    return false;
+    return false;``
   };
 
   return (
@@ -65,8 +66,8 @@ const ImageComponent = (props: ImageProps) => {
               resizeMode: resize ? resize : "contain",
             },
             // @ts-ignore
-            height && {height},
             width && {width},
+            height && {height},
           ]}
           source={
             isUrl(src)

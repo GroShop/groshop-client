@@ -15,8 +15,11 @@ interface IInputProps {
   inputStyle?: string;
   type?: any;
   placeholderColor?: string;
+  inputWrapperStyle?: string;
   securityPassword?: boolean;
   onClick?: any;
+  keyboardType?:any
+  currency?: string;
 }
 
 const Input = (props: IInputProps) => {
@@ -30,11 +33,18 @@ const Input = (props: IInputProps) => {
           return (
             <>
               <View
-                className={`flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ${
+                className={`flex-row items-center justify-between rounded-lg ${props.inputWrapperStyle} ${
                   error && 'border-error border-[1px]'
                 }`}>
+                  {props.currency && (
+                  <View>
+                    <Text className='text-secondary-black font-merriweather-regular  text-[14px]'>{props.currency} </Text>
+                  </View>
+                )}
                 <TextInput
-                  className={`${props.inputStyle} text-secondary-black  h-full ${
+                  className={`${
+                    props.inputStyle
+                  } text-secondary-black font-merriweather-regular h-full text-[14px] ${
                     props.iconOnPress || props.icon ? 'w-[80%]' : 'w-full'
                   } rounded-lg`}
                   placeholder={props.placeholder}
@@ -46,15 +56,17 @@ const Input = (props: IInputProps) => {
                   secureTextEntry={props.securityPassword}
                   onChangeText={onChange}
                   value={value}
+                  keyboardType={props.keyboardType}
                 />
                 {props.icon && (
                   <View>
-                    <ImageComponent src={props.icon} height={20} width={22} />
+                    <ImageComponent src={props.icon} height={20} width={22} svg/>
                   </View>
                 )}
                 {props.iconOnPress && (
                   <TouchableOpacity activeOpacity={0.7} onPress={props.onClick}>
                     <ImageComponent
+                      svg
                       src={props.iconOnPress}
                       height={20}
                       width={22}

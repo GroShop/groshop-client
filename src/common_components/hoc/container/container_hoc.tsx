@@ -6,13 +6,14 @@ interface IContainer {
   loading?: boolean;
   statusBarColor?: string;
   children?: any;
+  backgroundColor?: string;
 }
 const Container = (props: IContainer) => {
   const inset = useSafeAreaInsets();
   return (
     <View>
       <StatusBar
-        backgroundColor={'green'}
+        backgroundColor={props.backgroundColor?props.backgroundColor:'white'}
         translucent={true}
         hidden={false}
         barStyle={'dark-content'}

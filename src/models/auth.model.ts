@@ -73,7 +73,7 @@ const auth = {
   },
   getUser: (data: any) => {
     let promise = new Promise((resolve, reject) => {
-      let url = 'auth/get_user';
+      let url = 'auth//view_user';
       instance()
         .post(url, data)
         .then((res: any) => {
@@ -88,6 +88,34 @@ const auth = {
   editUser: (data: any) => {
     let promise = new Promise((resolve, reject) => {
       let url = 'auth/edit_user';
+      instance()
+        .post(url, data)
+        .then((res: any) => {
+          resolve(res.data);
+        })
+        .catch((error: any) => {
+          reject(error.response.data);
+        });
+    });
+    return promise;
+  },
+  socialSignIn: (data: any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/social_signin';
+      instance()
+        .post(url, data)
+        .then((res: any) => {
+          resolve(res.data);
+        })
+        .catch((error: any) => {
+          reject(error.response.data);
+        });
+    });
+    return promise;
+  },
+  addAddress: (data: any) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = 'auth/add_address';
       instance()
         .post(url, data)
         .then((res: any) => {

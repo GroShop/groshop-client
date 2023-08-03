@@ -18,6 +18,10 @@ module.exports = {
       'merriweather-thin': ['Merriweather-Thin'],
       'merriweather-medium': ['Merriweather-Medium'],
       'merriweather-semibold': ['Merriweather-Semibold'],
+      'inter-regular': ['Inter-Regular'],
+      'inter-medium': ['Inter-Medium'],
+      'inter-semibold': ['Inter-SemiBold'],
+      'inter-bold': ['Inter-Bold'],
     },
     colors: {
       'primary-green': '#689C36',
@@ -31,12 +35,9 @@ module.exports = {
       'dark-mode': '#191A19',
       'light-green': '#E6F8D5',
       'neutral-white': '#F7FFFA',
-      'transparent-black': '#80000000'
+      'product-gray': '#FCFFFD',
+      success: '#E6F8D5',
     },
-    // width: {
-    //   '15%': '15%',
-    //   '90%': '90%',
-    // },
     extend: {},
   },
   plugins: [],

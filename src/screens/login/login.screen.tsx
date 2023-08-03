@@ -1,10 +1,10 @@
-import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text,TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
   Container,
   ImageComponent,
-  Input,
+  PrimaryInput,
   PrimaryButton,
   Validation,
 } from '../../utils/imports.utils';
@@ -12,9 +12,17 @@ import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
-import {Failure, Height, Ratio, Success, Width, useSetState} from '../../utils/functions.utils';
-import { Models } from 'imports/models.imports';
+import {
+  Failure,
+  Height,
+  Ratio,
+  Success,
+  Width,
+  useSetState,
+} from '../../utils/functions.utils';
+import {Models} from '../../imports/models.imports';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth } from 'utils/redux.utils';
 
 const Login = (props: any) => {
   const [state, setState] = useSetState({
@@ -31,20 +39,30 @@ const Login = (props: any) => {
     },
     resolver: zodResolver(Validation.loginScheme),
   });
-  const handleLogin = async(data?: any) => {
-      try {
-        let res:any= await Models.auth.login(data);
-       await AsyncStorage.setItem("token",res.token);
-        props.navigation.reset({
-          index: 0,
-          routes: [{name: 'Home'}],
-        });
-        Success(res.message)
-      } catch (error:any) {
-        console.log("error",error);
-        Failure(error.message)
-    };
+  const handleLogin = async (data?: any) => {
+    try {
+      let res: any = await Models.auth.login(data);
+      await AsyncStorage.setItem('token', res.token);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'BottomTabs'}],
+      });
+      Success(res.message);
+      // getUser()
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
+    }
   };
+  // const getUser = async () => {
+  //   try {
+  //     let res: any = await Models.auth.getUser({});
+  //     auth(res.data);
+  //   } catch (error: any) {
+  //     console.log('error', error);
+  //     Failure(error.message);
+  //   }
+  // };
   return (
     <Container>
       <ScrollView
@@ -61,6 +79,7 @@ const Login = (props: any) => {
             </Text>
           </View>
           <ImageComponent
+            svg
             src={Assets.signIn}
             height={Ratio(265)}
             width={Ratio(250)}
@@ -68,7 +87,7 @@ const Login = (props: any) => {
         </View>
         <View className="space-y-3">
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Email"
               control={control}
@@ -76,7 +95,7 @@ const Login = (props: any) => {
             />
           </View>
           <View>
-            <Input
+            <PrimaryInput
               type="text"
               placeholder="Password"
               control={control}
@@ -107,15 +126,14 @@ const Login = (props: any) => {
             Or Sign In with
           </Text>
           <View>
-
-          <SocialMedia />
+            <SocialMedia {...props} />
           </View>
         </View>
-   
+
         <View className="py-3">
           <View className="items-center justify-center flex-row ">
             <Text className="font-merriweather-regular text-text-gray text-xs ">
-              Didn’t have an account?{' '}
+              Didn’t have an account?
             </Text>
             <TouchableOpacity
               activeOpacity={0.7}
