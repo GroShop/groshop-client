@@ -4,20 +4,19 @@ import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
 import {useSetState, width} from '../../utils/functions.utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const FilterSlider = (props: any) => {
+interface IFilterSlider{
+  data:any;
+  onPress:any;
+  active:string;
+}
+
+const FilterSlider = (props: IFilterSlider) => {
   const slideRef = useRef(new Animated.Value(0)).current;
   const [state, setState] = useSetState({
     dotIndex: 0,
-    active: 'All',
+    active: props.active,
   });
-  let slides = [
-    'All',
-    'Flash Sale',
-    'Discount',
-    'Best offer',
-    'Buy Again',
-    'New',
-  ];
+
 
   const handleScroll = (event: any) => {
     Animated.event(
@@ -51,7 +50,7 @@ const FilterSlider = (props: any) => {
   return (
     <View className="w-full">
       <FlatList
-        data={slides}
+        data={props.data}
         renderItem={(data: any, index: number) => (
           <TouchableOpacity
             className={`mr-4  ${

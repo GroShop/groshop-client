@@ -95,9 +95,59 @@ const InviteModal = forwardRef((props: any, ref) => {
             </TouchableOpacity>
           </View>
         </View>
-      ) : (
-        ''
-      )}
+      ) : props.type === 'paymentSuccess'?(
+        <View
+        className="h-full items-center justify-center"
+        style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+        <View className="w-[90%] items-center justify-center bg-neutral-white shadow-xl rounded-xl p-[35px]">
+          <View className="w-[100px] h-[100px] bg-light-green rounded-full items-center justify-center  ">
+            <ImageComponent
+              svg
+              src={Assets.tickIcon}
+              height={Ratio(33.33)}
+              width={Ratio(46.67)}
+            />
+          </View>
+          <Text className="font-raleway-bold text-[28px] text-primary-green my-3 ">
+            Successful
+          </Text>
+          <Text className="font-merriweather-light text-[14px] text-secondary-black mb-3">
+          Your payment is success
+          </Text>
+          <View className='flex-row space-x-3'>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            className="bg-primary-green py-[10px] justify-center items-center rounded-xl mt-6  w-[150px]"
+            onPress={() => {
+              props.navigation.reset({
+                index: 0,
+                routes: [{name: 'OrderDetails',params: props.data}],
+              },)
+                setState({isModalOpen: false});
+            }}>
+            <Text className="font-merriweather-bold text-[14px] text-neutral-white">
+            Track My Order
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            className="bg-primary-green py-[10px] justify-center items-center rounded-xl mt-6 w-[150px]"
+            onPress={() => {
+              props.navigation.reset({
+                index: 0,
+                routes: [{name: 'BottomTabs'}],
+              }),
+                setState({isModalOpen: false});
+            }}>
+            <Text className="font-merriweather-bold text-[14px] text-neutral-white">
+              Back To Home
+            </Text>
+          </TouchableOpacity>
+         
+          </View>
+        </View>
+      </View>
+      ):""}
     </Modal>
   );
 });

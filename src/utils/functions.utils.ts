@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {useState} from "react";
+import {useState} from 'react';
 import {
   Alert,
   Dimensions,
   Linking,
   PermissionsAndroid,
   Platform,
-} from "react-native";
-import {showMessage} from "react-native-flash-message";
+} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 // import Models from "imports/models.import";
-// import ImagePicker from "react-native-image-crop-picker";np 
-import {useNavigation} from "@react-navigation/native";
-import _ from "lodash";
+// import ImagePicker from "react-native-image-crop-picker";np
+import {useNavigation} from '@react-navigation/native';
+import _ from 'lodash';
 // import {setAppRoute} from "./redux.utils";
 // import {letters, Mail} from "./constant.utils";
 
-export const {width, height} = Dimensions.get("window");
+export const {width, height} = Dimensions.get('window');
 export const aspectRatio = height / width;
 export const getBaseURL = () => {
   let baseURL = "https://groshop-ecom.onrender.com";
   // let baseURL ="http://localhost:8001";
-  // let baseURL = "http://192.168.0.116:8001";
-  if (process.env.REACT_APP_NODE_ENV === "development") {
-    baseURL = "http://localhost:8001";
-  } else if (process.env.REACT_APP_NODE_ENV === "stage") {
-    baseURL = "https://stage.hellaviews.com";
+  // let baseURL = 'http://192.168.1.25:8001';
+  if (process.env.REACT_APP_NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8001';
+  } else if (process.env.REACT_APP_NODE_ENV === 'stage') {
+    baseURL = 'https://stage.hellaviews.com';
   }
   return baseURL;
 };
@@ -86,20 +86,20 @@ export const Success = (message: string, description?: string) => [
   showMessage({
     message: message,
     description: description,
-    type: "success",
-    icon: "auto",
+    type: 'success',
+    icon: 'auto',
     autoHide: true,
-    position: "top",
+    position: 'top',
   }),
 ];
 export const Failure = (message: string, description?: string) => [
   showMessage({
     message: message,
     description: description,
-    type: "danger",
-    icon: "auto",
+    type: 'danger',
+    icon: 'auto',
     autoHide: true,
-    position: "top",
+    position: 'top',
   }),
 ];
 
@@ -107,20 +107,20 @@ export const Warning = (message: string, description?: string) => [
   showMessage({
     message: message,
     description: description,
-    type: "warning",
-    icon: "auto",
+    type: 'warning',
+    icon: 'auto',
     autoHide: true,
-    position: "top",
+    position: 'top',
   }),
 ];
 export const Info = (message: string, description?: string) => [
   showMessage({
     message: message,
     description: description,
-    type: "info",
-    icon: "auto",
+    type: 'info',
+    icon: 'auto',
     autoHide: true,
-    position: "top",
+    position: 'top',
   }),
 ];
 
@@ -135,9 +135,9 @@ export const isUrlFound = (url: string) => {
 };
 
 export const checkPermission = async () => {
-  if (Platform.OS === "android") {
+  if (Platform.OS === 'android') {
     try {
-      console.log("try");
+      console.log('try');
       await PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
@@ -160,8 +160,8 @@ export const checkPermission = async () => {
         return true;
       }
     } catch (err) {
-      console.log("Checking permission failed");
-      console.log("err", err);
+      console.log('Checking permission failed');
+      console.log('err', err);
     }
   } else {
     // console.log(Platform.OS)
@@ -170,7 +170,7 @@ export const checkPermission = async () => {
 };
 
 export const getFileData = (file: any) => {
-  const filePathArray = file.path.split("/");
+  const filePathArray = file.path.split('/');
   const fileName = filePathArray.pop();
   return {name: fileName, uri: file.path, type: file.mime};
 };
@@ -235,15 +235,16 @@ export const getFileData = (file: any) => {
 //   }
 // };
 
-export const capitalizeFirstLetter = (string: string = "") => {
+export const capitalizeFirstLetter = (string: string = '') => {
+  let data = string.toLowerCase();
   if (string.length > 0) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    return data.charAt(0).toUpperCase() + data.slice(1);
   }
-  return string;
+  return data;
 };
 
 export const searchArray = (a: string[], search: string) => {
-  const regex = new RegExp(search, "i");
+  const regex = new RegExp(search, 'i');
   const result: string[] = [];
   for (let i = 0; i < a.length; i++) {
     let index = a[i].search(regex);
@@ -256,11 +257,11 @@ export const searchArray = (a: string[], search: string) => {
 
 export const checkURL = (url: string) => {
   if (url.match(/\.(jpeg|jpg|gif|png|JPEG|JPG|GIF|PNG|HEIC|heic)$/) !== null) {
-    return "image";
+    return 'image';
   } else if (url.match(/\.(mp4|MP4|mov|MOV|HEVC|hevc)$/) !== null) {
-    return "video";
+    return 'video';
   } else if (url.match(/\.(pdf|docs|xls|xlsx|doc|txt|ppt|pptx)$/) !== null) {
-    return "document";
+    return 'document';
   }
 };
 
@@ -277,8 +278,6 @@ export const modelError = (error: any) => {
   }
 };
 
-
-
 export const calculateTimeToString = (date: string | number | Date) => {
   var datePast = new Date(date);
   var dateNow = new Date();
@@ -291,34 +290,41 @@ export const calculateTimeToString = (date: string | number | Date) => {
   var years = Math.floor(days / 365);
 
   if (seconds < 60) {
-    return "Just now";
+    return 'Just now';
   } else if (minutes < 60) {
-    return minutes + "m";
+    return minutes + 'm';
   } else if (hours < 24) {
-    return hours + "h";
+    return hours + 'h';
   } else if (days < 7) {
-    return days + "d";
+    return days + 'd';
   } else if (weeks < 52) {
-    return weeks + "w";
+    return weeks + 'w';
   } else {
-    return years + "y";
+    return years + 'y';
   }
 };
 
 export const getMediaType = (url: String) => {
   if (
-    url.split(".").pop() === "jpg" ||
-    url.split(".").pop() === "jpeg" ||
-    url.split(".").pop() === "svg" ||
-    url.split(".").pop() === "bmp" ||
-    url.split(".").pop() === "png"
+    url.split('.').pop() === 'jpg' ||
+    url.split('.').pop() === 'jpeg' ||
+    url.split('.').pop() === 'svg' ||
+    url.split('.').pop() === 'bmp' ||
+    url.split('.').pop() === 'png'
   ) {
-    return "image";
+    return 'image';
   } else {
-    return "video";
+    return 'video';
   }
 };
 
 export const phoneRegex = new RegExp(
-  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
+
+export const timeConversion = (timestamp: string) => {
+  const date = new Date(timestamp);
+  const options: any = {hour: 'numeric', minute: 'numeric', hour12: true};
+  const formattedTime = date.toLocaleString('en-US', options);
+  return formattedTime;
+};

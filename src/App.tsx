@@ -18,6 +18,8 @@ import WishList from './screens/wishlist/wishlist.screen';
 import Categories from './screens/categories/categories.screen';
 import Voucher from 'screens/voucher/voucher.screen';
 import Address from 'screens/address/address.screen';
+import TrackOrder from 'screens/track_order/track_order.screen';
+import OrderDetails from 'screens/order_details/order_details.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -39,7 +41,9 @@ const App = () => {
         <Stack.Screen name="WishList" component={WishList} />
         <Stack.Screen name="Categories" component={Categories} />
         <Stack.Screen name="Voucher" component={Voucher} />
-        <Stack.Screen name="Address" component={Address} />
+        <Stack.Screen name="Address" component={Address} /> 
+      {/* <Stack.Screen name="TrackOrder" component={TrackOrder} /> */}
+         <Stack.Screen name="OrderDetails" component={OrderDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

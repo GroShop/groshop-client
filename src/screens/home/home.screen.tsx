@@ -63,6 +63,14 @@ const HomeScreen = (props: any) => {
   useEffect(() => {
     getManyProduct();
   }, [state.categories, state.tags]);
+  let productFilter = [
+    'All',
+    'Flash Sale',
+    'Discount',
+    'Best offer',
+    'Buy Again',
+    'New',
+  ];
 
   return (
     <Container>
@@ -94,7 +102,11 @@ const HomeScreen = (props: any) => {
           <ImageSlider data={slides} />
         </View>
         <View className="w-full items-center justify-center p-5 ">
-          <FilterSlider onPress={(value: any) => setState({tags: value})} />
+          <FilterSlider
+            onPress={(value: any) => setState({tags: value})}
+            data={productFilter}
+            active="All"
+          />
         </View>
         {!_.isEmpty(state.allProductData) ? (
           <View className="w-full flex-row justify-between flex-wrap px-5 ">
