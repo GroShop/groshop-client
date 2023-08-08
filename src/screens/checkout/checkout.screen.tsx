@@ -68,13 +68,13 @@ const CheckoutScreen = (props: any) => {
       if (!_.isEmpty(auth?.profile_picture)) {
         options.image = auth.profile_picture;
       }
-      // RazorpayCheckout.open(options).then((data:any)=>{
-      //     console.log('data',data);
-      //   }).catch((err:any) => {
-      //     console.log('res',err);
-      //   });
-      setState({bookingId: res.data._id});
-      paymentRef.current.openModal();
+      RazorpayCheckout.open(options).then((data:any)=>{
+        setState({bookingId: res.data._id});
+        paymentRef.current.openModal();
+        }).catch((err:any) => {
+          console.log('res',err);
+        });
+  
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);

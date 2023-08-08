@@ -42,6 +42,15 @@ import timeIcon from "../assets/icons/time";
 import shippingIcon from "../assets/icons/shipping";
 import officeIcon from "../assets/icons/office_icon";
 import editIcon from "../assets/icons/edit_icon";
+import deliveryActive from "../assets/icons/delivery_active";
+import dispatchActive from "../assets/icons/dispatch_active";
+import processActive from "../assets/icons/process_active";
+import placedActive from "../assets/icons/placed_active";
+import deliveryInactive from "../assets/icons/delivery_inactive";
+import dispatchInactive from "../assets/icons/dispatch_inactive";
+import processInactive from "../assets/icons/process_inactive";
+import placedInactive from "../assets/icons/placed_inactive";
+
 
 
 
@@ -88,7 +97,15 @@ const Assets = {
   shippingIcon,
   officeIcon,
   editIcon,
-  plus
+  plus,
+  deliveryActive,
+  deliveryInactive,
+  processActive,
+  processInactive,
+  placedActive,
+  placedInactive,
+  dispatchActive,
+  dispatchInactive
 };
 
 export default Assets;

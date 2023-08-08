@@ -93,7 +93,7 @@ const OrderDetails = (props: any) => {
             {/* <View className='bg-input-bg h-[60px] rounded-lg mt-2'> */}
             <TouchableOpacity
               className="bg-btn-white  px-[12px] h-[60px] flex-row items-center justify-between rounded-lg mt-2"
-              onPress={() => props.navigation.navigate('Voucher')}
+              onPress={() => props.navigation.navigate('OrderStatus', state.bookingData._id)}
               activeOpacity={0.7}>
               <View className="space-y-1">
                 <Text className="font-raleway-semi-bold text-base text-secondary-black">
@@ -191,7 +191,6 @@ const OrderDetails = (props: any) => {
                 </View>
               </View>
             </View>
-
             <View className="  flex-row  justify-between items-center mt-5">
               <Text className="font-raleway-semi-bold text-secondary-black text-[20px]">
                 Payment Details

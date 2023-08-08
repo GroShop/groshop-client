@@ -328,3 +328,10 @@ export const timeConversion = (timestamp: string) => {
   const formattedTime = date.toLocaleString('en-US', options);
   return formattedTime;
 };
+
+
+// 08-08-2023
+export const isoToDateConversion = (date: string)=>{
+  const inputDate = new Date(date);
+return `${(inputDate.getMonth() + 1).toString().padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}-${inputDate.getFullYear()}`;
+}
