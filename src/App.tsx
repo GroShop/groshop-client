@@ -21,6 +21,7 @@ import Address from 'screens/address/address.screen';
 import TrackOrder from 'screens/track_order/track_order.screen';
 import OrderDetails from 'screens/order_details/order_details.screen';
 import OrderStatus from 'screens/order_status/order_status.screen';
+import CancelOrder from 'screens/cancel_order/canel_order.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -46,6 +47,9 @@ const App = () => {
          <Stack.Screen name="OrderDetails" component={OrderDetails} />
       {/* <Stack.Screen name="TrackOrder" component={TrackOrder} /> */}
       <Stack.Screen name="OrderStatus" component={OrderStatus} />
+      <Stack.Screen name="CancelOrder" component={CancelOrder} />
+      {/* <Stack.Screen name="" component={CancelOrder} />  */}
+
       </Stack.Navigator>
     </NavigationContainer>
   );

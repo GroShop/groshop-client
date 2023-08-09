@@ -23,9 +23,11 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 const OrderDetails = (props: any) => {
   const route: any = useRoute();
   let bookingId: any = route.params;
+
   const [state, setState] = useSetState({
     bookingData: {},
   });
+
   const getBooking = async () => {
     try {
       let query = {
@@ -38,19 +40,7 @@ const OrderDetails = (props: any) => {
       Failure(error.message);
     }
   };
-  const cancelBooking = async () => {
-    try {
-      let query = {
-        booking_id: bookingId,
-        status: BOOKING.CANCELLED,
-      };
-      let res: any = await Models.booking.editBooking(query);
-      setState({bookingData: res.data});
-    } catch (error: any) {
-      console.log('error', error);
-      Failure(error.message);
-    }
-  };
+
   useMemo(() => {
     if (!_.isEmpty(bookingId)) {
       getBooking();
@@ -206,7 +196,7 @@ const OrderDetails = (props: any) => {
             </View>
             <PrimaryButton
               btnStyle="bg-error"
-              onPress={cancelBooking}
+             onPress={() => props.navigation.navigate('CancelOrder', state.bookingData._id)}
               text={'Cancel Order'}
             />
           </ScrollViewComponent>
