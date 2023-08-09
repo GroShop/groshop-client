@@ -50,6 +50,14 @@ import deliveryInactive from "../assets/icons/delivery_inactive";
 import dispatchInactive from "../assets/icons/dispatch_inactive";
 import processInactive from "../assets/icons/process_inactive";
 import placedInactive from "../assets/icons/placed_inactive";
+import profileIcon from "../assets/icons/profile_icon";
+import user from "../assets/icons/user_icon";
+import addressIcon from "../assets/icons/address_icon";
+import orderIcon from "../assets/icons/order_icon";
+import wishlistIcon from "../assets/icons/wishlist_icon";
+import notification from "../assets/icons/notification";
+import resetIcon from "../assets/icons/reset_icon";
+import logoutIcon from "../assets/icons/logout_icon";
 
 
 
@@ -105,7 +113,16 @@ const Assets = {
   placedActive,
   placedInactive,
   dispatchActive,
-  dispatchInactive
+  dispatchInactive,
+  profileIcon,
+  user,
+  addressIcon,
+  resetIcon,
+  logoutIcon,
+  profileIcon,
+  orderIcon,
+  wishlistIcon,
+  notification,
 };
 
 export default Assets;
