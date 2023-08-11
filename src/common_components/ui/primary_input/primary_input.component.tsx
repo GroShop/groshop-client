@@ -37,7 +37,7 @@ const PrimaryInput = (props: IPrimaryInputProps) => {
                 <TextInput
                   className={`${
                     props.inputStyle
-                  } text-secondary-black  h-full ${
+                  } text-secondary-black font-merriweather-semibold h-full  text-[14px] ${
                     props.iconOnPress || props.icon ? 'w-[80%]' : 'w-full'
                   } rounded-lg`}
                   placeholder={props.placeholder}

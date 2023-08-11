@@ -8,6 +8,7 @@ import {
 } from 'utils/imports.utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
+import _ from 'lodash';
 
 const UserScreen = (props: any) => {
   const auth: any = useSelector((state: any) => state.auth.data);
@@ -64,12 +65,21 @@ const UserScreen = (props: any) => {
             </Text>
           </View>
           <View className="flex-row space-x-3">
-            <ImageComponent
-              src={Assets.profileIcon}
-              height={70}
-              width={70}
-              svg
-            />
+          {!_.isEmpty(auth.profile_pic) ? (
+                <ImageComponent
+                  src={auth.profile_pic}
+                  height={70}
+                  width={70}
+                  radius={100}
+                />
+              ) : (
+                <ImageComponent
+                  src={Assets.profileIcon}
+                  height={70}
+                  width={70}
+                  svg
+                />
+              )}
             <View className="mt-1.5 space-y-1">
               <Text className="font-raleway-bold text-[20px] text-secondary-black">
                 {auth.username}

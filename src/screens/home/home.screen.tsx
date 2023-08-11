@@ -84,7 +84,17 @@ const HomeScreen = (props: any) => {
               what would you buy today
             </Text>
           </View>
-          <ImageComponent src={Assets.userIcon} svg height={36} width={36} />
+          {!_.isEmpty(state.user?.profile_pic) ? (
+            <ImageComponent
+              src={state.user?.profile_pic}
+              height={36}
+              width={36}
+              radius={100}
+            />
+          ) : (
+            <ImageComponent src={Assets.userIcon} height={36} width={36} svg />
+          )}
+          {/* <ImageComponent src={Assets.userIcon} svg height={36} width={36} /> */}
         </View>
         <View className="py-2 px-[20px]">
           <SearchInput

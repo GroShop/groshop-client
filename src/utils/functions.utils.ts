@@ -12,6 +12,7 @@ import {showMessage} from 'react-native-flash-message';
 // import ImagePicker from "react-native-image-crop-picker";np
 import {useNavigation} from '@react-navigation/native';
 import _ from 'lodash';
+import axios from 'axios';
 // import {setAppRoute} from "./redux.utils";
 // import {letters, Mail} from "./constant.utils";
 
@@ -20,7 +21,7 @@ export const aspectRatio = height / width;
 export const getBaseURL = () => {
   let baseURL = "https://groshop-ecom.onrender.com";
   // let baseURL ="http://localhost:8001";
-  // let baseURL = 'http://192.168.1.25:8001';
+  // let baseURL = 'http://192.168.1.9:8001';
   if (process.env.REACT_APP_NODE_ENV === 'development') {
     baseURL = 'http://localhost:8001';
   } else if (process.env.REACT_APP_NODE_ENV === 'stage') {
@@ -329,9 +330,34 @@ export const timeConversion = (timestamp: string) => {
   return formattedTime;
 };
 
-
 // 08-08-2023
-export const isoToDateConversion = (date: string)=>{
+export const isoToDateConversion = (date: string) => {
   const inputDate = new Date(date);
-return `${(inputDate.getMonth() + 1).toString().padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}-${inputDate.getFullYear()}`;
-}
+  return `${(inputDate.getMonth() + 1).toString().padStart(2, '0')}-${inputDate
+    .getDate()
+    .toString()
+    .padStart(2, '0')}-${inputDate.getFullYear()}`;
+};
+
+// cloudnary
+export const imgToUrl = async(image: any) => {
+  const data = new FormData();
+  data.append('file', {
+    uri: image.path,
+    type: image.mime,
+    name: image.path.substring(image.path.lastIndexOf('/') +1)
+  });
+  data.append('upload_preset', 'groshop_upload');
+  // data.append('cloud_name', 'denokpulg');
+  let url = 'https://api.cloudinary.com/v1_1/denokpulg/image/upload'
+
+ let uri =await axios
+    .post(url, data)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log("error",err);
+    });
+    return uri
+};
