@@ -1,26 +1,36 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import {Rating} from 'react-native-ratings';
+import {useSetState} from 'utils/functions.utils';
 
-interface IRatingComponent{
-  RatingValue:number
+interface IRatingComponent {
+  RatingValue?: number;
+  readonly?: boolean;
+  imageSize?: number;
+  onClick?: any;
 }
 
-const RatingComponent = (props:IRatingComponent) => {
+const RatingComponent = (props: IRatingComponent) => {
+
+  const [state, setState] = useSetState({
+    rating: props.RatingValue || 0,
+  });
   return (
-    <View>
-      <Rating
-        type="custom"
-        ratingColor="#FFD12E"
-        ratingBackgroundColor="#DADDD8"
-        ratingCount={5}
-        imageSize={24}
-        startingValue={props.RatingValue&&props.RatingValue/20}
-        onFinishRating={() => 120}
-        style={{paddingVertical: 10}}
-        readonly
-      />
-    </View>
+    <View className='w-full'>
+    <Rating
+      type="custom"
+      ratingColor="#FFD12E"
+      ratingBackgroundColor="#DADDD8"
+      ratingCount={5}
+      imageSize={props.imageSize}
+      startingValue={state.rating}
+      onStartRating={(e: any) => {
+        props.onClick(e);
+        setState({rating: e});
+      }}
+      readonly={props.readonly ? true : false}
+    />
+   </View>
   );
 };
 

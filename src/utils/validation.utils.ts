@@ -2,7 +2,6 @@ import {z} from 'zod';
 import {phoneRegex} from './functions.utils';
 
 const Validation: any = {
-
   loginScheme: z.object({
     email: z.string().nonempty('Please Enter Email').email('Invalid Email'),
     password: z
@@ -42,11 +41,27 @@ const Validation: any = {
       message: "Passwords don't match",
       path: ['confirmPassword'], // path of error
     }),
+
   addressScheme: z.object({
-    name:z.string().nonempty('Please Enter Name'), 
-    phone_number: z.string().regex(phoneRegex, 'Invalid Number!').max(10,'Phone number at least 10 ').min(10,'Phone number at least 10 '),
+    name: z.string().nonempty('Please Enter Name'),
+    phone_number: z
+      .string()
+      .regex(phoneRegex, 'Invalid Number!')
+      .max(10, 'Phone number at least 10 ')
+      .min(10, 'Phone number at least 10 '),
     place: z.string().nonempty('Please Enter Place'),
     address: z.string().nonempty('Please Enter Address'),
+  }),
+
+  profileScheme: z.object({
+    username: z.string().nonempty('Please Enter Name'),
+    phone_number: z
+      .string()
+      .regex(phoneRegex, 'Invalid Number!')
+      .max(10, 'Phone number at least 10 ')
+      .min(10, 'Phone number at least 10 ')
+      .optional()
+      .or(z.literal('')),
   }),
 };
 

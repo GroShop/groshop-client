@@ -1,11 +1,12 @@
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   AddressComponent,
   Assets,
   CheckoutCart,
   Container,
   ImageComponent,
+  InviteModal,
   PrimaryButton,
   ScrollViewComponent,
 } from 'utils/imports.utils';
@@ -16,68 +17,69 @@ import RazorpayCheckout from 'react-native-razorpay';
 import {Colors} from 'utils/theme.utils';
 import {BOOKING_PAYMENT} from 'utils/constant.utils';
 import Models from 'imports/models.imports';
+import {Failure, useSetState} from 'utils/functions.utils';
 
 const CheckoutScreen = (props: any) => {
   const cart: any = useSelector((state: any) => state.cart.data);
   const voucher: any = useSelector((state: any) => state.voucher.data);
   const auth: any = useSelector((state: any) => state.auth.data);
-
+  const paymentRef: any = useRef();
+  const [state, setState] = useSetState({
+    bookingId: '',
+  });
   const razorPayment = async () => {
-    let query: any = {
-      order: {
-        currency: 'INR',
+    try {
+      let query: any = {
+        order: {
+          currency: 'INR',
+          amount: totalPayAmount() * 100,
+          receipt: 'receipt#1',
+        },
+        cart: cart.cart_id,
         amount: totalPayAmount() * 100,
-        receipt: 'receipt#1',
-      },
-      cart: cart._id,
-      amount: totalPayAmount() * 100,
-      payment_type: BOOKING_PAYMENT.ONLINE_PAYMENT,
-    };
-    if (!_.isEmpty(auth.address)) {
-      for (let data of auth.address) {
-        if (data.default_address) {
-          delete data._id;
-          query.address = data;
+        payment_type: BOOKING_PAYMENT.ONLINE_PAYMENT,
+      };
+      if (!_.isEmpty(auth.address)) {
+        for (let data of auth.address) {
+          if (data.default_address) {
+            delete data._id;
+            query.address = data;
+          }
         }
       }
-    }
-    if (!_.isEmpty(voucher)) {
-      query.voucher = voucher._id;
-    }
-    const res:any= await Models.booking.createBooking(query) 
-
-
-//     const randomNumber = Math.floor(Math.random() * 10) + 1;
-// const currentDate = new Date();
-// currentDate.setHours(currentDate.getHours() + randomNumber);
-  console.log('res.data',res.data);
+      if (!_.isEmpty(voucher)) {
+        query.voucher = voucher._id;
+      }
+      const res: any = await Models.booking.createBooking(query);
+      var options: any = {
+        // description: 'Credits towards consultation',
+        currency: 'INR',
+        amount: '',
+        key: 'rzp_test_5E9saBhBEvuN7m',
+        name: auth.username,
+        order_id: res.data.razorpay_order_id,
+        prefill: {
+          email: auth.email,
+          contact: res.data?.address.phone_number,
+          name: auth.username,
+        },
+        theme: {color: Colors['primary-green']},
+      };
+      if (!_.isEmpty(auth?.profile_picture)) {
+        options.image = auth.profile_picture;
+      }
+      RazorpayCheckout.open(options).then((data:any)=>{
+        setState({bookingId: res.data._id});
+        paymentRef.current.openModal();
+        }).catch((err:any) => {
+          console.log('res',err);
+        });
   
-    var options:any = {
-      // description: 'Credits towards consultation',
-      key: 'rzp_test_5E9saBhBEvuN7m',
-      name: auth.name,
-      order_id:res.data.razorpay_order_id, 
-      prefill: {
-        email: auth.email,
-        contact: res.data?.address.phone_number,
-        name: auth.name,
-      },
-      theme: {color: Colors['primary-green']},
-    };
-    if(!_.isEmpty(auth?.profile_picture)){
-      options.image=auth.profile_picture
+    } catch (error: any) {
+      console.log('error', error);
+      Failure(error.message);
     }
-    RazorpayCheckout.open(options)
-      .then((data: any) => {
-        // handle success
-        console.log('data', data);
-      })
-      .catch((error: any) => {
-        // handle failure
-        console.log('error', error);
-      });
   };
-
   const totalPayAmount = () => {
     return !_.isEmpty(voucher) && voucher?.name !== 'Free Shipping'
       ? Math.round(
@@ -88,7 +90,7 @@ const CheckoutScreen = (props: any) => {
 
   return (
     <Container>
-      <View className="w-[90%] mx-auto">
+      <View className="mx-[20px]">
         <View className="items-center flex-row justify-center my-5">
           <TouchableOpacity
             activeOpacity={0.7}
@@ -182,8 +184,9 @@ const CheckoutScreen = (props: any) => {
                   </Text>
                 </View>
               </View>
-              <View className="h-[220px]">
+              <View className="max-h-[220px]">
                 <ScrollViewComponent
+                  nestedScrollEnabled={true}
                   className="space-y-3 "
                   inlineStyle={{paddingBottom: 10}}>
                   {cart.product.map((item: any, index: number) => (
@@ -307,6 +310,12 @@ const CheckoutScreen = (props: any) => {
                 onPress={razorPayment}
                 btnStyle="bg-primary-green w-[156px] h-[40px]"
                 text={'Select Payment'}
+              />
+              <InviteModal
+                ref={paymentRef}
+                {...props}
+                data={state.bookingId}
+                type={'paymentSuccess'}
               />
             </View>
           </View>

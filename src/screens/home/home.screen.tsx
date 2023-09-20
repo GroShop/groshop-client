@@ -63,6 +63,14 @@ const HomeScreen = (props: any) => {
   useEffect(() => {
     getManyProduct();
   }, [state.categories, state.tags]);
+  let productFilter = [
+    'All',
+    'Flash Sale',
+    'Discount',
+    'Best offer',
+    'Buy Again',
+    'New',
+  ];
 
   return (
     <Container>
@@ -76,7 +84,17 @@ const HomeScreen = (props: any) => {
               what would you buy today
             </Text>
           </View>
-          <ImageComponent src={Assets.userIcon} svg height={36} width={36} />
+          {!_.isEmpty(state.user?.profile_pic) ? (
+            <ImageComponent
+              src={state.user?.profile_pic}
+              height={36}
+              width={36}
+              radius={100}
+            />
+          ) : (
+            <ImageComponent src={Assets.userIcon} height={36} width={36} svg />
+          )}
+          {/* <ImageComponent src={Assets.userIcon} svg height={36} width={36} /> */}
         </View>
         <View className="py-2 px-[20px]">
           <SearchInput
@@ -94,7 +112,11 @@ const HomeScreen = (props: any) => {
           <ImageSlider data={slides} />
         </View>
         <View className="w-full items-center justify-center p-5 ">
-          <FilterSlider onPress={(value: any) => setState({tags: value})} />
+          <FilterSlider
+            onPress={(value: any) => setState({tags: value})}
+            data={productFilter}
+            active="All"
+          />
         </View>
         {!_.isEmpty(state.allProductData) ? (
           <View className="w-full flex-row justify-between flex-wrap px-5 ">

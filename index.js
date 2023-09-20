@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {AppRegistry,Platform} from 'react-native';
 import App from './src/App';
 import {name as appName} from './app.json';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -12,6 +12,14 @@ import {Provider} from 'react-redux';
 import store from 'store/store';
 
 const Index = () => {
+
+
+AppRegistry.registerComponent('Groshop', () => App);
+
+if (Platform.OS === 'web') {
+    const rootTag = document.getElementById('root') || document.getElementById('Groshop');
+    AppRegistry.runApplication('Groshop', { rootTag });
+}
   return (
     <Provider store={store}>
       <SafeAreaProvider>

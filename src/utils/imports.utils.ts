@@ -19,8 +19,9 @@ import FilterSearch from '../components/filter_search/flitter_search';
 import AddressComponent from '../components/address/address.component';
 import CheckoutCart from '../components/checkout_cart/checkout_cart.component';
 import ScrollViewComponent from '../components/scrollView/scrollview.component'
-import DropDown from 'common_components/ui/dropdown/dropdown.ui';
-import Textarea from 'common_components/ui/textarea/textarea.ui';
+import DropDown from '../common_components/ui/dropdown/dropdown.ui';
+import Textarea from '../common_components/ui/textarea/textarea.ui';
+import ProgressBar from '../common_components/ui/progress_bar/progress_bar.ui';
 
 export {
   Container,
@@ -45,5 +46,6 @@ export {
   ScrollViewComponent,
   BottomModal,
   DropDown,
-  Textarea
+  Textarea,
+  ProgressBar
 };

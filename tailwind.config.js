@@ -24,6 +24,7 @@ module.exports = {
       'inter-bold': ['Inter-Bold'],
     },
     colors: {
+      'light-gray':'#DADDD8',
       'primary-green': '#689C36',
       'secondary-black': '#191A19',
       'text-gray': '#ACADAC',

@@ -163,6 +163,7 @@ const CartScreen = (props: any) => {
       originalAmount: state.originalAmount,
       product: state.cartData,
       voucher,
+      cart_id:state.cartId
     };
     Cart(cartData);
   };

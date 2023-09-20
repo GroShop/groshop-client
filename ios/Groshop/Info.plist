@@ -48,6 +48,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	  <key>NSPhotoLibraryUsageDescription</key>
+  <string>app want to access gallery</string>
+	  <key>NSCameraUsageDescription</key>
+  <string>app want to access camera</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Merriweather-Black.ttf</string>
