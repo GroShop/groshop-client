@@ -23,6 +23,7 @@ import OrderDetails from 'screens/order_details/order_details.screen';
 import OrderStatus from 'screens/order_status/order_status.screen';
 import CancelOrder from 'screens/cancel_order/canel_order.screen';
 import EditProfile from 'screens/edit_profile/edit_profile';
+import MyOrder from 'screens/my_order/my_order.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -50,6 +51,7 @@ const App = () => {
       <Stack.Screen name="OrderStatus" component={OrderStatus} />
       <Stack.Screen name="CancelOrder" component={CancelOrder} />
       <Stack.Screen name="EditProfile" component={EditProfile} /> 
+      <Stack.Screen name="MyOrder" component={MyOrder} /> 
 
 
       </Stack.Navigator>

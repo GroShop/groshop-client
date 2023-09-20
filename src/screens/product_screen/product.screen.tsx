@@ -147,7 +147,7 @@ const ProductScreen = (props: any) => {
           Farm Shop
         </Text>
         <View className="items-center  flex-row py-1 space-x-2">
-          <RatingComponent RatingValue={state.productData?.rating} />
+          <RatingComponent RatingValue={state.productData?.rating} readonly={true}  imageSize={24}/>
           <View className="flex-row items-center space-x-1">
             <Text className="font-merriweather-regular  text-secondary-black text-xs">
               {state.productData?.rating}

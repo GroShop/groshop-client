@@ -25,7 +25,7 @@ const UserScreen = (props: any) => {
     },
     {
       name: 'My Orders',
-      route: 'OrderScreen',
+      route: 'MyOrder',
       pic: Assets.orderIcon,
     },
     {
