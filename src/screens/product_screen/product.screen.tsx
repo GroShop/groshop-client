@@ -25,6 +25,7 @@ const ProductScreen = (props: any) => {
     productData: {},
     productWeight: 1,
     wishlistProduct: [],
+    loading: false
   });
 
   const createSearchProduct = async () => {
@@ -38,8 +39,9 @@ const ProductScreen = (props: any) => {
 
   const getProduct = async () => {
     try {
+      setState({loading: true});
       let res: any = await Models.product.getProduct(productId);
-      setState({productData: res.data});
+      setState({productData: res.data,loading: false});
       createSearchProduct();
     } catch (error: any) {
       console.log('error', error);
@@ -49,8 +51,9 @@ const ProductScreen = (props: any) => {
 
   const getWishlist = async () => {
     try {
+      setState({loading: true});
       let res: any = await Models.wishlist.getWishlist({});
-      setState({wishlistProduct: res.data.wishlist_product});
+      setState({wishlistProduct: res.data.wishlist_product,loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -92,7 +95,7 @@ const ProductScreen = (props: any) => {
   }, [productId]);
 
   return (
-    <Container backgroundColor="#E6F8D5">
+    <Container backgroundColor="#E6F8D5" lottie={Assets.loader} loading={state.loading}>
       {/* <ScrollViewComponent> */}
       <View className="w-full h-[358px]">
         <View className="w-full h-[250px] bg-success relative  rounded-b-full"></View>

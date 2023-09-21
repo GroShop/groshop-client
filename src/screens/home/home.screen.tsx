@@ -7,6 +7,7 @@ import {
   FilterSlider,
   ImageComponent,
   ImageSlider,
+  LottieComponent,
   ProductCard,
   ScrollViewComponent,
   SearchInput,
@@ -14,9 +15,7 @@ import {
 import Models from 'imports/models.imports';
 import {Failure, useSetState} from 'utils/functions.utils';
 import {auth} from 'utils/redux.utils';
-import {useSelector} from 'react-redux';
 import _ from 'lodash';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = (props: any) => {
   const [state, setState] = useSetState({
@@ -24,12 +23,14 @@ const HomeScreen = (props: any) => {
     user: {},
     categories: '',
     tags: '',
+    loading: false
   });
   // redux
   // const auth:any = useSelector((state:any)=>{state.auth.data})
   let slides = [Assets.productIcon, Assets.productIcon, Assets.productIcon];
   const getManyProduct = async (data?: string, key?: string) => {
     try {
+     setState({loading: true})
       let query: any = {};
       if (!_.isEmpty(state.categories)) {
         query.categories = state.categories;
@@ -38,7 +39,7 @@ const HomeScreen = (props: any) => {
         query.tag = state.tags;
       }
       let res: any = await Models.product.getManyProduct(query);
-      setState({allProductData: res.data.docs});
+      setState({allProductData: res.data.docs,loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -73,7 +74,7 @@ const HomeScreen = (props: any) => {
   ];
 
   return (
-    <Container>
+    <Container >
       <ScrollViewComponent>
         <View className="items-center flex-row justify-between py-4 px-[20px] ">
           <View>
@@ -118,7 +119,10 @@ const HomeScreen = (props: any) => {
             active="All"
           />
         </View>
-        {!_.isEmpty(state.allProductData) ? (
+        {state.loading ? 
+        <View className="flex-1">
+          <LottieComponent src={Assets.product_loader} height={80} width={80} />
+        </View>:!_.isEmpty(state.allProductData) ? (
           <View className="w-full flex-row justify-between flex-wrap px-5 ">
             <ProductCard {...props} data={state.allProductData} />
           </View>

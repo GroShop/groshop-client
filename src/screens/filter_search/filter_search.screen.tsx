@@ -5,6 +5,7 @@ import {
   CategoriesComponent,
   Container,
   ImageComponent,
+  LottieComponent,
   PrimaryInput,
   ProductCard,
   ScrollViewComponent,
@@ -25,6 +26,8 @@ const FilterSearch = (props: any) => {
   const [state, setState] = useSetState({
     productData: [],
     lastProductData: {},
+    loading: false,
+    product_loader: false
   });
   const {
     control,
@@ -39,11 +42,12 @@ const FilterSearch = (props: any) => {
 
   const getManyProduct = async () => {
     try {
+      setState({product_loader: true});
       let query = {
         search: watch().filterSearch,
       };
       let res: any = await Models.product.getManyProduct(query);
-      setState({productData: res.data.docs});
+      setState({productData: res.data.docs,product_loader: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -75,8 +79,9 @@ const FilterSearch = (props: any) => {
   };
   const getManySearchProduct = async () => {
     try {
+      setState({loading: true});
       let res: any = await Models.searchProduct.getSearchProduct({});
-      setState({lastProductData: res.data});
+      setState({lastProductData: res.data,loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -97,7 +102,7 @@ const FilterSearch = (props: any) => {
   }, [isFocused]);
 
   return (
-    <Container>
+    <Container loading={state.loading} lottie={Assets.loader}>
       <View className=" mt-3">
         <View className="flex-row items-center justify-between py-3  px-5">
           <View className="w-[80%] flex-row items-center">
@@ -191,7 +196,12 @@ const FilterSearch = (props: any) => {
               </View>
             )}
           </View>
-        ) : !_.isEmpty(state.productData) ? (
+        ) :
+          state.product_loader ? 
+            <View className="">
+              <LottieComponent src={Assets.product_loader} height={80} width={80} />
+            </View>:
+             !_.isEmpty(state.productData) ? (
           <ScrollViewComponent
             className="bg-product-gray">
             <View className="w-full flex-row justify-between flex-wrap px-5">

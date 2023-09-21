@@ -8,6 +8,7 @@ import OtpComponent from '../components/otp/otp.component';
 import InviteModal from '../common_components/ui/invite_modal/invite_modal';
 import BottomModal from '../common_components/ui/bottom_modal/bottom_modal';
 import BottomTabs from '../common_components/ui/bottom_tabs/bottom_tabs';
+import LottieComponent from '../common_components/ui/lottie/lottie.component';
 import SearchInput from '../common_components/ui/search_input/search_input.component';
 import ImageSlider from '../components/image_slider/image_slider';
 import FilterSlider from '../components/fliter_slider/fliter_slider';
@@ -47,5 +48,6 @@ export {
   BottomModal,
   DropDown,
   Textarea,
-  ProgressBar
+  ProgressBar,
+  LottieComponent
 };

@@ -61,6 +61,9 @@ import logoutIcon from '../assets/icons/logout_icon';
 import cameraIcon from '../assets/icons/camera_icon';
 import galleryIcon from '../assets/icons/gallery_icon';
 import uploadCamera from '../assets/icons/upload_camera';
+import loader from '../assets/lottie/loader.json';
+import product_loader from '../assets/lottie/product_loader.json';
+import shopping_cart from '../assets/icons/shopping_cart';
 
 const Assets = {
   closeIcon,
@@ -126,6 +129,9 @@ const Assets = {
   cameraIcon,
   uploadCamera,
   galleryIcon,
+  loader,
+  product_loader,
+  shopping_cart,
 };
 
 export default Assets;

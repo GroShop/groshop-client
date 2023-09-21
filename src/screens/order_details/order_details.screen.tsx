@@ -83,7 +83,9 @@ const OrderDetails = (props: any) => {
             {/* <View className='bg-input-bg h-[60px] rounded-lg mt-2'> */}
             <TouchableOpacity
               className="bg-btn-white  px-[12px] h-[60px] flex-row items-center justify-between rounded-lg mt-2"
-              onPress={() => props.navigation.navigate('OrderStatus', state.bookingData._id)}
+              onPress={() =>
+                props.navigation.navigate('OrderStatus', state.bookingData._id)
+              }
               activeOpacity={0.7}>
               <View className="space-y-1">
                 <Text className="font-raleway-semi-bold text-base text-secondary-black">
@@ -194,11 +196,28 @@ const OrderDetails = (props: any) => {
                 ₹{state.bookingData.amount / 100}
               </Text>
             </View>
-            <PrimaryButton
-              btnStyle="bg-error"
-             onPress={() => props.navigation.navigate('CancelOrder', state.bookingData._id)}
-              text={'Cancel Order'}
-            />
+
+            {!_.includes(
+              [BOOKING.DISPATCH, BOOKING.CANCELLED, BOOKING.DELIVERED],
+              state.bookingData?.status,
+            ) && (
+              <PrimaryButton
+                btnStyle="bg-error"
+                onPress={() =>
+                  props.navigation.navigate(
+                    'CancelOrder',
+                    state.bookingData._id,
+                  )
+                }
+                text={'Cancel Order'}
+              />
+            )}
+            <View className="my-2 flex-1">
+              <PrimaryButton
+                onPress={() => props.navigation.navigate('HomeScreen')}
+                text={'Return to Home'}
+              />
+            </View>
           </ScrollViewComponent>
         </View>
       )}

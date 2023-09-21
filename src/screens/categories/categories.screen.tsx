@@ -22,7 +22,7 @@ const Categories = (props: any) => {
           </TouchableOpacity>
           <View className="items-center w-[90%] ">
             <Text className="font-raway-semi-bold text-secondary-black text-[20px]  mr-[10px]">
-              Categories : Fruit
+              Categories 
             </Text>
           </View>
         </View>

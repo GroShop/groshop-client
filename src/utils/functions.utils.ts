@@ -19,9 +19,9 @@ import axios from 'axios';
 export const {width, height} = Dimensions.get('window');
 export const aspectRatio = height / width;
 export const getBaseURL = () => {
-  let baseURL = "https://groshop-ecom.onrender.com";
+  // let baseURL = "https://groshop-ecom.onrender.com";
   // let baseURL ="http://localhost:8001";
-  // let baseURL = 'http://192.168.1.9:8001';
+  let baseURL = 'http://192.168.1.24:8001';
   if (process.env.REACT_APP_NODE_ENV === 'development') {
     baseURL = 'http://localhost:8001';
   } else if (process.env.REACT_APP_NODE_ENV === 'stage') {
@@ -347,7 +347,7 @@ export const imgToUrl = async(image: any) => {
     type: image.mime,
     name: image.path.substring(image.path.lastIndexOf('/') +1)
   });
-  data.append('upload_preset', 'groshop_upload');
+  data.append('upload_preset' , 'groshop_upload');
   // data.append('cloud_name', 'denokpulg');
   let url = 'https://api.cloudinary.com/v1_1/denokpulg/image/upload'
 
@@ -360,4 +360,28 @@ export const imgToUrl = async(image: any) => {
       console.log("error",err);
     });
     return uri
+};
+
+export const unixTimeToDateConvert = (data: number, year?: boolean) => {
+  const milliseconds = data * 1000;
+  const date = new Date(milliseconds);
+  const day = date.getDate();
+  const month = date.toLocaleString('default', { month: 'short' });
+  if (year) {
+    const year = date.toLocaleString('default', { year: 'numeric' });
+    const formattedDate = `${day} ${month} ${year}`;
+    return formattedDate;
+  } else {
+    const formattedDate = `${day} ${month}`;
+    return formattedDate;
+  }
+};
+
+export const isoToDateConvert = (data: string) => {
+  const date = new Date(data);
+  const options: any = { year: 'numeric', month: 'short', day: 'numeric' };
+  const formattedDate = date
+    .toLocaleDateString(undefined, options)
+    .replace(',', '');
+  return formattedDate;
 };

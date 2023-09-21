@@ -1,24 +1,16 @@
 import Models from 'imports/models.imports';
 import _ from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Animated,
-  TouchableHighlight,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
+import {View, Text, StyleSheet, Animated, TouchableOpacity} from 'react-native';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {useSelector} from 'react-redux';
-import {CART} from 'utils/constant.utils';
-import {Failure, Success, useSetState} from 'utils/functions.utils';
+import {Failure, useSetState} from 'utils/functions.utils';
 import {
   Assets,
   Container,
   ImageComponent,
+  LottieComponent,
   PrimaryButton,
 } from 'utils/imports.utils';
 import {Cart} from 'utils/redux.utils';
@@ -33,6 +25,7 @@ const CartScreen = (props: any) => {
     originalAmount: 0,
     duplicateCartData: [],
     cartId: '',
+    loading: false
   });
 
   const closeRow = (rowMap: any, rowKey: any) => {
@@ -54,6 +47,7 @@ const CartScreen = (props: any) => {
 
   const getManyCart = async () => {
     try {
+      setState({loading: true});
       let res: any = await Models.cart.getCart({});
       let cartData: any = res.data?.cart_product.map(
         (data: any, index: number) => ({
@@ -61,10 +55,11 @@ const CartScreen = (props: any) => {
           ...data,
         }),
       );
-      setState({cartData, cartId: res.data._id, duplicateCartData: cartData});
+      setState({cartData, cartId: res.data._id, duplicateCartData: cartData,loading: false});
     } catch (error: any) {
       console.log('error', error);
-      Failure(error.message);
+      setState({loading: false});
+      // Failure(error.message);
     }
   };
 
@@ -163,7 +158,7 @@ const CartScreen = (props: any) => {
       originalAmount: state.originalAmount,
       product: state.cartData,
       voucher,
-      cart_id:state.cartId
+      cart_id: state.cartId,
     };
     Cart(cartData);
   };
@@ -428,6 +423,10 @@ const CartScreen = (props: any) => {
           </Text>
         </View>
       </View>
+      {state.loading ? 
+        <View className="h-[80%]">
+          <LottieComponent src={Assets.loader}  />
+        </View>:!_.isEmpty(state.cartData) ?  <>
       <View className="h-[66%]">
         <View className="bg-btn-white h-[380px]">
           <View className="w-[85%] mx-auto ">
@@ -528,6 +527,28 @@ const CartScreen = (props: any) => {
           </View>
         </View>
       </View>
+      </>:
+      <View className="h-[80%] items-center justify-center ">
+        <View className="h-[100px] w-[100px] bg-success rounded-full items-center justify-center mb-8">
+          <ImageComponent
+            src={Assets.shopping_cart}
+            svg
+            height={60}
+            width={60}
+          />
+        </View>
+        <Text className=" font-merriweather-bold text-base text-secondary-black">
+          Missing Cart Items?
+        </Text>
+        <Text className="font-merriweather-regular text-[12px] text-text-gray py-1">
+          start your wellness journey today
+        </Text>
+        <TouchableOpacity className="h-[30px]  bg-primary-green items-center justify-center px-4 rounded-lg mt-3" onPress={() => props.navigation.navigate('HomeScreen')}>
+          <Text className="font-merriweather-bold text-[12px] text-light-mode ">
+            Start Shopping
+          </Text>
+        </TouchableOpacity>
+      </View>}
     </Container>
   );
 };
