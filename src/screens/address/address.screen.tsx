@@ -7,6 +7,7 @@ import {
   Container,
   DropDown,
   ImageComponent,
+  LottieComponent,
   PrimaryButton,
   PrimaryInput,
   ScrollViewComponent,
@@ -67,14 +68,16 @@ const Address = (props: any) => {
 
   const getUser = async () => {
     try {
+      setState({loading: true})
       let res: any = await Models.auth.getUser({});
       if (_.isEmpty(res.data.address)) {
         addressRef.current.openModal();
       }
-      setState({addressData: res.data?.address});
+      setState({addressData: res.data?.address,loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 
@@ -92,6 +95,7 @@ const Address = (props: any) => {
 
   const addAddress = async (data?: any) => {
     try {
+      setState({loading: true})
       let addressData = state.addressData;
       let query: any = {address: []};
       if (state.defaultAddress) {
@@ -115,12 +119,14 @@ const Address = (props: any) => {
         query.address.unshift(data);
       }
       const res: any = await Models.auth.addAddress(query);
-      addressRef.current.closeModal();
       setState({
         addressData: res.data.address,
         defaultAddress: false,
         selectAddressIndex: null,
+        loading: false
       });
+      addressRef.current.closeModal();
+
       reset({
         name: '',
         address: '',
@@ -130,6 +136,7 @@ const Address = (props: any) => {
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 
@@ -153,6 +160,11 @@ const Address = (props: any) => {
           </Text>
         </View>
       </View>
+      {state.loading ? 
+        <View className="h-[80%]">
+          <LottieComponent src={Assets.loader}  />
+        </View>:
+      <>
       <ScrollViewComponent>
         {!_.isEmpty(state.addressData) &&
           state.addressData?.map((item: any, index: number) => {
@@ -272,6 +284,7 @@ const Address = (props: any) => {
           </View>
         </BottomModal>
       </View>
+      </>}
     </Container>
   );
 };

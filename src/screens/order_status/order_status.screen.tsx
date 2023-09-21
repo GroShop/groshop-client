@@ -1,6 +1,6 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, { useEffect } from 'react';
-import {Assets, Container, ImageComponent, ProgressBar} from 'utils/imports.utils';
+import {Assets, Container, ImageComponent, LottieComponent, ProgressBar} from 'utils/imports.utils';
 import { useRoute } from '@react-navigation/native';
 import { Failure, useSetState } from 'utils/functions.utils';
 import Models from 'imports/models.imports';
@@ -15,16 +15,18 @@ const OrderStatus = (props: any) => {
   });
   const getBooking = async () => {
     try {
+      setState({loading: true})
       let query = {
         // booking_id:  "64d1f49fb85e115878d5e8c8",
         booking_id: bookingId 
       };
       let res: any = await Models.booking.getBooking(query);
      let trackingData= res.data.tracking_status.sort((a:any,b:any) => a.last_nom - b.last_nom); 
-      setState({bookingData: trackingData});
+      setState({bookingData: trackingData,loading:false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 
@@ -50,9 +52,13 @@ const OrderStatus = (props: any) => {
             </Text>
           </View>
         </View>
+        {state.loading ? 
+        <View className="h-[80%]">
+          <LottieComponent src={Assets.loader}  />
+        </View>:
         <View className="w-full p-1 h-[400px] ">
       {state.bookingData&&<ProgressBar data={state.bookingData}/>}
-        </View>
+        </View>}
       </View>
     </Container>
   );

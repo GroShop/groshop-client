@@ -43,6 +43,7 @@ const HomeScreen = (props: any) => {
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 

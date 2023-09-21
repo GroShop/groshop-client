@@ -68,13 +68,14 @@ const CheckoutScreen = (props: any) => {
       if (!_.isEmpty(auth?.profile_picture)) {
         options.image = auth.profile_picture;
       }
-      RazorpayCheckout.open(options).then((data:any)=>{
-        setState({bookingId: res.data._id});
-        paymentRef.current.openModal();
-        }).catch((err:any) => {
-          console.log('res',err);
+      RazorpayCheckout.open(options)
+        .then((data: any) => {
+          setState({bookingId: res.data._id});
+          paymentRef.current.openModal();
+        })
+        .catch((err: any) => {
+          console.log('res', err);
         });
-  
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -85,11 +86,13 @@ const CheckoutScreen = (props: any) => {
       ? Math.round(
           cart.totalAmount + 100 - (cart.totalAmount * voucher.discount) / 100,
         )
-      : Math.round(cart.totalAmount - 100);
+      : voucher?.name === 'Free Shipping'
+      ? Math.round(cart.totalAmount)
+      : Math.round(cart.totalAmount + 100);
   };
 
   return (
-    <Container>
+    <Container >
       <View className="mx-[20px]">
         <View className="items-center flex-row justify-center my-5">
           <TouchableOpacity

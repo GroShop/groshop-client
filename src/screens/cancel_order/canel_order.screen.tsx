@@ -4,10 +4,11 @@ import {
   Assets,
   Container,
   ImageComponent,
+  LottieComponent,
   PrimaryButton,
   Textarea,
 } from 'utils/imports.utils';
-import {Failure, useSetState} from 'utils/functions.utils';
+import {Failure, Success, useSetState} from 'utils/functions.utils';
 import {useForm} from 'react-hook-form';
 import Models from 'imports/models.imports';
 import {BOOKING} from 'utils/constant.utils';
@@ -23,6 +24,7 @@ const CancelOrder = (props: any) => {
 
   const cancelBooking = async () => {
     try {
+      setState({loading: true})
       let query: any = {
         booking_id: bookingId,
         status: BOOKING.CANCELLED,
@@ -47,10 +49,12 @@ const CancelOrder = (props: any) => {
       reset({
         other: '',
       });
-      setState({cancel_reason: ''});
+      setState({cancel_reason: '',loading: false});
+      Success('SuccessFully Cancelled');
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 
@@ -88,7 +92,10 @@ const CancelOrder = (props: any) => {
             </Text>
           </View>
         </View>
-        <View className="w-full my-3 ">
+       {  state.loading ? 
+        <View className="h-[80%]">
+          <LottieComponent src={Assets.loader}  />
+        </View>:<View className="w-full my-3 ">
           <View>
             <Text className="font-merriweather-semibold text-secondary-black text-[16px] ">
               Please select your cancelation reason
@@ -136,7 +143,7 @@ const CancelOrder = (props: any) => {
           <View className="mt-7">
             <PrimaryButton onPress={cancelBooking} text={'Confirm'} />
           </View>
-        </View>
+        </View>}
       </View>
     </Container>
   );

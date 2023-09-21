@@ -1,6 +1,5 @@
 import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
-import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
-import {ScrollView} from 'react-native-gesture-handler';
+import {Assets, Container, ImageComponent, LottieComponent, ScrollViewComponent} from '../../utils/imports.utils';
 import {Failure, useSetState} from '../../utils/functions.utils';
 import Models from '../../imports/models.imports';
 import {useEffect} from 'react';
@@ -11,23 +10,27 @@ const WishList = (props: any) => {
   });
   const getWishlist = async () => {
     try {
+      setState({loading: true})
       let res: any = await Models.wishlist.getWishlist({});
-      setState({wishlistData: res.data.wishlist_product});
+      setState({wishlistData: res.data.wishlist_product, loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
   const removeWishlist = async (data: any) => {
     try {
+      setState({loading: true})
       let query = {
         wishlist_product: data,
       };
       let res: any = await Models.wishlist.removeWishlist(query);
-      setState({wishlistData: res.data.wishlist_product});
+      setState({wishlistData: res.data.wishlist_product, loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 
@@ -50,7 +53,10 @@ const WishList = (props: any) => {
           </Text>
         </View>
       </View>
-      <ScrollView className="mb-5 " showsVerticalScrollIndicator={false}>
+      {state.loading ? 
+        <View className="h-[80%]">
+          <LottieComponent src={Assets.loader}  />
+        </View>: <ScrollViewComponent>
         <View className="space-y-4 m-5 relative">
           {state.wishlistData.map((item: any, index: number) => (
             <View
@@ -125,7 +131,7 @@ const WishList = (props: any) => {
             </View>
           ))}
         </View>
-      </ScrollView>
+      </ScrollViewComponent>}
     </Container>
   );
 };

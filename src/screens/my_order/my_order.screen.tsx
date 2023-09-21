@@ -3,9 +3,8 @@ import React, {useEffect} from 'react';
 import {
   Assets,
   Container,
-  FilterSlider,
   ImageComponent,
-  ProgressBar,
+  LottieComponent,
   RatingComponent,
   ScrollViewComponent,
 } from 'utils/imports.utils';
@@ -13,8 +12,6 @@ import {useRoute} from '@react-navigation/native';
 import {
   Failure,
   isoToDateConvert,
-  timeConversion,
-  unixTimeToDateConvert,
   useSetState,
 } from 'utils/functions.utils';
 import Models from 'imports/models.imports';
@@ -26,19 +23,20 @@ const MyOrder = (props: any) => {
   });
   const getManyBooking = async () => {
     try {
+      setState({loading: true})
       let res: any = await Models.booking.getManyBooking({});
-      setState({bookingData: res.data});
+      setState({bookingData: res.data ,loading: false});
       console.log('');
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 
   useEffect(() => {
     getManyBooking();
   }, []);
-  console.log('state.bookingData', JSON.stringify(state.bookingData));
 
   const ratingProduct = (e: number, id?: string) => {
     console.log('e', e);
@@ -58,7 +56,10 @@ const MyOrder = (props: any) => {
           </Text>
         </View>
       </View>
-      <ScrollViewComponent className="space-y-4 ">
+      {state.loading ? 
+        <View className="h-[80%]">
+          <LottieComponent src={Assets.loader}  />
+        </View>:<ScrollViewComponent className="space-y-4 ">
         {!_.isEmpty(state.bookingData) ? (
           state.bookingData.map((item: any, index: number) => (
             <View
@@ -144,7 +145,7 @@ const MyOrder = (props: any) => {
         ) : (
           <></>
         )}
-      </ScrollViewComponent>
+      </ScrollViewComponent>}
 
       {/* <FilterSlider
               onPress={(value: any) => setState({tags: value})}

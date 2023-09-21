@@ -1,8 +1,4 @@
 import React, {forwardRef, useImperativeHandle, useRef} from 'react';
-import {Modal, Text, Pressable, View, TouchableOpacity} from 'react-native';
-import ImageComponent from '../image/image.component';
-import {Ratio, useSetState} from '../../../utils/functions.utils';
-import Assets from '../../../imports/assets.imports';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 interface IBottomModal {

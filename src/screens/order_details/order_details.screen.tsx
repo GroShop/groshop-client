@@ -5,6 +5,7 @@ import {
   CheckoutCart,
   Container,
   ImageComponent,
+  LottieComponent,
   PrimaryButton,
   ScrollViewComponent,
 } from 'utils/imports.utils';
@@ -18,7 +19,6 @@ import {
 } from 'utils/functions.utils';
 import {BOOKING} from 'utils/constant.utils';
 import _ from 'lodash';
-import {SwipeListView} from 'react-native-swipe-list-view';
 
 const OrderDetails = (props: any) => {
   const route: any = useRoute();
@@ -30,14 +30,16 @@ const OrderDetails = (props: any) => {
 
   const getBooking = async () => {
     try {
+      setState({loading: true})
       let query = {
         booking_id: bookingId,
       };
       let res: any = await Models.booking.getBooking(query);
-      setState({bookingData: res.data});
+      setState({bookingData: res.data,loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
+      setState({loading: false})
     }
   };
 
@@ -49,7 +51,7 @@ const OrderDetails = (props: any) => {
 
   return (
     <Container>
-      {!_.isEmpty(state.bookingData) && (
+      
         <View className="mx-[20px]">
           <View className="items-center flex-row justify-center my-5">
             <TouchableOpacity
@@ -74,6 +76,11 @@ const OrderDetails = (props: any) => {
               </Text>
             </View>
           </View>
+          {state.loading ? 
+        <View className="h-[80%]">
+          <LottieComponent src={Assets.loader}  />
+        </View>:
+          !_.isEmpty(state.bookingData) && (
           <ScrollViewComponent inlineStyle={{paddingBottom: 80}}>
             <View className="  flex-row  justify-between items-center mt-5">
               <Text className="font-raleway-semi-bold text-secondary-black text-[20px]">
@@ -219,8 +226,8 @@ const OrderDetails = (props: any) => {
               />
             </View>
           </ScrollViewComponent>
-        </View>
       )}
+        </View>
     </Container>
   );
 };
