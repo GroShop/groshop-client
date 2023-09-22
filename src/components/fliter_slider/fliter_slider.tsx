@@ -1,13 +1,12 @@
 import {View, Text, FlatList, Animated} from 'react-native';
 import React, {useRef} from 'react';
-import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
-import {useSetState, width} from '../../utils/functions.utils';
+import {useSetState} from '../../utils/functions.utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-interface IFilterSlider{
-  data:any;
-  onPress:any;
-  active:string;
+interface IFilterSlider {
+  data: any;
+  onPress: any;
+  active: string;
 }
 
 const FilterSlider = (props: IFilterSlider) => {
@@ -16,7 +15,6 @@ const FilterSlider = (props: IFilterSlider) => {
     dotIndex: 0,
     active: props.active,
   });
-
 
   const handleScroll = (event: any) => {
     Animated.event(
@@ -39,9 +37,7 @@ const FilterSlider = (props: IFilterSlider) => {
     // setState({dotIndex: viewableItems[0].index});
   }).current;
 
-  const handleSlider = (data: any) => {
-   
-  };
+  const handleSlider = (data: any) => {};
 
   const handleviewabilityConfig = useRef({
     itemVisiblePercentThreshold: 50,
@@ -56,7 +52,9 @@ const FilterSlider = (props: IFilterSlider) => {
             className={`mr-4  ${
               data.item === state.active && 'border-b-2 border-primary-green '
             }pb-1`}
-            onPress={() =>  {setState({active: data.item}),props.onPress(data.item)}}
+            onPress={() => {
+              setState({active: data.item}), props.onPress(data.item);
+            }}
             activeOpacity={0.7}
             key={index}>
             <Text

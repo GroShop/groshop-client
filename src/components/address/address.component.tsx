@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useEffect} from 'react';
-import {Assets, ImageComponent} from 'utils/imports.utils';
-import {useSetState} from 'utils/functions.utils';
+import {Assets, ImageComponent} from '../../utils/imports.utils';
+import {useSetState} from '../../utils/functions.utils';
 
 interface IAddressProps {
   index?: number;

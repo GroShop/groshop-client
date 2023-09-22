@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { Assets, Container, ImageComponent } from 'utils/imports.utils'
+import {View, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
 
-const CartComponent = (props:any) => {
+const CartComponent = (props: any) => {
   return (
     <Container>
       <View className="items-center flex-row justify-center w-[90%] mx-auto h-[10%]">
@@ -18,8 +18,8 @@ const CartComponent = (props:any) => {
           </Text>
         </View>
       </View>
-      </Container>
-  )
-}
+    </Container>
+  );
+};
 
-export default CartComponent
+export default CartComponent;

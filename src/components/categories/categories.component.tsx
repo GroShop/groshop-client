@@ -1,7 +1,7 @@
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
-import React, {useEffect} from 'react';
-import {Assets, ImageComponent} from 'utils/imports.utils';
-import {useSetState} from 'utils/functions.utils';
+import React from 'react';
+import {ImageComponent} from '../../utils/imports.utils';
+import {useSetState} from '../../utils/functions.utils';
 
 interface ICategories {
   data?: any;

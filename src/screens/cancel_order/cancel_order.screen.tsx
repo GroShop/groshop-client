@@ -7,11 +7,11 @@ import {
   LottieComponent,
   PrimaryButton,
   Textarea,
-} from 'utils/imports.utils';
-import {Failure, Success, useSetState} from 'utils/functions.utils';
+} from '../../utils/imports.utils';
+import {Failure, Success, useSetState} from '../../utils/functions.utils';
 import {useForm} from 'react-hook-form';
-import Models from 'imports/models.imports';
-import {BOOKING} from 'utils/constant.utils';
+import Models from '../../imports/models.imports';
+import {BOOKING} from '../../utils/constant.utils';
 import {useRoute} from '@react-navigation/native';
 import _ from 'lodash';
 
@@ -24,7 +24,7 @@ const CancelOrder = (props: any) => {
 
   const cancelBooking = async () => {
     try {
-      setState({loading: true})
+      setState({loading: true});
       let query: any = {
         booking_id: bookingId,
         status: BOOKING.CANCELLED,
@@ -49,12 +49,12 @@ const CancelOrder = (props: any) => {
       reset({
         other: '',
       });
-      setState({cancel_reason: '',loading: false});
+      setState({cancel_reason: '', loading: false});
       Success('SuccessFully Cancelled');
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
-      setState({loading: false})
+      setState({loading: false});
     }
   };
 
@@ -92,58 +92,61 @@ const CancelOrder = (props: any) => {
             </Text>
           </View>
         </View>
-       {  state.loading ? 
-        <View className="h-[80%]">
-          <LottieComponent src={Assets.loader}  />
-        </View>:<View className="w-full my-3 ">
-          <View>
-            <Text className="font-merriweather-semibold text-secondary-black text-[16px] ">
-              Please select your cancelation reason
-            </Text>
+        {state.loading ? (
+          <View className="h-[80%]">
+            <LottieComponent src={Assets.loader} />
           </View>
-          <View className="space-y-4 my-3">
-            {reasonData.map((item: string, index: number) => (
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() =>
-                  setState(
-                    state.cancel_reason === item
-                      ? {cancel_reason: ''}
-                      : {cancel_reason: item},
-                  )
-                }
-                className="flex-row items-center space-x-1  mt-1"
-                key={index}>
-                <ImageComponent
-                  svg
-                  src={
-                    item === state.cancel_reason
-                      ? Assets.checkBoxActive
-                      : Assets.checkBoxInActive
-                  }
-                  height={26}
-                  width={26}
-                />
-                <Text className="font-merriweather-regular text-secondary-black text-[14px]">
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {state.cancel_reason === 'Other / Change of mind' && (
-            <View className="w-full mb-6 mt-2">
-              <Textarea
-                textAreaSize={20}
-                type="text"
-                control={control}
-                name="other"
-              />
+        ) : (
+          <View className="w-full my-3 ">
+            <View>
+              <Text className="font-merriweather-semibold text-secondary-black text-[16px] ">
+                Please select your cancelation reason
+              </Text>
             </View>
-          )}
-          <View className="mt-7">
-            <PrimaryButton onPress={cancelBooking} text={'Confirm'} />
+            <View className="space-y-4 my-3">
+              {reasonData.map((item: string, index: number) => (
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() =>
+                    setState(
+                      state.cancel_reason === item
+                        ? {cancel_reason: ''}
+                        : {cancel_reason: item},
+                    )
+                  }
+                  className="flex-row items-center space-x-1  mt-1"
+                  key={index}>
+                  <ImageComponent
+                    svg
+                    src={
+                      item === state.cancel_reason
+                        ? Assets.checkBoxActive
+                        : Assets.checkBoxInActive
+                    }
+                    height={26}
+                    width={26}
+                  />
+                  <Text className="font-merriweather-regular text-secondary-black text-[14px]">
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            {state.cancel_reason === 'Other / Change of mind' && (
+              <View className="w-full mb-6 mt-2">
+                <Textarea
+                  textAreaSize={20}
+                  type="text"
+                  control={control}
+                  name="other"
+                />
+              </View>
+            )}
+            <View className="mt-7">
+              <PrimaryButton onPress={cancelBooking} text={'Confirm'} />
+            </View>
           </View>
-        </View>}
+        )}
       </View>
     </Container>
   );

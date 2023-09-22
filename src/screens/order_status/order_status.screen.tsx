@@ -1,9 +1,9 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, { useEffect } from 'react';
-import {Assets, Container, ImageComponent, LottieComponent, ProgressBar} from 'utils/imports.utils';
+import {Assets, Container, ImageComponent, LottieComponent, ProgressBar} from '../../utils/imports.utils';
 import { useRoute } from '@react-navigation/native';
-import { Failure, useSetState } from 'utils/functions.utils';
-import Models from 'imports/models.imports';
+import { Failure, useSetState } from '../../utils/functions.utils';
+import Models from '../../imports/models.imports';
 import _ from 'lodash';
 
 const OrderStatus = (props: any) => {

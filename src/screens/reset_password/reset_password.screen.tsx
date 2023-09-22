@@ -11,14 +11,8 @@ import {
 } from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {
-  Failure,
-  Ratio,
-  Success,
-  useSetState,
-} from '../../utils/functions.utils';
+import {Failure, Success, useSetState} from '../../utils/functions.utils';
 import Models from '../../imports/models.imports';
-import {auth} from '../../utils/redux.utils';
 import {useSelector} from 'react-redux';
 
 const ResetPassword = (props: any) => {

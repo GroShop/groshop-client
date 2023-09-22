@@ -27,15 +27,13 @@ const TextArea = (props: ITextAreaProps) => {
           return (
             <>
               <View
-                className={`flex-row items-start justify-start p-2.5 bg-input-bg h-[100px] rounded-lg ${props.inputWrapperStyle} ${
-                  error && 'border-error border-[1px]'
-                }`}>
+                className={`flex-row items-start justify-start p-2.5 bg-input-bg h-[100px] rounded-lg ${
+                  props.inputWrapperStyle
+                } ${error && 'border-error border-[1px]'}`}>
                 <TextInput
-                 editable
-                 multiline
-                  className={`${
-                    props.inputStyle
-                  } text-secondary-black  h-full w-full rounded-lg`}
+                  editable
+                  multiline
+                  className={`${props.inputStyle} text-secondary-black  h-full w-full rounded-lg`}
                   placeholder={props.placeholder}
                   placeholderTextColor={
                     props.placeholderColor ? props.placeholderColor : '#ACADAC'

@@ -57,7 +57,6 @@ const searchProduct = {
     });
     return promise;
   },
-
-}
+};
 
 export default searchProduct;

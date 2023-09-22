@@ -9,15 +9,13 @@ import {
 import {Failure, useSetState} from '../../utils/functions.utils';
 import {useSelector} from 'react-redux';
 import {FlatList} from 'react-native';
+// @ts-ignore
 import Slider from 'react-native-slider';
 import _ from 'lodash';
 import Models from '../../imports/models.imports';
 import {filterProduct} from '../../utils/redux.utils';
 
 const FilterProduct = (props: any) => {
-  // redux
-  const auth: any = useSelector((state: any) => state.auth.data);
-
   // state
   const [state, setState] = useSetState({
     categories: '',

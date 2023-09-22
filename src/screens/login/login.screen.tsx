@@ -1,4 +1,4 @@
-import {View, Text,TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import {
   Assets,
@@ -11,18 +11,14 @@ import {
 import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {z} from 'zod';
 import {
   Failure,
-  Height,
   Ratio,
   Success,
-  Width,
   useSetState,
 } from '../../utils/functions.utils';
-import {Models} from '../../imports/models.imports';
+import Models from '../../imports/models.imports';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { auth } from 'utils/redux.utils';
 
 const Login = (props: any) => {
   const [state, setState] = useSetState({

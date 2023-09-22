@@ -12,9 +12,9 @@ import {
   ScrollViewComponent,
   SearchInput,
 } from '../../utils/imports.utils';
-import Models from 'imports/models.imports';
-import {Failure, useSetState} from 'utils/functions.utils';
-import {auth} from 'utils/redux.utils';
+import Models from '../../imports/models.imports';
+import {Failure, useSetState} from '../../utils/functions.utils';
+import {auth} from '../../utils/redux.utils';
 import _ from 'lodash';
 
 const HomeScreen = (props: any) => {
@@ -23,14 +23,14 @@ const HomeScreen = (props: any) => {
     user: {},
     categories: '',
     tags: '',
-    loading: false
+    loading: false,
   });
   // redux
   // const auth:any = useSelector((state:any)=>{state.auth.data})
   let slides = [Assets.productIcon, Assets.productIcon, Assets.productIcon];
   const getManyProduct = async (data?: string, key?: string) => {
     try {
-     setState({loading: true})
+      setState({loading: true});
       let query: any = {};
       if (!_.isEmpty(state.categories)) {
         query.categories = state.categories;
@@ -39,11 +39,11 @@ const HomeScreen = (props: any) => {
         query.tag = state.tags;
       }
       let res: any = await Models.product.getManyProduct(query);
-      setState({allProductData: res.data.docs,loading: false});
+      setState({allProductData: res.data.docs, loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
-      setState({loading: false})
+      setState({loading: false});
     }
   };
 
@@ -75,7 +75,7 @@ const HomeScreen = (props: any) => {
   ];
 
   return (
-    <Container >
+    <Container>
       <ScrollViewComponent>
         <View className="items-center flex-row justify-between py-4 px-[20px] ">
           <View>
@@ -120,10 +120,15 @@ const HomeScreen = (props: any) => {
             active="All"
           />
         </View>
-        {state.loading ? 
-        <View className="flex-1">
-          <LottieComponent src={Assets.product_loader} height={80} width={80} />
-        </View>:!_.isEmpty(state.allProductData) ? (
+        {state.loading ? (
+          <View className="flex-1">
+            <LottieComponent
+              src={Assets.product_loader}
+              height={80}
+              width={80}
+            />
+          </View>
+        ) : !_.isEmpty(state.allProductData) ? (
           <View className="w-full flex-row justify-between flex-wrap px-5 ">
             <ProductCard {...props} data={state.allProductData} />
           </View>

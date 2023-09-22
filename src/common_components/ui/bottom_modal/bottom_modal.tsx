@@ -18,6 +18,7 @@ const BottomModal = forwardRef((props: IBottomModal, ref) => {
   }));
 
   return (
+    // @ts-ignore
     <RBSheet
       keyboardAvoidingViewEnabled={false}
       ref={modalRef}

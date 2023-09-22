@@ -1,7 +1,7 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {Rating} from 'react-native-ratings';
-import {useSetState} from 'utils/functions.utils';
+import {useSetState} from '../../utils/functions.utils';
 
 interface IRatingComponent {
   RatingValue?: number;

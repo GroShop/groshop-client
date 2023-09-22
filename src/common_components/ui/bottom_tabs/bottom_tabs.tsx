@@ -10,7 +10,7 @@ import CartScreen from '../../../screens/cart/cart.screen';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabs = (props:any) => {
+const BottomTabs = (props: any) => {
   const CustomBarButton = (props: any) => (
     <TouchableOpacity
       activeOpacity={0.6}
@@ -94,7 +94,7 @@ const BottomTabs = (props:any) => {
           tabPress: e => {
             // Prevent default action
             e.preventDefault();
-            props.navigation.navigate("CartScreen")
+            props.navigation.navigate('CartScreen');
           },
         }}
         options={{

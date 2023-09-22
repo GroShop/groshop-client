@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   Assets,
@@ -7,7 +7,6 @@ import {
   ImageSlider,
   PrimaryButton,
   RatingComponent,
-  ScrollViewComponent,
 } from '../../utils/imports.utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useRoute} from '@react-navigation/native';
@@ -25,7 +24,7 @@ const ProductScreen = (props: any) => {
     productData: {},
     productWeight: 1,
     wishlistProduct: [],
-    loading: false
+    loading: false,
   });
 
   const createSearchProduct = async () => {
@@ -41,7 +40,7 @@ const ProductScreen = (props: any) => {
     try {
       setState({loading: true});
       let res: any = await Models.product.getProduct(productId);
-      setState({productData: res.data,loading: false});
+      setState({productData: res.data, loading: false});
       createSearchProduct();
     } catch (error: any) {
       console.log('error', error);
@@ -53,7 +52,7 @@ const ProductScreen = (props: any) => {
     try {
       setState({loading: true});
       let res: any = await Models.wishlist.getWishlist({});
-      setState({wishlistProduct: res.data.wishlist_product,loading: false});
+      setState({wishlistProduct: res.data.wishlist_product, loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -95,7 +94,10 @@ const ProductScreen = (props: any) => {
   }, [productId]);
 
   return (
-    <Container backgroundColor="#E6F8D5" lottie={Assets.loader} loading={state.loading}>
+    <Container
+      backgroundColor="#E6F8D5"
+      lottie={Assets.loader}
+      loading={state.loading}>
       {/* <ScrollViewComponent> */}
       <View className="w-full h-[358px]">
         <View className="w-full h-[250px] bg-success relative  rounded-b-full"></View>
@@ -150,7 +152,11 @@ const ProductScreen = (props: any) => {
           Farm Shop
         </Text>
         <View className="items-center  flex-row py-1 space-x-2">
-          <RatingComponent RatingValue={state.productData?.rating} readonly={true}  imageSize={24}/>
+          <RatingComponent
+            RatingValue={state.productData?.rating}
+            readonly={true}
+            imageSize={24}
+          />
           <View className="flex-row items-center space-x-1">
             <Text className="font-merriweather-regular  text-secondary-black text-xs">
               {state.productData?.rating}

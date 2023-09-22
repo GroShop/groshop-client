@@ -1,6 +1,5 @@
-import {View, Text, TextInput, Image, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput,TouchableOpacity} from 'react-native';
 import React from 'react';
-import Assets from '../../../imports/assets.imports';
 import {Controller} from 'react-hook-form';
 import ImageComponent from '../image/image.component';
 
@@ -18,7 +17,7 @@ interface IInputProps {
   inputWrapperStyle?: string;
   securityPassword?: boolean;
   onClick?: any;
-  keyboardType?:any
+  keyboardType?: any;
   currency?: string;
 }
 
@@ -33,12 +32,14 @@ const Input = (props: IInputProps) => {
           return (
             <>
               <View
-                className={`flex-row items-center justify-between rounded-lg ${props.inputWrapperStyle} ${
-                  error && 'border-error border-[1px]'
-                }`}>
-                  {props.currency && (
+                className={`flex-row items-center justify-between rounded-lg ${
+                  props.inputWrapperStyle
+                } ${error && 'border-error border-[1px]'}`}>
+                {props.currency && (
                   <View>
-                    <Text className='text-secondary-black font-merriweather-regular  text-[14px]'>{props.currency} </Text>
+                    <Text className="text-secondary-black font-merriweather-regular  text-[14px]">
+                      {props.currency}{' '}
+                    </Text>
                   </View>
                 )}
                 <TextInput
@@ -60,7 +61,12 @@ const Input = (props: IInputProps) => {
                 />
                 {props.icon && (
                   <View>
-                    <ImageComponent src={props.icon} height={20} width={22} svg/>
+                    <ImageComponent
+                      src={props.icon}
+                      height={20}
+                      width={22}
+                      svg
+                    />
                   </View>
                 )}
                 {props.iconOnPress && (

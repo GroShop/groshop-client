@@ -27,4 +27,3 @@ export const Cart = (payload: any) => {
     payload: payload,
   });
 };
-

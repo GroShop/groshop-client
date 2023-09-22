@@ -1,7 +1,7 @@
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import { Text, ScrollView, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Assets, ImageComponent} from 'utils/imports.utils';
-import {useSetState} from 'utils/functions.utils';
+import {Assets, ImageComponent} from '../../utils/imports.utils';
+import {useSetState} from '../../utils/functions.utils';
 
 interface IFilterSearch {
   searchData?: any;
@@ -11,9 +11,7 @@ const FilterSearch = (props: IFilterSearch) => {
   const [state, setState] = useSetState({
     product: '',
   });
-  const filterSearch = [
-  "Orange","Guvi","Apple","Mango","Veel"
-  ];  
+  const filterSearch = ['Orange', 'Guvi', 'Apple', 'Mango', 'Veel'];
 
   return (
     <ScrollView className="w-full">

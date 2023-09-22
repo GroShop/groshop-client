@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
-import {StyleSheet} from "react-native";
-import FastImage from "react-native-fast-image";
-
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 interface ImageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,16 +34,17 @@ const ImageComponent = (props: ImageProps) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isUrl = (source: any) => {
-    if (typeof source === "string") return true;
-    return false;``
+    if (typeof source === 'string') return true;
+    return false;
+    ``;
   };
 
   return (
     <>
       {svg ? (
         <props.src
-          width={width ? width : "100%"}
-          height={height ? height : "100%"}
+          width={width ? width : '100%'}
+          height={height ? height : '100%'}
           styles={{
             marginLeft: left,
             marginRight: right,
@@ -63,7 +63,7 @@ const ImageComponent = (props: ImageProps) => {
               marginBottom: bottom,
               marginTop: top,
               borderRadius: radius || 0,
-              resizeMode: resize ? resize : "contain",
+              resizeMode: resize ? resize : 'contain',
             },
             // @ts-ignore
             width && {width},
@@ -72,10 +72,10 @@ const ImageComponent = (props: ImageProps) => {
           source={
             isUrl(src)
               ? {
-                uri: src,
-                priority: FastImage.priority.high,
-                cache: FastImage.cacheControl.immutable,
-              }
+                  uri: src,
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.immutable,
+                }
               : src
           }
           resizeMode={resize ? resize : FastImage.resizeMode.contain}

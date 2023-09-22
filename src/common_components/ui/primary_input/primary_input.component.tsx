@@ -1,6 +1,5 @@
-import {View, Text, TextInput, Image, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import React from 'react';
-import Assets from '../../../imports/assets.imports';
 import {Controller} from 'react-hook-form';
 import ImageComponent from '../image/image.component';
 
@@ -31,9 +30,9 @@ const PrimaryInput = (props: IPrimaryInputProps) => {
           return (
             <>
               <View
-                className={`flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ${props.inputWrapperStyle} ${
-                  error && 'border-error border-[1px]'
-                }`}>
+                className={`flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ${
+                  props.inputWrapperStyle
+                } ${error && 'border-error border-[1px]'}`}>
                 <TextInput
                   className={`${
                     props.inputStyle
@@ -52,7 +51,12 @@ const PrimaryInput = (props: IPrimaryInputProps) => {
                 />
                 {props.icon && (
                   <View>
-                    <ImageComponent src={props.icon} height={20} width={22} svg/>
+                    <ImageComponent
+                      src={props.icon}
+                      height={20}
+                      width={22}
+                      svg
+                    />
                   </View>
                 )}
                 {props.iconOnPress && (

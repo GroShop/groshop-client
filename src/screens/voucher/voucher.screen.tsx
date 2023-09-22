@@ -1,11 +1,5 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-} from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
+import React, {useEffect} from 'react';
 import {
   Assets,
   Container,

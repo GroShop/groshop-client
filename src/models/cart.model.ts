@@ -71,6 +71,6 @@ const cart = {
     });
     return promise;
   },
-}
+};
 
-export default cart
+export default cart;

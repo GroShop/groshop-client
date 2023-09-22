@@ -8,7 +8,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {Failure, Success, useSetState} from '../../utils/functions.utils';
 import auth from '@react-native-firebase/auth';
-import Models from 'imports/models.imports';
+import Models from '../../imports/models.imports';
 import {socialLogIn} from '../../utils/constant.utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -48,7 +48,7 @@ const SocialMedia = (props: any) => {
           console.log(error);
         });
       let res: any = await Models.auth.socialSignIn(query);
-      console.log("ffff",res.token);
+      console.log('ffff', res.token);
       await AsyncStorage.setItem('token', res.token);
       props.navigation.reset({
         index: 0,
@@ -72,7 +72,7 @@ const SocialMedia = (props: any) => {
         username: userInfo.user.name,
       };
       let res: any = await Models.auth.socialSignIn(query);
-      console.log("ffff",res);
+      console.log('ffff', res);
       await AsyncStorage.setItem('token', res.token);
       props.navigation.reset({
         index: 0,

@@ -1,6 +1,7 @@
 import Models from '../../imports/models.imports';
 import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
+// @ts-ignore
 import OTPTextInput from 'react-native-otp-textinput';
 import {useSelector} from 'react-redux';
 import {Failure, Success} from '../../utils/functions.utils';

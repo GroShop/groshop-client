@@ -2,7 +2,6 @@ import {View, Text, TouchableOpacity, Platform} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {
   Assets,
-  BottomModal,
   Container,
   ImageComponent,
   InviteModal,
@@ -11,13 +10,13 @@ import {
   PrimaryInput,
   ScrollViewComponent,
   Validation,
-} from 'utils/imports.utils';
+} from '../../utils/imports.utils';
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Failure, Success, imgToUrl, useSetState} from 'utils/functions.utils';
 import _ from 'lodash';
-import Models from 'imports/models.imports';
-import {auth} from 'utils/redux.utils';
+import Models from '../../imports/models.imports';
+import {auth} from '../../utils/redux.utils';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useSelector} from 'react-redux';
@@ -32,7 +31,7 @@ const EditProfile = (props: any) => {
   const [state, setState] = useSetState({
     profilePic: '',
     email: '',
-    loading: false
+    loading: false,
   });
 
   // local data
@@ -47,46 +46,45 @@ const EditProfile = (props: any) => {
     },
   ];
 
-  const cameraHandel = async(permission: any) => {
-    setState({loading: true})
+  const cameraHandel = async (permission: any) => {
+    setState({loading: true});
     try {
-      let camera = await request(permission)
+      let camera = await request(permission);
       if (camera === RESULTS.GRANTED) {
-          let imgPicker= await  ImagePicker.openCamera({
-            width: 500,
-            height: 500,
-            cropping: true,
-            mediaType: 'photo',
-          })
-            let img: any = await imgToUrl(imgPicker);
-            setState({profilePic: img.url,  loading:false});
-            profileRef.current.closeModal();
+        let imgPicker = await ImagePicker.openCamera({
+          width: 500,
+          height: 500,
+          cropping: true,
+          mediaType: 'photo',
+        });
+        let img: any = await imgToUrl(imgPicker);
+        setState({profilePic: img.url, loading: false});
+        profileRef.current.closeModal();
       }
     } catch (error) {
-      Failure('Profile not Uploaded')
-      setState({loading: false})
+      Failure('Profile not Uploaded');
+      setState({loading: false});
     }
-    
   };
 
-  const galleryHandel = async(permission: any) => {
-    setState({loading: true})
+  const galleryHandel = async (permission: any) => {
+    setState({loading: true});
     try {
-      let gallery = await request(permission)
+      let gallery = await request(permission);
       if (gallery === RESULTS.GRANTED) {
-        let imgPicker= await ImagePicker.openPicker({
+        let imgPicker = await ImagePicker.openPicker({
           mediaType: 'photo',
           width: 500,
           height: 500,
           cropping: true,
-        })
+        });
         let img: any = await imgToUrl(imgPicker);
-        setState({profilePic: img.url,  loading:false});
+        setState({profilePic: img.url, loading: false});
         profileRef.current.closeModal();
       }
     } catch (error) {
-      Failure('Profile not Uploaded')
-      setState({loading: false})
+      Failure('Profile not Uploaded');
+      setState({loading: false});
     }
     // request(permission).then(async result => {
     //   if (result === RESULTS.GRANTED) {
@@ -109,7 +107,7 @@ const EditProfile = (props: any) => {
 
   const editProfile = async (data: any) => {
     try {
-      setState({loading: true})
+      setState({loading: true});
       let query: any = {
         username: data.username,
       };
@@ -120,11 +118,11 @@ const EditProfile = (props: any) => {
         query.profile_pic = state.profilePic;
       }
       const res: any = await Models.auth.editUser(query);
-      setState({loading: false})
+      setState({loading: false});
       Success('Profile updated successfully');
       auth(res.data);
     } catch (error: any) {
-      setState({loading: false})
+      setState({loading: false});
       Failure(error.message);
     }
   };
@@ -160,114 +158,112 @@ const EditProfile = (props: any) => {
   return (
     <Container>
       <View className="mx-[20px] h-full">
-          <View className="items-center flex-row justify-center my-6">
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => props.navigation.goBack()}
-              className="">
-              <ImageComponent
-                src={Assets.backIcon}
-                height={24}
-                width={24}
-                svg
-              />
-            </TouchableOpacity>
-            <View className="items-center w-[90%] ">
-              <Text className="font-raleway-semi-bold text-secondary-black text-[20px]  mr-[15px]">
-                Edit Profile
-              </Text>
-            </View>
+        <View className="items-center flex-row justify-center my-6">
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => props.navigation.goBack()}
+            className="">
+            <ImageComponent src={Assets.backIcon} height={24} width={24} svg />
+          </TouchableOpacity>
+          <View className="items-center w-[90%] ">
+            <Text className="font-raleway-semi-bold text-secondary-black text-[20px]  mr-[15px]">
+              Edit Profile
+            </Text>
           </View>
-          {state.loading ? 
-        <View className="h-[80%]">
-          <LottieComponent src={Assets.loader}  />
-        </View>:
-        <>
-          <ScrollViewComponent>
-          <View className="w-full items-center justify-center relative my-3">
-            <TouchableOpacity
-              className="flex-row space-x-3"
-              onPress={() => {
-                profileRef.current.openModal();
-              }}>
-        
-             { !_.isEmpty(state.profilePic) ? (
-                <ImageComponent
-                  src={state.profilePic}
-                  height={110}
-                  width={110}
-                  radius={100}
-                />
-              ) : (
-                <ImageComponent
-                  src={Assets.profileIcon}
-                  height={110}
-                  width={110}
-                  svg
-                />
-              )}
-              <View className="bg-primary-green w-[32px] h-[32px] rounded-full items-center justify-center  absolute bottom-0 right-1">
-                <ImageComponent
-                  src={Assets.cameraIcon}
-                  height={24}
-                  width={24}
-                  svg
-                />
-              </View>
-            </TouchableOpacity>
-            <InviteModal
-              ref={profileRef}
-              type="uploadProfile"
-              data={profileData}
-              onPress={(item: string) => {
-                if (item === 'Camera') {
-                  if (Platform.OS === 'ios') {
-                    cameraHandel(PERMISSIONS.IOS.CAMERA);
-                  } else {
-                    cameraHandel(PERMISSIONS.ANDROID.CAMERA);
-                  }
-                } else {
-                  if (Platform.OS === 'ios') {
-                    galleryHandel(PERMISSIONS.IOS.PHOTO_LIBRARY);
-                  } else {
-                    galleryHandel(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
-                  }
-                }
-              }}
-            />
-            <View className="space-y-4 my-8">
-              <View>
-                <PrimaryInput
-                  type="text"
-                  placeholder="Full Name"
-                  control={control}
-                  name="username"
-                />
-              </View>
-              <View className="flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ">
-                <Text className="text-secondary-black font-merriweather-semibold text-[14px]">
-                  {state.email}
-                </Text>
-              </View>
-              <View>
-                <PrimaryInput
-                  type="text"
-                  placeholder="Phone Number"
-                  control={control}
-                  name="phone_number"
-                />
-              </View>
-            </View>
-          </View>
-        </ScrollViewComponent>
-   
-        <View className="flex-1 justify-end pb-6">
-          <PrimaryButton
-            onClick={() => handleSubmit(editProfile)}
-            text={'Save'}
-          />
         </View>
-        </>}
+        {state.loading ? (
+          <View className="h-[80%]">
+            <LottieComponent src={Assets.loader} />
+          </View>
+        ) : (
+          <>
+            <ScrollViewComponent>
+              <View className="w-full items-center justify-center relative my-3">
+                <TouchableOpacity
+                  className="flex-row space-x-3"
+                  onPress={() => {
+                    profileRef.current.openModal();
+                  }}>
+                  {!_.isEmpty(state.profilePic) ? (
+                    <ImageComponent
+                      src={state.profilePic}
+                      height={110}
+                      width={110}
+                      radius={100}
+                    />
+                  ) : (
+                    <ImageComponent
+                      src={Assets.profileIcon}
+                      height={110}
+                      width={110}
+                      svg
+                    />
+                  )}
+                  <View className="bg-primary-green w-[32px] h-[32px] rounded-full items-center justify-center  absolute bottom-0 right-1">
+                    <ImageComponent
+                      src={Assets.cameraIcon}
+                      height={24}
+                      width={24}
+                      svg
+                    />
+                  </View>
+                </TouchableOpacity>
+                <InviteModal
+                  ref={profileRef}
+                  type="uploadProfile"
+                  data={profileData}
+                  onPress={(item: string) => {
+                    if (item === 'Camera') {
+                      if (Platform.OS === 'ios') {
+                        cameraHandel(PERMISSIONS.IOS.CAMERA);
+                      } else {
+                        cameraHandel(PERMISSIONS.ANDROID.CAMERA);
+                      }
+                    } else {
+                      if (Platform.OS === 'ios') {
+                        galleryHandel(PERMISSIONS.IOS.PHOTO_LIBRARY);
+                      } else {
+                        galleryHandel(
+                          PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+                        );
+                      }
+                    }
+                  }}
+                />
+                <View className="space-y-4 my-8">
+                  <View>
+                    <PrimaryInput
+                      type="text"
+                      placeholder="Full Name"
+                      control={control}
+                      name="username"
+                    />
+                  </View>
+                  <View className="flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ">
+                    <Text className="text-secondary-black font-merriweather-semibold text-[14px]">
+                      {state.email}
+                    </Text>
+                  </View>
+                  <View>
+                    <PrimaryInput
+                      type="text"
+                      placeholder="Phone Number"
+                      control={control}
+                      name="phone_number"
+                    />
+                  </View>
+                </View>
+              </View>
+            </ScrollViewComponent>
+
+            <View className="flex-1 justify-end pb-6">
+              <PrimaryButton
+                onClick={() => handleSubmit(editProfile)}
+                text={'Save'}
+              />
+            </View>
+          </>
+        )}
       </View>
     </Container>
   );

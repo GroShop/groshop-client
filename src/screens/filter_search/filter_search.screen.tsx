@@ -9,11 +9,10 @@ import {
   PrimaryInput,
   ProductCard,
   ScrollViewComponent,
-} from 'utils/imports.utils';
+} from '../../utils/imports.utils';
 import {useForm} from 'react-hook-form';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
-import  Models from '../../imports/models.imports';
+import Models from '../../imports/models.imports';
 import {Failure, useSetState} from '../../utils/functions.utils';
 import _ from 'lodash';
 import {useIsFocused} from '@react-navigation/native';
@@ -27,7 +26,7 @@ const FilterSearch = (props: any) => {
     productData: [],
     lastProductData: {},
     loading: false,
-    product_loader: false
+    product_loader: false,
   });
   const {
     control,
@@ -47,7 +46,7 @@ const FilterSearch = (props: any) => {
         search: watch().filterSearch,
       };
       let res: any = await Models.product.getManyProduct(query);
-      setState({productData: res.data.docs,product_loader: false});
+      setState({productData: res.data.docs, product_loader: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -81,7 +80,7 @@ const FilterSearch = (props: any) => {
     try {
       setState({loading: true});
       let res: any = await Models.searchProduct.getSearchProduct({});
-      setState({lastProductData: res.data,loading: false});
+      setState({lastProductData: res.data, loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);
@@ -196,14 +195,16 @@ const FilterSearch = (props: any) => {
               </View>
             )}
           </View>
-        ) :
-          state.product_loader ? 
-            <View className="">
-              <LottieComponent src={Assets.product_loader} height={80} width={80} />
-            </View>:
-             !_.isEmpty(state.productData) ? (
-          <ScrollViewComponent
-            className="bg-product-gray">
+        ) : state.product_loader ? (
+          <View className="">
+            <LottieComponent
+              src={Assets.product_loader}
+              height={80}
+              width={80}
+            />
+          </View>
+        ) : !_.isEmpty(state.productData) ? (
+          <ScrollViewComponent className="bg-product-gray">
             <View className="w-full flex-row justify-between flex-wrap px-5">
               <ProductCard
                 {...props}

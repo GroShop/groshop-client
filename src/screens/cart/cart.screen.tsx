@@ -1,19 +1,18 @@
 import Models from 'imports/models.imports';
 import _ from 'lodash';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Animated, TouchableOpacity} from 'react-native';
-
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {useSelector} from 'react-redux';
-import {Failure, useSetState} from 'utils/functions.utils';
+import {Failure, useSetState} from '../../utils/functions.utils';
 import {
   Assets,
   Container,
   ImageComponent,
   LottieComponent,
   PrimaryButton,
-} from 'utils/imports.utils';
-import {Cart} from 'utils/redux.utils';
+} from '../../utils/imports.utils';
+import {Cart} from '../../utils/redux.utils';
 const CartScreen = (props: any) => {
   // redux
   const voucher: any = useSelector((state: any) => state.voucher.data);
@@ -25,7 +24,7 @@ const CartScreen = (props: any) => {
     originalAmount: 0,
     duplicateCartData: [],
     cartId: '',
-    loading: false
+    loading: false,
   });
 
   const closeRow = (rowMap: any, rowKey: any) => {
@@ -55,7 +54,12 @@ const CartScreen = (props: any) => {
           ...data,
         }),
       );
-      setState({cartData, cartId: res.data._id, duplicateCartData: cartData,loading: false});
+      setState({
+        cartData,
+        cartId: res.data._id,
+        duplicateCartData: cartData,
+        loading: false,
+      });
     } catch (error: any) {
       console.log('error', error);
       setState({loading: false});
@@ -423,132 +427,143 @@ const CartScreen = (props: any) => {
           </Text>
         </View>
       </View>
-      {state.loading ? 
+      {state.loading ? (
         <View className="h-[80%]">
-          <LottieComponent src={Assets.loader}  />
-        </View>:!_.isEmpty(state.cartData) ?  <>
-      <View className="h-[66%]">
-        <View className="bg-btn-white h-[380px]">
-          <View className="w-[85%] mx-auto ">
-            <View className="flex-row space-x-2  items-center h-[66px] ">
-              <View className="h-[40px] w-[40px] rounded-full bg-neutral-white justify-center items-center ">
-                <ImageComponent
-                  src={Assets.shopCart}
-                  height={24}
-                  width={24}
-                  svg
-                />
+          <LottieComponent src={Assets.loader} />
+        </View>
+      ) : !_.isEmpty(state.cartData) ? (
+        <>
+          <View className="h-[66%]">
+            <View className="bg-btn-white h-[380px]">
+              <View className="w-[85%] mx-auto ">
+                <View className="flex-row space-x-2  items-center h-[66px] ">
+                  <View className="h-[40px] w-[40px] rounded-full bg-neutral-white justify-center items-center ">
+                    <ImageComponent
+                      src={Assets.shopCart}
+                      height={24}
+                      width={24}
+                      svg
+                    />
+                  </View>
+                  <View>
+                    <Text className="font-merriweather-bold text-[14px]  text-secondary-black">
+                      Farmer Shop
+                    </Text>
+                    <Text className="font-merriweather-light text-[11px]  text-text-gray">
+                      California
+                    </Text>
+                  </View>
+                </View>
+                <View className="h-[300px] ">
+                  <SwipeListView
+                    className="bottom-2"
+                    data={state.cartData}
+                    renderItem={renderItem}
+                    renderHiddenItem={renderHiddenItem}
+                    // leftOpenValue={75}
+                    rightOpenValue={-75}
+                    disableRightSwipe
+                    // onRowDidOpen={onRowDidOpen}
+                    showsVerticalScrollIndicator={false}
+                    // leftActivationValue={75}
+                    // rightActivationValue={-120}
+                    // leftActionValue={0}
+                    // rightActionValue={-500}
+                    // onLeftAction={onLeftAction}
+                    // onRightAction={onRightAction}
+                    // onLeftActionStatusChange={onLeftActionStatusChange}
+                    // onRightActionStatusChange={onRightActionStatusChange}
+                  />
+                </View>
               </View>
-              <View>
-                <Text className="font-merriweather-bold text-[14px]  text-secondary-black">
-                  Farmer Shop
-                </Text>
-                <Text className="font-merriweather-light text-[11px]  text-text-gray">
-                  California
-                </Text>
-              </View>
-            </View>
-            <View className="h-[300px] ">
-              <SwipeListView
-                className="bottom-2"
-                data={state.cartData}
-                renderItem={renderItem}
-                renderHiddenItem={renderHiddenItem}
-                // leftOpenValue={75}
-                rightOpenValue={-75}
-                disableRightSwipe
-                // onRowDidOpen={onRowDidOpen}
-                showsVerticalScrollIndicator={false}
-                // leftActivationValue={75}
-                // rightActivationValue={-120}
-                // leftActionValue={0}
-                // rightActionValue={-500}
-                // onLeftAction={onLeftAction}
-                // onRightAction={onRightAction}
-                // onLeftActionStatusChange={onLeftActionStatusChange}
-                // onRightActionStatusChange={onRightActionStatusChange}
-              />
             </View>
           </View>
-        </View>
-      </View>
-      <View className="flex-1 space-y-6 w-[90%] mx-auto justify-end mb-9">
-        <TouchableOpacity
-          className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg"
-          onPress={() => props.navigation.navigate('Voucher')}
-          activeOpacity={0.7}>
-          <View className=" flex-row space-x-2 items-center">
-            <View className="bg-neutral-white h-[40px] w-[40px] items-center justify-center rounded-lg">
+          <View className="flex-1 space-y-6 w-[90%] mx-auto justify-end mb-9">
+            <TouchableOpacity
+              className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg"
+              onPress={() => props.navigation.navigate('Voucher')}
+              activeOpacity={0.7}>
+              <View className=" flex-row space-x-2 items-center">
+                <View className="bg-neutral-white h-[40px] w-[40px] items-center justify-center rounded-lg">
+                  <ImageComponent
+                    src={Assets.voucherIcon}
+                    svg
+                    height={24}
+                    width={24}
+                  />
+                </View>
+                <Text className="font-raleway-bold text-base text-secondary-black">
+                  {!_.isEmpty(voucher)
+                    ? voucher.name === 'Discount'
+                      ? `${voucher.name} ${voucher.discount}%`
+                      : voucher.name
+                    : 'Select Voucher'}
+                </Text>
+              </View>
               <ImageComponent
-                src={Assets.voucherIcon}
-                svg
+                src={Assets.arrowRight}
                 height={24}
                 width={24}
+                svg
               />
+            </TouchableOpacity>
+            <View className="flex-row items-center justify-between">
+              <View className=" space-y-0.5">
+                <Text className="font-merriweather-bold text-secondary-black text-base ">
+                  Total
+                </Text>
+                <View className="flex-row items-center space-x-0.5">
+                  <Text className="font-raleway-bold text-text-gray text-[16px] line-through">
+                    ₹{state.originalAmount}
+                  </Text>
+                  <Text className="font-raleway-bold text-primary-green text-[24px] ">
+                    ₹
+                    {!_.isEmpty(voucher)
+                      ? voucher.name === 'Discount'
+                        ? Math.round(
+                            state.totalAmount -
+                              (state.totalAmount * voucher.discount) / 100,
+                          )
+                        : state.totalAmount
+                      : state.totalAmount}
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <PrimaryButton
+                  onPress={checkoutCart}
+                  btnStyle="bg-primary-green w-[156px] h-[40px]"
+                  text={'Checkout'}
+                />
+              </View>
             </View>
-            <Text className="font-raleway-bold text-base text-secondary-black">
-              {!_.isEmpty(voucher)
-                ? voucher.name === 'Discount'
-                  ? `${voucher.name} ${voucher.discount}%`
-                  : voucher.name
-                : 'Select Voucher'}
-            </Text>
           </View>
-          <ImageComponent src={Assets.arrowRight} height={24} width={24} svg />
-        </TouchableOpacity>
-        <View className="flex-row items-center justify-between">
-          <View className=" space-y-0.5">
-            <Text className="font-merriweather-bold text-secondary-black text-base ">
-              Total
-            </Text>
-            <View className="flex-row items-center space-x-0.5">
-              <Text className="font-raleway-bold text-text-gray text-[16px] line-through">
-                ₹{state.originalAmount}
-              </Text>
-              <Text className="font-raleway-bold text-primary-green text-[24px] ">
-                ₹
-                {!_.isEmpty(voucher)
-                  ? voucher.name === 'Discount'
-                    ? Math.round(
-                        state.totalAmount -
-                          (state.totalAmount * voucher.discount) / 100,
-                      )
-                    : state.totalAmount
-                  : state.totalAmount}
-              </Text>
-            </View>
-          </View>
-          <View>
-            <PrimaryButton
-              onPress={checkoutCart}
-              btnStyle="bg-primary-green w-[156px] h-[40px]"
-              text={'Checkout'}
+        </>
+      ) : (
+        <View className="h-[80%] items-center justify-center ">
+          <View className="h-[100px] w-[100px] bg-success rounded-full items-center justify-center mb-8">
+            <ImageComponent
+              src={Assets.shopping_cart}
+              svg
+              height={60}
+              width={60}
             />
           </View>
-        </View>
-      </View>
-      </>:
-      <View className="h-[80%] items-center justify-center ">
-        <View className="h-[100px] w-[100px] bg-success rounded-full items-center justify-center mb-8">
-          <ImageComponent
-            src={Assets.shopping_cart}
-            svg
-            height={60}
-            width={60}
-          />
-        </View>
-        <Text className=" font-merriweather-bold text-base text-secondary-black">
-          Missing Cart Items?
-        </Text>
-        <Text className="font-merriweather-regular text-[12px] text-text-gray py-1">
-          start your wellness journey today
-        </Text>
-        <TouchableOpacity className="h-[30px]  bg-primary-green items-center justify-center px-4 rounded-lg mt-3" onPress={() => props.navigation.navigate('HomeScreen')}>
-          <Text className="font-merriweather-bold text-[12px] text-light-mode ">
-            Start Shopping
+          <Text className=" font-merriweather-bold text-base text-secondary-black">
+            Missing Cart Items?
           </Text>
-        </TouchableOpacity>
-      </View>}
+          <Text className="font-merriweather-regular text-[12px] text-text-gray py-1">
+            start your wellness journey today
+          </Text>
+          <TouchableOpacity
+            className="h-[30px]  bg-primary-green items-center justify-center px-4 rounded-lg mt-3"
+            onPress={() => props.navigation.navigate('HomeScreen')}>
+            <Text className="font-merriweather-bold text-[12px] text-light-mode ">
+              Start Shopping
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </Container>
   );
 };

@@ -1,9 +1,8 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Assets, Container, ImageComponent} from 'utils/imports.utils';
+import {Assets, Container, ImageComponent} from '../../utils/imports.utils';
 
 const TrackOrder = (props: any) => {
-
   // const orderFilter
   return (
     <Container>

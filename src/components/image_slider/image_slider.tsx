@@ -1,18 +1,17 @@
-import {View, Text, FlatList, Animated} from 'react-native';
-import React, {useEffect, useMemo, useRef} from 'react';
-import Assets from '../../imports/assets.imports';
+import {View, FlatList, Animated} from 'react-native';
+import React, {useRef} from 'react';
 import {ImageComponent} from '../../utils/imports.utils';
 import {height, useSetState, width} from '../../utils/functions.utils';
 import {ExpandingDot} from 'react-native-animated-pagination-dots';
 
-interface IImageslider{
-  data?:any
+interface IImageslider {
+  data?: any;
 }
 
-const ItemSliderComponent = (props:IImageslider) => {
+const ItemSliderComponent = (props: IImageslider) => {
   // ref
   const flatListRef: any = useRef(null);
- 
+
   // state
   const [state, setState] = useSetState({
     currentIndex: '',
@@ -24,7 +23,7 @@ const ItemSliderComponent = (props:IImageslider) => {
         <ImageComponent
           resize="contain"
           width={width * 0.9}
-          height={(width * height)/width}
+          height={(width * height) / width}
           src={data.item}
         />
       </View>
@@ -35,9 +34,8 @@ const ItemSliderComponent = (props:IImageslider) => {
     return <View className="ml-8"></View>;
   };
 
-  return (
-  props.data? 
-     <View className="w-full h-full ">
+  return props.data ? (
+    <View className="w-full h-full ">
       <FlatList
         ref={flatListRef}
         style={{width: '100%'}}
@@ -60,7 +58,7 @@ const ItemSliderComponent = (props:IImageslider) => {
         )}
         renderItem={renderItem}
       />
-      <View className=''>
+      <View className="">
         <ExpandingDot
           data={props.data}
           expandingDotWidth={15}
@@ -79,8 +77,10 @@ const ItemSliderComponent = (props:IImageslider) => {
           }}
         />
       </View>
-    </View>:<></>
-  )
+    </View>
+  ) : (
+    <></>
+  );
 };
 
 export default ItemSliderComponent;

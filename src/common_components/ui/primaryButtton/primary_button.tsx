@@ -16,7 +16,7 @@ interface IPrimaryButtonProps {
 const PrimaryButton = (props: IPrimaryButtonProps) => {
   return (
     <TouchableOpacity
-      onPress={props.onClick?props.onClick():props.onPress}
+      onPress={props.onClick ? props.onClick() : props.onPress}
       activeOpacity={0.7}
       className={`h-14 flex-row items-center justify-center ${
         props.btnStyle ? props.btnStyle : ' bg-primary-green w-full '
@@ -31,13 +31,10 @@ const PrimaryButton = (props: IPrimaryButtonProps) => {
           />
         </View>
       )}
-      <View
-        className={`${props.icon&&'w-[67%]' }`}>
+      <View className={`${props.icon && 'w-[67%]'}`}>
         <Text
           className={`text-sm  ${
-            props.btnText
-              ? props.btnText
-              : ' text-btn-white '
+            props.btnText ? props.btnText : ' text-btn-white '
           }  font-merriweather-bold`}>
           {props.text}
         </Text>

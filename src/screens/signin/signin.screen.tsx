@@ -12,7 +12,7 @@ import {useForm} from 'react-hook-form';
 import SocialMedia from '../../components/socialMedia/social_media';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Failure, useSetState} from '../../utils/functions.utils';
-import {Models} from '../../imports/models.imports';
+import Models from '../../imports/models.imports';
 import {Success} from '../../utils/functions.utils';
 
 const SignIn = (props: any) => {

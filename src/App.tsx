@@ -16,14 +16,14 @@ import CartScreen from './screens/cart/cart.screen';
 import CheckoutScreen from './screens/checkout/checkout.screen';
 import WishList from './screens/wishlist/wishlist.screen';
 import Categories from './screens/categories/categories.screen';
-import Voucher from 'screens/voucher/voucher.screen';
-import Address from 'screens/address/address.screen';
-import TrackOrder from 'screens/track_order/track_order.screen';
-import OrderDetails from 'screens/order_details/order_details.screen';
-import OrderStatus from 'screens/order_status/order_status.screen';
-import CancelOrder from 'screens/cancel_order/canel_order.screen';
-import EditProfile from 'screens/edit_profile/edit_profile';
-import MyOrder from 'screens/my_order/my_order.screen';
+import Voucher from './screens/voucher/voucher.screen';
+import Address from './screens/address/address.screen';
+import TrackOrder from './screens/track_order/track_order.screen';
+import OrderDetails from './screens/order_details/order_details.screen';
+import OrderStatus from './screens/order_status/order_status.screen';
+import CancelOrder from './screens/cancel_order/cancel_order.screen';
+import EditProfile from './screens/edit_profile/edit_profile';
+import MyOrder from './screens/my_order/my_order.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -45,15 +45,13 @@ const App = () => {
         <Stack.Screen name="WishList" component={WishList} />
         <Stack.Screen name="Categories" component={Categories} />
         <Stack.Screen name="Voucher" component={Voucher} />
-        <Stack.Screen name="Address" component={Address} /> 
-         <Stack.Screen name="OrderDetails" component={OrderDetails} />
-      <Stack.Screen name="TrackOrder" component={TrackOrder} />
-      <Stack.Screen name="OrderStatus" component={OrderStatus} />
-      <Stack.Screen name="CancelOrder" component={CancelOrder} />
-      <Stack.Screen name="EditProfile" component={EditProfile} /> 
-      <Stack.Screen name="MyOrder" component={MyOrder} /> 
-
-
+        <Stack.Screen name="Address" component={Address} />
+        <Stack.Screen name="OrderDetails" component={OrderDetails} />
+        <Stack.Screen name="TrackOrder" component={TrackOrder} />
+        <Stack.Screen name="OrderStatus" component={OrderStatus} />
+        <Stack.Screen name="CancelOrder" component={CancelOrder} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="MyOrder" component={MyOrder} />
       </Stack.Navigator>
     </NavigationContainer>
   );

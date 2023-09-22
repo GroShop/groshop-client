@@ -1,17 +1,16 @@
 import {View, Text} from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   isoToDateConversion,
   timeConversion,
   useSetState,
-} from 'utils/functions.utils';
+} from '../../../utils/functions.utils';
 import StepIndicator from 'react-native-step-indicator';
-import {Colors} from 'utils/theme.utils';
-import {BOOKING} from 'utils/constant.utils';
-import Assets from 'imports/assets.imports';
+import {Colors} from '../../../utils/theme.utils';
+import {BOOKING} from '../../../utils/constant.utils';
+import Assets from '../../../imports/assets.imports';
 import ImageComponent from '../image/image.component';
 import _ from 'lodash';
-import {check} from 'prettier';
 
 const ProgressBar = (props: any) => {
   const [state, setState] = useSetState({
@@ -78,17 +77,17 @@ const ProgressBar = (props: any) => {
     };
   };
   useEffect(() => {
-    
-setState({currentPosition: props.data.length-1})
+    setState({currentPosition: props.data.length - 1});
   }, [props.data]);
   return (
     <View className="h-full  w-full flex-row space-x-4">
       <View className="flex-col justify-between py-7">
-        {imageData.map((item: any,index:number) => (
+        {imageData.map((item: any, index: number) => (
           <View
             className={`bg-input-bg h-[40px] w-[40px]  items-center justify-center  rounded-lg ${
               statusCheck(item.status).value && 'bg-primary-green'
-            }`} key={index}>
+            }`}
+            key={index}>
             <ImageComponent
               src={
                 statusCheck(item.status).value

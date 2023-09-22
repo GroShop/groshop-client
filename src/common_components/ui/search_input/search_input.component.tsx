@@ -1,7 +1,6 @@
-import {View, Text, TextInput, Image, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Assets from '../../../imports/assets.imports';
-import {Controller} from 'react-hook-form';
 import ImageComponent from '../image/image.component';
 
 interface ISearchInputProps {
@@ -16,12 +15,15 @@ interface ISearchInputProps {
   type?: any;
   placeholderColor?: string;
   securityPassword?: boolean;
-  onClick?: any; 
+  onClick?: any;
 }
 
 const SearchInput = (props: ISearchInputProps) => {
   return (
-    <TouchableOpacity className={`w-full ${props.style}`} activeOpacity={0.7} onPress={()=>props.onPress()}>
+    <TouchableOpacity
+      className={`w-full ${props.style}`}
+      activeOpacity={0.7}
+      onPress={() => props.onPress()}>
       {/* <Controller
         name={props.name}
         rules={props.rules || {}}
@@ -56,18 +58,13 @@ const SearchInput = (props: ISearchInputProps) => {
           );
         }}
       /> */}
-              <View
-                className={`flex-row items-center  px-2.5 space-x-2 bg-input-bg h-14 rounded-lg `}>
-                <View className='w-[8%]'>
-                  <ImageComponent
-                    src={Assets.searchIcon}
-                    height={24}
-                    width={24}
-                    svg
-                  />
-                </View>
-               <Text className='text-text-gray'>{props.placeholder}</Text>
-              </View>
+      <View
+        className={`flex-row items-center  px-2.5 space-x-2 bg-input-bg h-14 rounded-lg `}>
+        <View className="w-[8%]">
+          <ImageComponent src={Assets.searchIcon} height={24} width={24} svg />
+        </View>
+        <Text className="text-text-gray">{props.placeholder}</Text>
+      </View>
     </TouchableOpacity>
   );
 };

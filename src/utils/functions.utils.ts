@@ -340,39 +340,39 @@ export const isoToDateConversion = (date: string) => {
 };
 
 // cloudnary
-export const imgToUrl = async(image: any) => {
+export const imgToUrl = async (image: any) => {
   const data = new FormData();
   data.append('file', {
     uri: image.path,
     type: image.mime,
-    name: image.path.substring(image.path.lastIndexOf('/') +1)
+    name: image.path.substring(image.path.lastIndexOf('/') + 1),
   });
-  data.append('upload_preset' , 'groshop_upload');
-  
+  data.append('upload_preset', 'groshop_upload');
+
   // data.append('cloud_name', 'denokpulg');
-  
-  let url = 'https://api.cloudinary.com/v1_1/denokpulg/image/upload'
-  const headers ={
-    headers:{
-      'Access-Control-Allow-Origin' : '*',
-      "Content-Type": "multipart/form-data; charset=UTF-8"
-    }
+
+  let url = 'https://api.cloudinary.com/v1_1/denokpulg/image/upload';
+  const headers = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'multipart/form-data; charset=UTF-8',
+    },
+  };
+  try {
+    let uri: any = await axios.post(url, data, headers);
+    return uri.data;
+  } catch (error) {
+    console.log('error', error);
   }
-try {
-  let uri :any= await axios.post(url,data,headers)
-  return uri.data
-} catch (error) {
-  console.log("error",error);
-}
 };
 
 export const unixTimeToDateConvert = (data: number, year?: boolean) => {
   const milliseconds = data * 1000;
   const date = new Date(milliseconds);
   const day = date.getDate();
-  const month = date.toLocaleString('default', { month: 'short' });
+  const month = date.toLocaleString('default', {month: 'short'});
   if (year) {
-    const year = date.toLocaleString('default', { year: 'numeric' });
+    const year = date.toLocaleString('default', {year: 'numeric'});
     const formattedDate = `${day} ${month} ${year}`;
     return formattedDate;
   } else {
@@ -383,7 +383,7 @@ export const unixTimeToDateConvert = (data: number, year?: boolean) => {
 
 export const isoToDateConvert = (data: string) => {
   const date = new Date(data);
-  const options: any = { year: 'numeric', month: 'short', day: 'numeric' };
+  const options: any = {year: 'numeric', month: 'short', day: 'numeric'};
   const formattedDate = date
     .toLocaleDateString(undefined, options)
     .replace(',', '');

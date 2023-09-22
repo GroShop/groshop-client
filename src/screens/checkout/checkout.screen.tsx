@@ -1,7 +1,6 @@
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 import React, {useRef} from 'react';
 import {
-  AddressComponent,
   Assets,
   CheckoutCart,
   Container,
@@ -9,15 +8,15 @@ import {
   InviteModal,
   PrimaryButton,
   ScrollViewComponent,
-} from 'utils/imports.utils';
+} from '../../utils/imports.utils';
 import {useSelector} from 'react-redux';
 import _ from 'lodash';
 // @ts-ignore
 import RazorpayCheckout from 'react-native-razorpay';
-import {Colors} from 'utils/theme.utils';
-import {BOOKING_PAYMENT} from 'utils/constant.utils';
-import Models from 'imports/models.imports';
-import {Failure, useSetState} from 'utils/functions.utils';
+import {Colors} from '../../utils/theme.utils';
+import {BOOKING_PAYMENT} from '../../utils/constant.utils';
+import Models from '../../imports/models.imports';
+import {Failure, useSetState} from '../../utils/functions.utils';
 
 const CheckoutScreen = (props: any) => {
   const cart: any = useSelector((state: any) => state.cart.data);
@@ -92,7 +91,7 @@ const CheckoutScreen = (props: any) => {
   };
 
   return (
-    <Container >
+    <Container>
       <View className="mx-[20px]">
         <View className="items-center flex-row justify-center my-5">
           <TouchableOpacity

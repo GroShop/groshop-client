@@ -43,6 +43,6 @@ const voucher = {
     });
     return promise;
   },
-}
+};
 
-export default voucher
+export default voucher;

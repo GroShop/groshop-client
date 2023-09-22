@@ -57,6 +57,6 @@ const booking = {
     });
     return promise;
   },
-}
+};
 
-export default booking
+export default booking;

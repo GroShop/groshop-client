@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useRef} from 'react';
 import {
   Assets,
@@ -74,7 +74,7 @@ const OtpVerify = (props: any) => {
             Verify
           </Text>
         </TouchableOpacity>
-        <InviteModal ref={verifyRef} {...props} type={'verifyOtp'}/>
+        <InviteModal ref={verifyRef} {...props} type={'verifyOtp'} />
       </View>
     </Container>
   );

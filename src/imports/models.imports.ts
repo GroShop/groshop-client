@@ -6,14 +6,14 @@ import cart from '../models/cart.model';
 import voucher from '../models/voucher.model';
 import booking from '../models/booking.model';
 
- const Models = {
+const Models = {
   auth,
   product,
   searchProduct,
   wishlist,
   cart,
   voucher,
-  booking
+  booking,
 };
 
-export default Models
+export default Models;

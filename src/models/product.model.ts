@@ -43,6 +43,6 @@ const product = {
     });
     return promise;
   },
-}
+};
 
-export default product
+export default product;
