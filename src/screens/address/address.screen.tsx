@@ -167,12 +167,12 @@ const Address = (props: any) => {
       <>
       <ScrollViewComponent>
         {!_.isEmpty(state.addressData) &&
-          state.addressData?.map((item: any, index: number) => {
+          state.addressData?.map((item: any, addIndex: number) => {
             return (
               <View className="pb-2">
                 <AddressComponent
                   editAddress={(e: any) => {
-                    setState({defaultAddress: true, selectAddressIndex: index});
+                    setState({defaultAddress: true, selectAddressIndex: addIndex});
                     setValue('name', e.name);
                     setValue('address', e.address);
                     setValue('place', e.place);
@@ -180,7 +180,7 @@ const Address = (props: any) => {
                     addressRef.current.openModal();
                   }}
                   data={item}
-                  index={index}
+                  index={addIndex}
                   defaultAddress={(e: any) => {
                     let address = state.addressData;
                     address.map((item: any, index: number) => {

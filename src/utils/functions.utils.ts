@@ -348,18 +348,22 @@ export const imgToUrl = async(image: any) => {
     name: image.path.substring(image.path.lastIndexOf('/') +1)
   });
   data.append('upload_preset' , 'groshop_upload');
+  
   // data.append('cloud_name', 'denokpulg');
+  
   let url = 'https://api.cloudinary.com/v1_1/denokpulg/image/upload'
-
- let uri =await axios
-    .post(url, data)
-    .then(res => {
-      return res.data;
-    })
-    .catch(err => {
-      console.log("error",err);
-    });
-    return uri
+  const headers ={
+    headers:{
+      'Access-Control-Allow-Origin' : '*',
+      "Content-Type": "multipart/form-data; charset=UTF-8"
+    }
+  }
+try {
+  let uri :any= await axios.post(url,data,headers)
+  return uri.data
+} catch (error) {
+  console.log("error",error);
+}
 };
 
 export const unixTimeToDateConvert = (data: number, year?: boolean) => {
