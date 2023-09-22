@@ -3,6 +3,8 @@ import {Modal, Text, View, TouchableOpacity} from 'react-native';
 import ImageComponent from '../image/image.component';
 import {Ratio, useSetState} from '../../../utils/functions.utils';
 import Assets from '../../../imports/assets.imports';
+import PrimaryButton from '../primaryButtton/primary_button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const InviteModal = forwardRef((props: any, ref) => {
   const modalRef: any = useRef();
@@ -175,6 +177,40 @@ const InviteModal = forwardRef((props: any, ref) => {
             </View>
           </TouchableOpacity>
         </TouchableOpacity>
+      ) : props.type === 'logout' ? (
+        <View
+          className="h-full items-center justify-center"
+          style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+          <View className="w-[90%] items-center justify-center bg-neutral-white shadow-xl rounded-xl py-[35px] px-[20px] space-y-1">
+            <Text className="font-raleway-bold text-[18px] text-secondary-black  ">
+              Logout From This App
+            </Text>
+            <Text className="font-merriweather-regular text-[14px] text-secondary-black">
+              You sure want to logout?
+            </Text>
+            <View className="w-full flex-row justify-between space-x-2 pt-[30px]">
+              <View className="w-[50%]">
+                <PrimaryButton
+                  text={'Cancel'}
+                  btnStyle="bg-light-mode border-[1px] border-primary-green  h-[45px]"
+                  btnText="text-primary-green "
+                  onPress={() => setState({isModalOpen: false})}
+                />
+              </View>
+              <View className="w-[50%]">
+                <PrimaryButton
+                  btnStyle="bg-primary-green  h-[45px]"
+                  text={'logout'}
+                  onPress={() => {
+                    AsyncStorage.clear();
+                    setState({isModalOpen: false});
+                    props.navigation.navigate('Login');
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
       ) : (
         ''
       )}

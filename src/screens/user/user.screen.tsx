@@ -1,9 +1,10 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Assets,
   Container,
   ImageComponent,
+  InviteModal,
   ScrollViewComponent,
 } from '../../utils/imports.utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -12,6 +13,7 @@ import _ from 'lodash';
 
 const UserScreen = (props: any) => {
   const auth: any = useSelector((state: any) => state.auth.data);
+  const logoutRef:any =useRef()
   const userData = [
     {
       name: 'Edit Profile',
@@ -51,7 +53,7 @@ const UserScreen = (props: any) => {
     },
     {
       name: 'Logout',
-      route: '',
+      route:'' ,
       pic: Assets.logoutIcon,
     },
   ];
@@ -101,7 +103,9 @@ const UserScreen = (props: any) => {
             {userData.map((item: any, index: number) => (
               <TouchableOpacity
                 className="bg-btn-white  px-4 h-[60px] flex-row items-center justify-between rounded-lg"
-                onPress={() => props.navigation.navigate(item.route)}
+                onPress={() =>{ item.name==='Logout'?
+                logoutRef.current.openModal()
+                :props.navigation.navigate(item.route)}}
                 activeOpacity={0.7}
                 key={index}>
                 <View className=" flex-row space-x-5 items-center">
@@ -120,6 +124,7 @@ const UserScreen = (props: any) => {
             ))}
           </View>
         </View>
+        <InviteModal ref={logoutRef} type={'logout'} {...props}/>
       </ScrollViewComponent>
     </Container>
   );
