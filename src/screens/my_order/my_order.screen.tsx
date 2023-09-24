@@ -65,7 +65,7 @@ const MyOrder = (props: any) => {
             state.bookingData.map((item: any, index: number) => (
               <View
                 className="bg-product-gray shadow-md  rounded-lg w-[90%] mx-auto  my-1 h-[110px]  justify-center"
-                style={Platform.OS === 'android' ? styles.shadow : null}>
+                style={Platform.OS === 'android' ? styles.shadow : null} key={index}>
                 <View className="flex-row  items-center space-x-4 ">
                   <TouchableOpacity
                     className=" w-[80px] flex-row flex-wrap justify-center items-center space-x-2  "
@@ -150,12 +150,6 @@ const MyOrder = (props: any) => {
           )}
         </ScrollViewComponent>
       )}
-
-      {/* <FilterSlider
-              onPress={(value: any) => setState({tags: value})}
-              data={productFilter}
-              active="All"
-            /> */}
     </Container>
   );
 };

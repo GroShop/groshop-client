@@ -76,7 +76,7 @@ const Address = (props: any) => {
       setState({addressData: res.data?.address, loading: false});
     } catch (error: any) {
       console.log('error', error);
-      Failure(error.message);
+      // Failure(error.message);
       setState({loading: false});
     }
   };

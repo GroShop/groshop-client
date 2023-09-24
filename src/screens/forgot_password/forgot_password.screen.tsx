@@ -58,6 +58,7 @@ const ForgotPsd = (props: any) => {
             src={Assets.passwordImg}
             height={Ratio(265)}
             width={Ratio(250)}
+            svg
           />
           <Text className="font-merriweather-regular text-secondary-black text-xs ">
             Enter your phone number to verify it’s you, and we will send you a

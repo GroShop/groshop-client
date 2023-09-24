@@ -49,7 +49,6 @@ const FilterSearch = (props: any) => {
       setState({productData: res.data.docs, product_loader: false});
     } catch (error: any) {
       console.log('error', error);
-      Failure(error.message);
     }
   };
   const createSearchProduct = async (_id: string, name: string) => {
@@ -61,7 +60,6 @@ const FilterSearch = (props: any) => {
       await Models.searchProduct.createSearchProduct(query);
     } catch (error: any) {
       console.log('error', error);
-      Failure(error.message);
     }
   };
   const deleteSearchProduct = async (_id: string) => {
@@ -73,7 +71,6 @@ const FilterSearch = (props: any) => {
       setState({lastProductData: res.data});
     } catch (error: any) {
       console.log('error', error);
-      Failure(error.message);
     }
   };
   const getManySearchProduct = async () => {

@@ -7,6 +7,7 @@ import {
   ImageSlider,
   PrimaryButton,
   RatingComponent,
+  ScrollViewComponent,
 } from '../../utils/imports.utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useRoute} from '@react-navigation/native';
@@ -55,7 +56,7 @@ const ProductScreen = (props: any) => {
       setState({wishlistProduct: res.data.wishlist_product, loading: false});
     } catch (error: any) {
       console.log('error', error);
-      Failure(error.message);
+      // Failure(error.message);
     }
   };
 
@@ -98,7 +99,7 @@ const ProductScreen = (props: any) => {
       backgroundColor="#E6F8D5"
       lottie={Assets.loader}
       loading={state.loading}>
-      {/* <ScrollViewComponent> */}
+      <ScrollViewComponent>
       <View className="w-full h-[358px]">
         <View className="w-full h-[250px] bg-success relative  rounded-b-full"></View>
         <View className=" w-full absolute h-[300px]">
@@ -137,7 +138,7 @@ const ProductScreen = (props: any) => {
           </View>
         </View>
       </View>
-      <View className="p-[20px]  flex-1">
+      <View className="px-[20px] pt-[20px]">
         <View className=" flex-row  pb-2 items-center">
           <View className="bg-primary-green w-[37px]   rounded-br-lg h-[24px] items-center justify-center ">
             <Text className="font-merriweather-bold  text-neutral-white  ">
@@ -151,7 +152,7 @@ const ProductScreen = (props: any) => {
         <Text className="font-merriweather-regular  text-text-gray  text-base">
           Farm Shop
         </Text>
-        <View className="items-center  flex-row py-1 space-x-2">
+        <View className="items-center  flex-row py-1 space-x-2 w-[110px]">
           <RatingComponent
             RatingValue={state.productData?.rating}
             readonly={true}
@@ -216,7 +217,7 @@ const ProductScreen = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View className="py-[22px] space-y-3">
+        <View className=" space-y-3">
           <Text className="font-raleway-semi-bold text-secondary-black text-[20px] ">
             Descriptions
           </Text>
@@ -224,23 +225,27 @@ const ProductScreen = (props: any) => {
             {state.productData?.description}
           </Text>
         </View>
-        <View className="flex-row items-end justify-between flex-1 pb-2">
+        <View className="flex-row  justify-between w-full pt-6">
+        <View className="w-[48%]">
           <PrimaryButton
             icon={Assets.cartActive}
-            btnStyle="bg-light-mode border-[1px] border-primary-green  w-[156px]"
+            btnStyle="bg-light-mode border-[1px] border-primary-green   h-[45px]"
             btnText="text-primary-green "
             iconHeight={18}
             iconWidth={18}
             text={'Add To Cart'}
             onPress={createCart}
           />
+          </View>
+           <View className="w-[48%]">
           <PrimaryButton
-            btnStyle="bg-primary-green w-[156px]"
+            btnStyle="bg-primary-green  h-[45px]"
             text={'Buy Now'}
           />
+           </View>
         </View>
       </View>
-      {/* </ScrollViewComponent> */}
+      </ScrollViewComponent>
     </Container>
   );
 };
