@@ -17,6 +17,7 @@ interface IPrimaryInputProps {
   inputWrapperStyle?: string;
   securityPassword?: boolean;
   onClick?: any;
+  isMultiLine?: boolean;
 }
 
 const PrimaryInput = (props: IPrimaryInputProps) => {
@@ -34,6 +35,7 @@ const PrimaryInput = (props: IPrimaryInputProps) => {
                   props.inputWrapperStyle
                 } ${error && 'border-error border-[1px]'}`}>
                 <TextInput
+                multiline={props.isMultiLine?true:false}
                   className={`${
                     props.inputStyle
                   } text-secondary-black font-merriweather-semibold h-full  text-[14px] ${

@@ -24,6 +24,7 @@ import OrderStatus from './screens/order_status/order_status.screen';
 import CancelOrder from './screens/cancel_order/cancel_order.screen';
 import EditProfile from './screens/edit_profile/edit_profile';
 import MyOrder from './screens/my_order/my_order.screen';
+import ChatScreen from 'screens/chat/chat.screen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -52,6 +53,7 @@ const App = () => {
         <Stack.Screen name="CancelOrder" component={CancelOrder} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="MyOrder" component={MyOrder} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -64,6 +64,8 @@ import uploadCamera from '../assets/icons/upload_camera';
 import loader from '../assets/lottie/loader.json';
 import product_loader from '../assets/lottie/product_loader.json';
 import shopping_cart from '../assets/icons/shopping_cart';
+import send_btn from '../assets/icons/send_btn';
+import farmer_shop from '../assets/icons/farmer_shop';
 
 const Assets = {
   closeIcon,
@@ -132,6 +134,8 @@ const Assets = {
   loader,
   product_loader,
   shopping_cart,
+  farmer_shop,
+  send_btn
 };
 
 export default Assets;

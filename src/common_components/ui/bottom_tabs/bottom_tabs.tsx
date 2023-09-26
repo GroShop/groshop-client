@@ -1,12 +1,12 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View, TouchableOpacity, Platform} from 'react-native';
-import EmailScreen from '../../../screens/email/email.screen';
 import HomeScreen from '../../../screens/home/home.screen';
 import Notification from 'screens/notification/notification.screen';
 import UserScreen from '../../../screens/user/user.screen';
 import ImageComponent from '../image/image.component';
 import Assets from '../../../imports/assets.imports';
 import CartScreen from '../../../screens/cart/cart.screen';
+import ChatScreen from '../../../screens/chat/chat.screen';
 
 const Tab = createBottomTabNavigator();
 
@@ -105,8 +105,15 @@ const BottomTabs = (props: any) => {
         }}
       />
       <Tab.Screen
-        name="EmailScreen"
-        component={EmailScreen}
+        name="ChatScreen"
+        component={ChatScreen}
+        listeners={{
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            props.navigation.navigate('ChatScreen');
+          },
+        }}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <ImageComponent
