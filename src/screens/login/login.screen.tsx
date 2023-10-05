@@ -44,6 +44,10 @@ const Login = (props: any) => {
         routes: [{name: 'BottomTabs'}],
       });
       Success(res.message);
+   const createChat:any= await Models.chat.createChat({
+        users:[ res.data._id,"646489865d00e663e8ff5eeb"]
+      })
+      await AsyncStorage.setItem('chat', res.data.role==='farmer shop'?'65151b282fc31248367ab48c':createChat.data._id);
       // getUser()
     } catch (error: any) {
       console.log('error', error);

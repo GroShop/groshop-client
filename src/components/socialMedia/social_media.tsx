@@ -48,13 +48,18 @@ const SocialMedia = (props: any) => {
           console.log(error);
         });
       let res: any = await Models.auth.socialSignIn(query);
-      console.log('ffff', res.token);
       await AsyncStorage.setItem('token', res.token);
       props.navigation.reset({
         index: 0,
         routes: [{name: 'BottomTabs'}],
       });
       Success(res.message);
+      const createChat:any= await Models.chat.createChat({
+        users:[ res.data._id,"646489865d00e663e8ff5eeb"]
+      })
+      console.log('createChat',createChat);
+      
+      await AsyncStorage.setItem('chat', createChat.data._id);
     } catch (error: any) {
       console.log('err', error);
       Failure(error.message);
@@ -79,6 +84,12 @@ const SocialMedia = (props: any) => {
         routes: [{name: 'BottomTabs'}],
       });
       Success(res.message);
+      const createChat:any= await Models.chat.createChat({
+        users:[ res.data._id,"646489865d00e663e8ff5eeb"]
+      })
+      console.log('createChat',createChat);
+      
+      await AsyncStorage.setItem('chat', res.data.role==='farmer shop'?'65151b282fc31248367ab48c':createChat.data._id);
     } catch (error: any) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('SIGN_IN_CANCELLED');
