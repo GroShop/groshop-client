@@ -35,6 +35,7 @@ const ProductCard = (props: IProductCard) => {
           <ImageComponent
             src={item.product_pic}
             resize="contain"
+radius={100}
             width={156}
             height={80}
           />

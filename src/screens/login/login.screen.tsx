@@ -37,6 +37,8 @@ const Login = (props: any) => {
   });
   const handleLogin = async (data?: any) => {
     try {
+      console.log('data',data);
+      
       let res: any = await Models.auth.login(data);
       await AsyncStorage.setItem('token', res.token);
       props.navigation.reset({

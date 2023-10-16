@@ -38,7 +38,7 @@ const PrimaryInput = (props: IPrimaryInputProps) => {
                 multiline={props.isMultiLine?true:false}
                   className={`${
                     props.inputStyle
-                  } text-secondary-black font-merriweather-semibold h-full  text-[14px] ${
+                  } text-secondary-black font-raleway-semi-bold h-full  text-[14px] ${
                     props.iconOnPress || props.icon ? 'w-[80%]' : 'w-full'
                   } rounded-lg`}
                   placeholder={props.placeholder}

@@ -17,7 +17,7 @@ module.exports = {
       'merriweather-light': ['Merriweather-Light'],
       'merriweather-thin': ['Merriweather-Thin'],
       'merriweather-medium': ['Merriweather-Medium'],
-      'merriweather-semibold': ['Merriweather-Semibold'],
+      'merriweather-semibold': ['Inter-SemiBold'],
       'inter-regular': ['Inter-Regular'],
       'inter-medium': ['Inter-Medium'],
       'inter-semibold': ['Inter-SemiBold'],

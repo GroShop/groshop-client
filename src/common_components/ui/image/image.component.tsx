@@ -38,6 +38,7 @@ const ImageComponent = (props: ImageProps) => {
     return false;
     ``;
   };
+console.log('src',src);
 
   return (
     <>
@@ -73,6 +74,11 @@ const ImageComponent = (props: ImageProps) => {
             isUrl(src)
               ? {
                   uri: src,
+                  headers: {
+                    'Content-Type': 'image/png',
+                     Authorization: 'someAuthToken' 
+                  },
+                  
                   priority: FastImage.priority.high,
                   cache: FastImage.cacheControl.immutable,
                 }

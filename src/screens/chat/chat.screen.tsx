@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   Assets,
@@ -20,22 +20,25 @@ import _ from 'lodash';
 const ChatScreen = (props: any) => {
   const socket = SocketIOClient('http://192.168.1.18:8001');
   const auth: any = useSelector((state: any) => state.auth.data);
-  console.log('');
 
   const [chatMsg, setChatMsg] = useState([]);
   const [chatId, setChatId] = useState('');
 
   useEffect(() => {
     socket.on('receiveMessage', (payload: any) => {
+      console.log('cheac',payload);
+      
       setChatMsg((pre: any) => [...pre, payload]);
     });
   }, []);
 
   useEffect(() => {
     (async () => {
-      let chat_id: any = await AsyncStorage.getItem('chat');
+      // let chat_id: any = await AsyncStorage.getItem('chat');
+      let chat_id="6513d5c33608b8d7753c9ab5"
       getManyMessage(chat_id);
-      socket.emit('join', chat_id);
+      socket.emit('join-room', chat_id);
+      console.log('chat_id',chat_id);
       setChatId(chat_id);
     })();
   }, []);
@@ -59,8 +62,8 @@ const ChatScreen = (props: any) => {
       chat: chatId,
     };
     let res: any = await Models.message.createMessage(query);
-    setChatMsg((pre: any) => [...pre, res.data]);
-    socket.emit('senderMessage', res.data);
+    // setChatMsg((pre: any) => [...pre, res.data]);
+    socket.emit('senderMessage', res.data,chatId,auth._id);
   };
 
   const getManyMessage = async (chatId: string) => {
@@ -86,6 +89,8 @@ const ChatScreen = (props: any) => {
         <View className="flex-1">
           <ScrollViewComponent>
             {chatMsg.map((item: any, index: number) => {
+              console.log('',auth._id , item.sender);
+              
               return auth._id === item.sender ? (
                 <TouchableOpacity
                   className=" flex-row w-full space-x-2 mt-3 "
@@ -103,11 +108,13 @@ const ChatScreen = (props: any) => {
                   </View>
                   {!_.isEmpty(auth?.profile_pic) ? (
                     <View className=" h-[44px] w-[44px] rounded-full items-center justify-center ">
-                      <ImageComponent
-                        src={auth?.profile_pic}
-                        height={44}
-                        width={44}
-                        radius={100}
+                      <Image
+                      className="w-[44px] h-[44px]"
+                        source={auth?.profile_pic}
+                        // resize="contain"
+                        // height={44}
+                        // width={44}
+                        // radius={100}
                       />
                     </View>
                   ) : (

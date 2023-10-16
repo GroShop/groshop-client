@@ -99,7 +99,7 @@ const CancelOrder = (props: any) => {
         ) : (
           <View className="w-full my-3 ">
             <View>
-              <Text className="font-merriweather-semibold text-secondary-black text-[16px] ">
+              <Text className="font-raleway-semi-bold text-secondary-black text-[16px] ">
                 Please select your cancelation reason
               </Text>
             </View>

@@ -55,14 +55,14 @@
     "react-native-image-crop-picker": "^0.39.0",
     "react-native-image-slider-box": "^2.0.7",
     "react-native-otp-textinput": "^1.0.1",
-    "react-native-permissions": "^3.8.4",
+    "react-native-permissions": "^3.9.3",
     "react-native-ratings": "^8.1.0",
     "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-razorpay": "^2.3.0",
     "react-native-safe-area-context": "^4.5.2",
     "react-native-screens": "^3.20.0",
     "react-native-slider": "^0.11.0",
-        "react-native-status-bar-height": "^2.6.0",
+    "react-native-status-bar-height": "^2.6.0",
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "^13.9.0",
     "react-native-svg-transformer": "^1.0.0",
@@ -72,6 +72,7 @@
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
+    "socket.io-client": "^4.7.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -95,5 +96,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

@@ -240,7 +240,7 @@ const EditProfile = (props: any) => {
                     />
                   </View>
                   <View className="flex-row items-center justify-between px-2.5 bg-input-bg h-14 rounded-lg ">
-                    <Text className="text-secondary-black font-merriweather-semibold text-[14px]">
+                    <Text className="text-secondary-black font-raleway-semi-bold text-[14px]">
                       {state.email}
                     </Text>
                   </View>
