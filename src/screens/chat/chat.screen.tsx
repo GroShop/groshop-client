@@ -16,7 +16,8 @@ import Models from 'imports/models.imports';
 import {useSetState} from 'utils/functions.utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import _ from 'lodash';
-
+import { onDisplayNotification } from 'utils/notification.utils';
+ 
 const ChatScreen = (props: any) => {
   const socket = SocketIOClient('http://192.168.1.18:8001');
   const auth: any = useSelector((state: any) => state.auth.data);
@@ -53,7 +54,7 @@ const ChatScreen = (props: any) => {
       message: '',
     },
   });
-
+  
   const chatMessage = async () => {
     let query = {
       // users: [auth._id, '646489865d00e663e8ff5eeb'],
@@ -187,6 +188,11 @@ const ChatScreen = (props: any) => {
           <TouchableOpacity
             className="h-[40px]  bg-primary-green rounded-lg items-center justify-center w-[40px]"
             onPress={chatMessage}>
+            <ImageComponent src={Assets.send_btn} svg height={24} width={24} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="h-[40px]  bg-primary-green rounded-lg items-center justify-center w-[40px]"
+            onPress={()=>onDisplayNotification("Groshop",'message')}>
             <ImageComponent src={Assets.send_btn} svg height={24} width={24} />
           </TouchableOpacity>
         </View>
