@@ -38,7 +38,6 @@ const ImageComponent = (props: ImageProps) => {
     return false;
     ``;
   };
-console.log('src',src);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Platform} from 'react-native';
+import {View, Text, TouchableOpacity, Platform, Alert} from 'react-native';
 import React, {useEffect} from 'react';
 import Assets from '../../imports/assets.imports';
 import {ImageComponent} from '../../utils/imports.utils';
@@ -11,6 +11,7 @@ import auth from '@react-native-firebase/auth';
 import Models from '../../imports/models.imports';
 import {socialLogIn} from '../../utils/constant.utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getNotificationToken } from 'utils/notification.utils';
 
 const SocialMedia = (props: any) => {
   const [state, setState] = useSetState({
@@ -36,9 +37,12 @@ const SocialMedia = (props: any) => {
       const {idToken} = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       const userInfo = auth().signInWithCredential(googleCredential);
+      // const notificationToken= await getNotificationToken()
       let query: any = {
         social_account_type: socialLogIn.GOOGLE,
+        // notification_token:notificationToken
       };
+
       await userInfo
         .then(userInfo => {
           query.email = userInfo.user.email;
@@ -57,8 +61,6 @@ const SocialMedia = (props: any) => {
       const createChat:any= await Models.chat.createChat({
         users:[ res.data._id,"646489865d00e663e8ff5eeb"]
       })
-      console.log('createChat',createChat);
-      
       await AsyncStorage.setItem('chat', createChat.data._id);
     } catch (error: any) {
       console.log('err', error);
@@ -71,13 +73,16 @@ const SocialMedia = (props: any) => {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
+      const notificationToken= await getNotificationToken()
+      
       let query: any = {
         social_account_type: socialLogIn.GOOGLE,
         email: userInfo.user.email,
         username: userInfo.user.name,
+        notification_token:notificationToken
       };
+      
       let res: any = await Models.auth.socialSignIn(query);
-      console.log('ffff', res);
       await AsyncStorage.setItem('token', res.token);
       props.navigation.reset({
         index: 0,

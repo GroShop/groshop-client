@@ -14,6 +14,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Failure, useSetState} from '../../utils/functions.utils';
 import Models from '../../imports/models.imports';
 import {Success} from '../../utils/functions.utils';
+import { getNotificationToken } from 'utils/notification.utils';
 
 const SignIn = (props: any) => {
   // state
@@ -40,6 +41,8 @@ const SignIn = (props: any) => {
   const handleSignIn = async (data?: any) => {
     try {
       delete data.confirmPassword;
+      const notificationToken= await getNotificationToken()
+      data.notification_token=notificationToken      
       let res: any = await Models.auth.signup(data);
       props.navigation.reset({
         index: 0,

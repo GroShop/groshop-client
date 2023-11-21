@@ -5,6 +5,7 @@ interface IScrollView {
   inlineStyle?: any;
   className?: string;
   nestedScrollEnabled?: boolean;
+  scrollEnabled?: boolean;
 }
 
 const ScrollViewComponent = (props: IScrollView) => {
@@ -12,6 +13,7 @@ const ScrollViewComponent = (props: IScrollView) => {
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
+      scrollEnabled={props.scrollEnabled}
       {...props}
       contentContainerStyle={
         props.inlineStyle ? props.inlineStyle : {paddingBottom: 40}
