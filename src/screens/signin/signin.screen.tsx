@@ -41,8 +41,8 @@ const SignIn = (props: any) => {
   const handleSignIn = async (data?: any) => {
     try {
       delete data.confirmPassword;
-      const notificationToken= await getNotificationToken()
-      data.notification_token=notificationToken      
+      // const notificationToken= await getNotificationToken()
+      // data.notification_token=notificationToken      
       let res: any = await Models.auth.signup(data);
       props.navigation.reset({
         index: 0,

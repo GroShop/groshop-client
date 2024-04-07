@@ -58,7 +58,7 @@ const FilterProduct = (props: any) => {
       }
       let res: any = await Models.product.getManyProduct(query);
       props.navigation.navigate('Categories');
-      filterProduct(res.data.docs);
+      filterProduct(res.data);
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);

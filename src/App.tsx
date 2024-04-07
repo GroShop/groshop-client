@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './screens/splash/splash.screen';
@@ -26,26 +26,29 @@ import EditProfile from './screens/edit_profile/edit_profile';
 import MyOrder from './screens/my_order/my_order.screen';
 import ChatScreen from 'screens/chat/chat.screen';
 import messaging from '@react-native-firebase/messaging';
-import { Alert } from 'react-native';
-import { getNotificationToken, notificationListener, requestUserPermission } from 'utils/notification.utils';
+import {Alert} from 'react-native';
+import {
+  getNotificationToken,
+  notificationListener,
+  requestUserPermission,
+} from 'utils/notification.utils';
 
 const App = () => {
   const Stack = createStackNavigator();
 
-
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    }); 
+      // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
     return unsubscribe;
   }, []);
 
   useEffect(() => {
-    requestUserPermission()
-    notificationListener()
-    getNotificationToken()
-  }, [])
-  
+    requestUserPermission();
+    notificationListener();
+    getNotificationToken();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>

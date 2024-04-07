@@ -39,7 +39,8 @@ const HomeScreen = (props: any) => {
         query.tag = state.tags;
       }
       let res: any = await Models.product.getManyProduct(query);
-      setState({allProductData: res.data.docs, loading: false});
+      
+      setState({allProductData: res.data, loading: false});
     } catch (error: any) {
       console.log('error', error);
       Failure(error.message);

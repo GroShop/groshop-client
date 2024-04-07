@@ -1,5 +1,11 @@
-import {View, Text, Image, , ScrollView} from 'react-native';
-import React, {useEffect, useRef, useState, useTransition} from 'react';
+import {View, Text, ScrollView} from 'react-native';
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from 'react';
 import {
   Assets,
   Container,
@@ -16,12 +22,12 @@ import {Failure, useSetState} from 'utils/functions.utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import _ from 'lodash';
 import {onDisplayNotification} from 'utils/notification.utils';
+import { useIsFocused } from '@react-navigation/native';
 
 const ChatScreen = (props: any) => {
-  const socket: any = SocketIOClient('http://192.168.0.108:8001', {
-    withCredentials: false,
-  });
+  const socket: any = SocketIOClient('http://192.168.185.82:8001');
   const auth: any = useSelector((state: any) => state.auth.data);
+  const isFocused=useIsFocused()
   const scrollViewRef: Record<string, any> = useRef();
 
   const [chatMsg, setChatMsg] = useState([]);
@@ -32,6 +38,7 @@ const ChatScreen = (props: any) => {
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: {errors},
   } = useForm({
     defaultValues: {
@@ -44,18 +51,19 @@ const ChatScreen = (props: any) => {
       setTrigger(true);
       if (trigger) {
         let query = {
-          // users: [auth._id, '646489865d00e663e8ff5eeb'],
           content: watch().message,
           sender: auth._id,
           chat: chatId,
         };
         let res: any = await Models.message.createMessage(query);
-        socket.emit('senderMessage', res.data, chatId, auth._id);
-        // setChatMsg((pre: any) => [...pre, res.data]);
+        // @ts-expect-error
+        setChatMsg((pre: any) => [...pre, res.data]);
+        socket.emit('senderMessage', res.data);
+        setValue('message', '');
         setTrigger(false);
       }
     } catch (error: any) {
-      // Failure(error.message);
+      Failure(error.message);
     }
   };
 
@@ -68,37 +76,49 @@ const ChatScreen = (props: any) => {
     }
   };
   useEffect(() => {
-    socket.off('receiveMessage').on('receiveMessage', (payload: any) => {
+    if (auth) {
+      socket.emit('setup', auth._id);
+    }
+  }, [auth]);
+
+  useMemo(() => {
+    socket.on('receiveMessage', (payload: any) => {
+      // @ts-expect-error
       setChatMsg((pre: any) => [...pre, payload]);
     });
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
     (async () => {
       let chat_id: any = await AsyncStorage.getItem('chat');
       getManyMessage(chat_id);
-      socket.emit('join-room', chat_id);
       setChatId(chat_id);
     })();
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     setTimeout(() => {
       scrollViewRef.current.scrollToEnd();
-    }, 2000);
+    }, 1000);
   }, [chatMsg]);
 
   return (
     <Container>
-      <View className="mx-[20px] flex-1">
-        <View className="items-center flex-row justify-center  h-[60px] ">
+      <View className=" flex-1 w-[90%] mx-auto">
+        <View className="items-center flex-row justify-center ]  h-[10%]">
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => props.navigation.goBack()}
+            className="">
+            <ImageComponent src={Assets.backIcon} height={24} width={24} svg />
+          </TouchableOpacity>
           <View className="items-center w-[90%] ">
-            <Text className="font-raleway-semi-bold text-secondary-black text-[20px]  mr-[15px]">
+            <Text className="font-raleway-semi-bold text-secondary-black text-[20px]  mr-[10px]">
               Farmer Shop
             </Text>
           </View>
         </View>
-        <View className="flex-1 pb-3">
+        <View className="flex-1 pb-3 ">
           {_.isEmpty(chatMsg) && (
             <View className="h-full">
               <LottieComponent src={Assets.loader} />

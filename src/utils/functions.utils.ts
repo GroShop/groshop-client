@@ -21,7 +21,7 @@ export const aspectRatio = height / width;
 export const getBaseURL = () => {
   // let baseURL = "https://groshop-ecom.onrender.com";
   // let baseURL ="http://localhost:8001";
-  let baseURL = 'http://192.168.0.108:8001';
+  let baseURL = 'http://192.168.185.82:8001';
   if (process.env.REACT_APP_NODE_ENV === 'development') {
     baseURL = 'http://localhost:8001';
   } else if (process.env.REACT_APP_NODE_ENV === 'stage') {
@@ -389,3 +389,4 @@ export const isoToDateConvert = (data: string) => {
     .replace(',', '');
   return formattedDate;
 };
+

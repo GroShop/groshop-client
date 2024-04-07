@@ -46,7 +46,7 @@ const FilterSearch = (props: any) => {
         search: watch().filterSearch,
       };
       let res: any = await Models.product.getManyProduct(query);
-      setState({productData: res.data.docs, product_loader: false});
+      setState({productData: res.data, product_loader: false});
     } catch (error: any) {
       console.log('error', error);
     }
